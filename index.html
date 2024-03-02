@@ -4,9 +4,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    
     <title>Computação Gráfica</title>
+
+    <!-- Incluir o arquivo variaveisGlobais.js -->
+    <script src="scripts/variaveisGlobais.js" defer></script>
+
+    <!-- Incluir o arquivo desenharEixosXY.js -->
+    <script src="scripts/desenharEixosXY.js" defer></script>
+
+    <!-- Incluir o arquivo atualizarCoordenadas.js -->
+    <script src="scripts/atualizarCoordenadas.js" defer></script>
+    
+    <!-- Incluir o arquivo adicionarEventos.js -->
+    <script src="scripts/adicionarEventos.js" defer></script>
+
+    <!-- Incluir o arquivo obterPosicaoDoMouse.js -->
+    <script src="scripts/obterPosicaoDoMouse.js" defer></script>
    
 </head>
+
 <body>
 
     <header>
@@ -21,8 +38,8 @@
 
         <div class="main_conteudo-geral">
 
-            <div class="main_content-painelInfo">
-
+            <section class="main_content-painelInfo">
+                
                 <h2>Informações</h2>
 
                 <div class="informacoes" id="coordMundo">
@@ -40,22 +57,19 @@
                     <p></p>
                 </div>
 
-            </div>
+            </section>
 
-            <div class="main_content-painel">
+            <section class="main_content-painel">
 
                 <div class="painel2D">
                     <canvas id="canvas"></canvas>
-                </div>
-                
-            </div>
+                </div>                
+            
+            </section>
 
         </div>
 
-    </main>
-
-    <script src="scripts/script.js"></script>
-    
+    </main>    
 
 </body>
 </html>
