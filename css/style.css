@@ -1,0 +1,76 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden; /* Para remover a barra de rolagem vertical */
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    height: 60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 2px solid black;
+}
+
+header div {
+    padding: 0 10px; /* Adicionando padding horizontal de 10px e padding vertical de 0 */
+}
+
+.main {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 40px); /* Subtraindo a altura do header */
+}
+
+.main_content-painelInfo, .main_content-painel {
+    margin: 5px; /* Adicionando margem em todas as direções */
+}
+
+.main_conteudo-geral {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 5px; /* Espaço entre os elementos */
+    margin-bottom: 30px; /* Margem inferior */
+    margin-left: 5px; /* Espaço à esquerda */
+    margin-right: 5px; /* Espaço à direita */
+    height: 100%;
+}
+
+.main_content-painelInfo {
+    background-color: #ddd;
+    width: 18%;
+    padding: 20px;
+    border: 3px double black;
+    display: flex;
+    flex-direction: column;
+}
+
+.main_content-painelInfo h2{
+    text-align: center;
+}
+
+.informacoes{
+    border: 3px groove black;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.main_content-painel {
+    background-color: #ddd;
+    width: 78%;
+    padding: 20px;
+    border: 3px double black;
+}
+
+.painel2D {
+    margin: 5px; /* Margem de 5px em todas as direções */
+    background-color: white; /* Fundo branco */
+    height: calc(100% - 10px); /* Altura calculada para a margem de 5px em cima e embaixo */
+    border: 1px dotted black;
+}
