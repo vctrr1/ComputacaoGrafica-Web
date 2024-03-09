@@ -6,8 +6,8 @@ var canvas = painel2D.querySelector('canvas');
 var ctx = canvas.getContext('2d');
 
 // Obtendo as dimensões do div pai
-var largura = parseFloat(painel2D.offsetWidth).toFixed(4);
-var altura = parseFloat(painel2D.offsetHeight).toFixed(4);
+var largura = parseFloat(painel2D.offsetWidth).toFixed(5);
+var altura = parseFloat(painel2D.offsetHeight).toFixed(5);
 
 // Configurando as dimensões do canvas
 canvas.width = largura;
