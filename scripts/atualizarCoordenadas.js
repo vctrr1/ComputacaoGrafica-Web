@@ -5,11 +5,15 @@ function atualizarCoordenadas(event) {
     var centroX = canvas.width / 2;
     var centroY = canvas.height / 2;
 
-    var ndcx = (coordenadas.x - centroX) / centroX;    
-    var ndcy = -(coordenadas.y - centroY) / centroY;
+    var ndcx = 2 * (coordenadas.x - centroX) / centroX;    
+    var ndcy = (coordenadas.y - centroY) / centroY;
 
     var dcx = Math.round(ndcx * (canvas.width -1));
     var dcy = Math.round(ndcy * (canvas.height -1));
+    
+    /*
+    
+    Informações de converção para quando existir o plano cartesiano
     
     // Verificar se a coordenada X é menor que o centro do canvas
     if (coordenadas.x < centroX) {
@@ -24,6 +28,7 @@ function atualizarCoordenadas(event) {
     } else {
         coordenadas.y = - Math.abs(Math.round(coordenadas.y - centroY)); 
     }
+    */
 
     // Atualizar os parágrafos com as coordenadas corrigidas   
     document.getElementById("coordMundo").querySelector("p").innerText = "X: " + coordenadas.x + "\nY: " + coordenadas.y ;

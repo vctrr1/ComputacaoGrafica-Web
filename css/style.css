@@ -10,21 +10,30 @@ header {
     background-color: #333;
     color: #fff;
     text-align: center;
-    height: 60px;
+    height: 150px;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     border: 2px solid black;
 }
 
-header div {
+header div, header h2 {
     padding: 0 10px; /* Adicionando padding horizontal de 10px e padding vertical de 0 */
+}
+
+header h2{
+    padding-top: 30px;
+}
+
+header .grupo{
+    display: flex;
+    flex-direction: column;
 }
 
 .main {
     display: flex;
     flex-direction: column;
-    height: calc(100vh - 40px); /* Subtraindo a altura do header */
+    height: calc(100vh - 150px); /* Subtraindo a altura do header */
 }
 
 .main_content-painelInfo, .main_content-painel {
