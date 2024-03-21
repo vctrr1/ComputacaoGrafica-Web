@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //sobre os checkboxes das informações
     const opcao2DSelecionada = document.getElementById('2D');
+    opcao2DSelecionada.checked = false;
     const opcao3DSelecionada = document.getElementById('3D');
 
     //sobre os checkboxes do canvas
@@ -155,9 +156,68 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     // Função para desenhar a circunferencia
-    function circunferenciaPontoMedio(){
-
+    function desenharCircunferencia() {
+        var raio = parseInt(document.getElementById('raio').value);
+        var valor = 'black'; // Cor do pixel, você pode alterar conforme necessário
+        cpontomedio(raio, valor);
     }
+    
+    function cpontomedio(raio, valor) {
+        var x = 0;
+        var y = raio;
+        var d = (5/4) - raio; // Inicializa o valor de d
+    
+        ponto_circulo(x, y, valor); // Desenha o primeiro ponto no centro
+    
+        while (y > x) {
+            if (d < 0) {
+                d += 2.0 * x + 3.0; // Escolhe o ponto E
+            } else {
+                d += 2.0 * (x - y) + 5; // Escolhe o ponto SE
+                y--;
+            }
+            x++;
+            ponto_circulo(x, y, valor); // Desenha os pontos simétricos em todos os octantes
+        }
+    }
+    
+    function ponto_circulo(x, y, valor) {
+        desenharPixel(x, y, valor); // Desenha o pixel na posição (x, y)
+        desenharPixel(y, x, valor); // Desenha o pixel na posição (y, x)
+        desenharPixel(y, -x, valor); // Desenha o pixel na posição (y, -x)
+        desenharPixel(x, -y, valor); // Desenha o pixel na posição (x, -y)
+        desenharPixel(-x, -y, valor); // Desenha o pixel na posição (-x, -y)
+        desenharPixel(-y, -x, valor); // Desenha o pixel na posição (-y, -x)
+        desenharPixel(-y, x, valor); // Desenha o pixel na posição (-y, x)
+        desenharPixel(-x, y, valor); // Desenha o pixel na posição (-x, y)
+    }
+    
+    function desenharPixel(x, y, valor) {
+        // Calcula as coordenadas do pixel no canvas
+        var posX = x + canvas.width / 2;
+        var posY = -y + canvas.height / 2;
+        
+        // Desenha o pixel no canvas
+        ctx.fillStyle = valor;
+        ctx.fillRect(posX, posY, 1, 1);
+    }
+    
+    // Adicione um evento de clique para a checkbox de circunferência onde chama a função 'desenharCircunferencia':
+    opcaoCircunferenciaPontoMedioSelecionado.addEventListener('click', function(){
+        desativaOutroCheckboxDoPainelCanvas(opcaoCircunferenciaPontoMedioSelecionado);
+        desenharCircunferencia(); // Chamada para desenhar a circunferência quando a checkbox é clicada
+    });
+    
+    function desenharPixel(x, y, valor) {
+        // Calcula as coordenadas do pixel no canvas
+        var posX = x + canvas.width / 2;
+        var posY = -y + canvas.height / 2;
+        
+        // Desenha o pixel no canvas
+        ctx.fillStyle = valor;
+        ctx.fillRect(posX, posY, 1, 1);
+    }
+    
 
     // Função para ativar um pixel
     function ativaPixel(X, Y) {
@@ -313,4 +373,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    document.getElementById('limparCanvas').addEventListener('click', limparCanvas);
+
+    // Função para limpar o canvas
+    function limparCanvas() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+}
+
 });
+
+
