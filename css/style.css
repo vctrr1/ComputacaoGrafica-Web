@@ -37,24 +37,26 @@ header .grupo{
 }
 
 .main_content-painelInfo, .main_content-painel {
-    margin: 5px; /* Adicionando margem em todas as direções */
+    margin: 3px; /* Adicionando margem em todas as direções */
 }
 
 .main_conteudo-geral {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 5px; /* Espaço entre os elementos */
-    margin-bottom: 30px; /* Margem inferior */
+    margin-top: 3px; /* Espaço entre os elementos */
+    margin-bottom: 3px; /* Margem inferior */
     margin-left: 5px; /* Espaço à esquerda */
     margin-right: 5px; /* Espaço à direita */
     height: 100%;
 }
 
 .main_content-painelInfo {
+    display: flex;
+    flex-direction: column;
     background-color: #ddd;
     width: 18%;
-    padding: 20px;
+    padding: 5px;
     border: 3px double black;
     display: flex;
     flex-direction: column;
@@ -64,10 +66,48 @@ header .grupo{
     text-align: center;
 }
 
+.opcaoDeDesenho{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 3px groove black;
+    justify-content: space-around;
+    padding: 5px;
+    font-weight: bold;
+}
+
+.aplicaFuncoes{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border: 2px groove black;
+    justify-content: space-around;
+    padding: 5px;
+    font-weight: bold;
+}
+
 .informacoes{
     border: 3px groove black;
-    margin-bottom: 10px;
+    margin-bottom: 3px;
     text-align: center;
+}
+
+.saidaDeInformacoes{
+    height: 40%;
+}
+
+.saidaDeInformacoes h6{
+    margin-bottom: 3px;
+    margin-top: 2px;
+}
+
+.saidaDeInformacoes p{
+    margin-bottom: 1px;
+    margin-top: 2px;
 }
 
 .main_content-painel {
@@ -75,11 +115,12 @@ header .grupo{
     width: 78%;
     padding: 20px;
     border: 3px double black;
+    height: 98;
 }
 
 .painel2D {
-    margin: 5px; /* Margem de 5px em todas as direções */
+    margin: 3px; /* Margem de 5px em todas as direções */
     background-color: white; /* Fundo branco */
-    height: calc(100% - 10px); /* Altura calculada para a margem de 5px em cima e embaixo */
+    height: calc(100% - 60px); /* Altura calculada para a margem de 5px em cima e embaixo */
     border: 1px dotted black;
 }

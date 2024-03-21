@@ -6,22 +6,10 @@
     <link rel="stylesheet" href="css/style.css">
     
     <title>Computação Gráfica</title>
-
-    <!-- Incluir o arquivo variaveisGlobais.js -->
-    <script src="scripts/variaveisGlobais.js" defer></script>
-
-    <!-- Incluir o arquivo desenharEixosXY.js 
-    <script src="scripts/desenharEixosXY.js" defer></script> -->
-
-    <!-- Incluir o arquivo atualizarCoordenadas.js -->
-    <script src="scripts/atualizarCoordenadas.js" defer></script>
-    
-    <!-- Incluir o arquivo adicionarEventos.js -->
-    <script src="scripts/adicionarEventos.js" defer></script>
-
-    <!-- Incluir o arquivo obterPosicaoDoMouse.js -->
-    <script src="scripts/obterPosicaoDoMouse.js" defer></script>
    
+    <script src="scripts/script.js" ></script>
+   
+
 </head>
 
 <body>
@@ -45,26 +33,46 @@
 
             <section class="main_content-painelInfo">
                 
-                <h2>Informações</h2>
+                <div class="opcaoDeDesenho">
+                    
+                    <label><input type="checkbox" class="opcaoEscolhida" id="2D"> 2D </label><br>
+                    <label><input type="checkbox" class="opcaoEscolhida" id="3D"> 3D </label><br>
 
-                <div class="informacoes" id="coordMundo">
-                    <h3>Coord. Mundo - CW</h3>
-                    <p></p>
                 </div>
 
-                <div class="informacoes" id="coordNorm">
-                    <h3>Coord. Norm. - NDC</h3>
-                    <p></p>
-                </div>
+                <div class="saidaDeInformacoes">
 
-                <div class="informacoes" id="coordTela">
-                    <h3>Coord. Tela - DC</h3>
-                    <p></p>
-                </div>
+                    <h2>Informações</h2>
 
+                    <div class="informacoes" id="coordMundo">
+                        <h6>Coord. Mundo - CW</h6>
+                        <p></p>
+                    </div>
+
+                    <div class="informacoes" id="coordNorm">
+                        <h6>Coord. Norm. - NDC</h6>
+                        <p></p>
+                    </div>
+
+                    <div class="informacoes" id="coordTela">
+                        <h6>Coord. Tela - DC</h6>
+                        <p></p>
+                    </div>
+
+                </div>
+                
             </section>
 
             <section class="main_content-painel">
+
+                <div class="aplicaFuncoes">
+                    
+                    <div><input type="checkbox" class="funcaoParaSerExecultada" id="pixel"><label id="labelPixel"> .................</label></div>
+                    <div><input type="checkbox" class="funcaoParaSerExecultada" id="retaDDA"><label id="labelRetaDDA"> ................. </label></div>
+                    <div><input type="checkbox" class="funcaoParaSerExecultada" id="retaPontoMedio"><label id="labelRetaPontoMedio"> ................. </label></div>
+                    <div><input type="checkbox" class="funcaoParaSerExecultada" id="circunferenciaPontoMedio"><label id="labelCircunferenciaPMedio"> ................. </label></div>
+
+                </div>
 
                 <div class="painel2D">
                     <canvas id="canvas"></canvas>
