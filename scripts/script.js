@@ -91,8 +91,60 @@ document.addEventListener('DOMContentLoaded', () => {
                 ponto2 = null;
             }
         }
+        else if(opcaoCircunferenciaPontoMedioSelecionado.checked){
+            var raio = parseInt(prompt("Digite o raio: "));
+            
+            console.log(typeof raio);
+            console.log(raio);
+
+            if( raio > 0){
+
+                circunferenciaPontoMedio(raio);
+            }
+            else{
+                alert('Click novamente no canvas e digite um raio válido e inteiro...')
+            }
+
+            
+
+        }
     }
 
+    // Função para desenhar a circunferencia
+    function circunferenciaPontoMedio(raio){
+        var x = 0;
+        var y = raio;
+        var d = (1-raio);
+
+        ponto_Circulo(x, y);
+
+        while( y > x){
+            if(d < 0 ){
+                d += 2.0*x + 3.0;
+            }
+            else{
+                d += 2.0*(x-y)+5;
+                y--;
+            }
+            x++;
+            ponto_Circulo(x, y);
+        }
+    }
+
+    function ponto_Circulo(x, y){
+        var centroX = largura / 2;
+        var centroY = altura / 2;
+        ativaPixel(centroX + x, centroY - y); 
+        ativaPixel(centroX + y, centroY - x);
+        ativaPixel(centroX + y, centroY + x);
+        ativaPixel(centroX + x, centroY + y);
+        ativaPixel(centroX - x, centroY + y);
+        ativaPixel(centroX - y, centroY + x);
+        ativaPixel(centroX - y, centroY - x);
+        ativaPixel(centroX - x, centroY - y);
+    }
+
+    //Reta DDA
     function DDA( X1, Y1, X2, Y2){
         var tamanho, I, X, Y, Xinc, Yinc;
         tamanho = Math.abs(X2 - X1);
@@ -108,27 +160,18 @@ document.addEventListener('DOMContentLoaded', () => {
         Y = Y1;
 
         ativaPixel(Math.round(X), Math.round(Y));
+        console.log("X: " + Math.round(X) + "\tY: " + Math.round(Y));
 
         while (X <= X2){
             X = X + Xinc;
             Y = Y + Yinc;
             ativaPixel(Math.round(X), Math.round(Y));
+            console.log("X: " + Math.round(X) + "\tY: " + Math.round(Y));
         }
     }
 
+    //Reta Ponto Médio
     function retaPontoMedio(X1, Y1, X2, Y2){
-        
-        // Verifica se X2 é menor que X1, e se sim, troca os valores de X1 e X2
-        if (X2 < X1) {
-            // Troca os valores de X1 e X2
-            var temp = X1;
-            X1 = X2;
-            X2 = temp;
-            // Troca os valores de Y1 e Y2 correspondentes
-            temp = Y1;
-            Y1 = Y2;
-            Y2 = temp;
-        }
     
         var dx = Math.abs(X2 - X1);
         var dy = Math.abs(Y2 - Y1);
@@ -139,6 +182,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var y = Y1;
     
         ativaPixel(x, y);
+        console.log("X: " + x + "\tY: " + y);
     
         while(x < X2){
             if(d <= 0){
@@ -151,13 +195,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 y = y + 1;
             }
             ativaPixel(x , y);
+            console.log("X: " + x + "\tY: " + y);
         }
-    }
-    
-    // Função para desenhar a circunferencia
-    function circunferenciaPontoMedio(){
-
-    }
+    }    
 
     // Função para ativar um pixel
     function ativaPixel(X, Y) {
@@ -313,4 +353,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    function testeteste(){
+        ponto_circulo();
+    }
+    
 });
