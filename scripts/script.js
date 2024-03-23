@@ -352,9 +352,5 @@ document.addEventListener('DOMContentLoaded', () => {
             desenhaNoCanvasODesenho2DEscolhido(posicaoMouse.x, posicaoMouse.y);
         }
     });
-
-    function testeteste(){
-        ponto_circulo();
-    }
     
 });
