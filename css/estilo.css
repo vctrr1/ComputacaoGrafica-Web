@@ -1,0 +1,170 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    overflow: hidden; /* Para remover a barra de rolagem vertical */
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 2px solid black;
+}
+
+head div, h1, h2 {
+    padding: 0 10px; /* Adicionando padding horizontal de 10px e padding vertical de 0 */
+}
+
+.main{
+    height: 100%;
+    width: 100%;
+    background-color: #9a9a9a;
+}
+
+.main_conteudo-geral{
+    display: flex;
+    flex-direction: row;
+    margin-left: 5px; /* Espaço à esquerda */
+    margin-right: 5px; /* Espaço à direita */    
+}
+
+.main_conteudo_painelConfig{
+    display: flex;
+    flex-direction: column;
+    background-color: #ddd;
+    width: 18%;
+    height: calc(97vh - 80px);
+    padding: 5px;
+    border: 3px double black;    
+}
+
+.opcaoDeDesenho{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    margin-top: 10px;
+}
+
+.saidaDeCoordenadasTransformadas{
+    margin-top: 5px;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.informacoes{
+    border-top: 1px dashed #000;
+}
+
+.informacoes h6{
+    margin-bottom: 2px;
+    margin-top: 5px;
+}
+
+.informacoes p{
+    margin-top: 2px;
+    font-size: 12px;
+}
+
+.configPanel2D{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel2D select {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.main_conteudo-painelDesenho{
+    background-color: white; /* Fundo branco */
+    height: calc(98.3vh - 80px);
+    width: 100%;
+    border: 3px double black;
+    margin-left: 5px;
+}
+
+.botoesDeAtivarELimpar button{
+    margin-top: 5px;
+    width: 70px;
+    height: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.botoesDeAtivarELimpar button:hover{
+    background-color: #333;
+    color: white;
+}
+
+.configPanel2D_opcoes_pixel{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel2D_opcoes_pixel h6{
+    margin-top: 1px;
+}
+
+.configPanel2D_opcoes_retas{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel2D_opcoes_retas h6{
+    margin-top: 1px;
+}
+
+.configPanel2D_opcoes_retas_pontos{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.configPanel2D_opcoes_retas_pontos input[type="number"]{
+    width: 60px; /* Define a largura */
+    height: 15px; /* Define a altura */ 
+}
+
+.ponto1, .ponto2{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.configPanel2D_opcoes_circunferencias{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 5px;
+    padding-bottom: 10px;
+}
+
+.configPanel2D_opcoes_circunferencias h6{
+    margin-top: 1px;
+}
