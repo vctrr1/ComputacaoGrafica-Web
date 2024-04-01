@@ -17,8 +17,18 @@ header {
     border: 2px solid black;
 }
 
-head div, h1, h2 {
+head div, h1{
     padding: 0 10px; /* Adicionando padding horizontal de 10px e padding vertical de 0 */
+}
+
+.nomesMembros{
+    display: flex;
+    flex-direction: row;
+    font-size: 25px;
+    margin-bottom: 2px;
+    margin-top: 0;
+    padding-right: 15px;
+    align-items: center;
 }
 
 .main{
