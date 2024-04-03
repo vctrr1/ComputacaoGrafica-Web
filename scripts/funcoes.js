@@ -1,3 +1,10 @@
+class wcPt2D {
+    constructor(x, y) {
+        this.x = x;
+        this.y = y;
+    }
+}
+
 
 // Carregamento do DOM
 document.addEventListener('DOMContentLoaded', () => {
@@ -32,6 +39,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Seleciona o elemento do input Do Raio
     const inputRaio = document.getElementById('inputRaio');
+
+    //seleciona botoes das transformações
+    const btnDesenharQuadrado = document.getElementById('btnDesenharQuadrado');
+    const btnAplicarTranslacao = document.getElementById('btnAplicarTranslacao');
+    const btnAplicarRotacao = document.getElementById('btnAplicarRotacao');
+    const btnAplicarEscala = document.getElementById('btnAplicarEscala');
+    const btnLimpar = document.getElementById('btnLimpar');
+    let vertices = [];
 
     const centroX = largura/2;
     const centroY = altura/2;
@@ -217,6 +232,117 @@ document.addEventListener('DOMContentLoaded', () => {
         ativaPixel(-y, x);
         ativaPixel(-x, y);
     }
+
+    function applyTranslation() {
+        // Obtém os valores de translação em x e y
+        var tx = parseInt(document.getElementById("inputTx").value);
+        var ty = parseInt(document.getElementById("inputTy").value);
+
+        let newVert = vertices;
+
+        for (let k = 0; k < vertices.length; k++) {
+            newVert[k].x = newVert[k].x + tx;
+            newVert[k].y = newVert[k].y + ty;
+        }
+
+        console.log(newVert);
+        
+        desenharQuadrado(newVert);
+    }
+
+    function applyRotation() {
+        let newVert = [];
+
+        let angulo = parseInt(document.getElementById('inputAnguloRotacao').value);
+        let theta = (angulo * Math.PI) / 180;
+
+        let pivPt = calcularPontoPivotal(vertices);
+
+        for (let k = 0; k < vertices.length; k++) {
+            let newX = pivPt.x + (vertices[k].x - pivPt.x) * Math.cos(theta) - (vertices[k].y - pivPt.y) * Math.sin(theta);
+            let newY = pivPt.y + (vertices[k].x - pivPt.x) * Math.sin(theta) + (vertices[k].y - pivPt.y) * Math.cos(theta);
+            newVert.push(new wcPt2D(newX, newY));
+        }
+        
+        desenharQuadrado(newVert);
+    }
+
+    function applyScale() {
+        
+        let sx = parseFloat(document.getElementById('inputSx').value);
+        let sy = parseFloat(document.getElementById('inputSy').value);
+        
+        let newVert = [];
+
+        let fixedPt = calcularPontoPivotal(vertices);
+        
+        for (let k = 0; k < vertices.length; k++) {
+            let newX = vertices[k].x * sx + fixedPt.x * (1 - sx);
+            let newY = vertices[k].y * sy + fixedPt.y * (1 - sy);
+            newVert.push(new wcPt2D(newX, newY));
+        }
+
+        desenharQuadrado(newVert);
+
+    }
+
+    function calcularPontoPivotal(v) {
+        let somaX = 0;
+        let somaY = 0;
+    
+        // Somar todas as coordenadas x e y
+        for (let i = 0; i < v.length; i++) {
+            somaX += v[i].x;
+            somaY += v[i].y;
+        }
+    
+        // Calcular as médias das coordenadas x e y
+        let mediaX = somaX / v.length;
+        let mediaY = somaY / v.length;
+    
+        // Retornar o ponto pivotal como um objeto wcPt2D
+        return new wcPt2D(mediaX, mediaY);
+    }
+    
+    
+    // Função para desenhar o polígono
+    function desenharQuadrado(vertices) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.moveTo(vertices[0].x, vertices[0].y);
+        for (let i = 1; i < vertices.length; i++) {
+            ctx.lineTo(vertices[i].x, vertices[i].y);
+        }
+        ctx.closePath();
+        ctx.stroke();
+    }
+    
+    // Adiciona o ouvinte de evento para o botão "Aplicar Translação"
+    btnAplicarTranslacao.addEventListener('click', applyTranslation);
+
+    btnAplicarRotacao.addEventListener('click', applyRotation)
+
+    btnAplicarEscala.addEventListener('click', applyScale)
+    
+    // Adiciona o ouvinte de evento para o botão "Desenhar Quadrado"
+    btnDesenharQuadrado.addEventListener('click', () => {
+        // Define as coordenadas do quadrado como desejado
+        vertices = [
+            new wcPt2D(-50, -50),
+            new wcPt2D(50, -50),
+            new wcPt2D(50, 50),
+            new wcPt2D(-50, 50)
+        ];
+        
+        // Desenha o quadrado no canvas
+        desenharQuadrado(vertices);
+    });
+    
+    // Adiciona o ouvinte de evento para o botão "Limpar Quadrado"
+    btnLimpar.addEventListener('click', () => {
+        // Limpa o canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    });
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
     canvas.addEventListener("mousemove", atualizarCoordenadas);
