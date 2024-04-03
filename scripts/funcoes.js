@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const altura = parseFloat(painel2D.offsetHeight).toFixed(5);
     canvas.width = largura;
     canvas.height = altura;
-
+    
     //Botões
     const btnLimparPixel = document.getElementById('btnLimparCanvasPixel');
     const btnDesenharPixel = document.getElementById('btnDesenharPixel');
@@ -316,6 +316,96 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.closePath();
         ctx.stroke();
     }
+    function applyReflectionX() {
+        // Define a matriz de reflexão em x
+        var reflectionMatrixX = [
+            [1, 0, 0],
+            [0, -1, 0],
+            [0, 0, 1]
+        ];
+    
+        let newVert = [];
+    
+        // Aplica a reflexão em x a cada ponto do polígono
+        for (let i = 0; i < vertices.length; i++) {
+            let newCoord = multiplyMatrixVector(reflectionMatrixX, [vertices[i].x, vertices[i].y, 1]);
+            newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
+        }
+    
+        // Desenha o polígono após a reflexão em x
+        desenharQuadrado(newVert);
+    }
+    
+    function applyReflectionY() {
+        // Define a matriz de reflexão em y
+        var reflectionMatrixY = [
+            [-1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]
+        ];
+    
+        let newVert = [];
+    
+        // Aplica a reflexão em y a cada ponto do polígono
+        for (let i = 0; i < vertices.length; i++) {
+            let newCoord = multiplyMatrixVector(reflectionMatrixY, [vertices[i].x, vertices[i].y, 1]);
+            newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
+        }
+    
+        // Desenha o polígono após a reflexão em y
+        desenharQuadrado(newVert);
+    }
+    
+    // Adiciona o ouvinte de evento para o botão "Aplicar Reflexão em X"
+    document.getElementById('btnAplicarReflexaoX').addEventListener('click', () => {
+        applyReflectionX();
+    });
+    
+    // Adiciona o ouvinte de evento para o botão "Aplicar Reflexão em Y"
+    document.getElementById('btnAplicarReflexaoY').addEventListener('click', () => {
+        applyReflectionY();
+    });
+
+    function applyShearing() {
+        // Obtém os valores de cisalhamento em x e y
+        var a = parseFloat(document.getElementById("inputAx").value);
+        var b = parseFloat(document.getElementById("inputBy").value);
+        
+        // Define a matriz de cisalhamento
+        var shearMatrix = [
+            [1, a, 0],
+            [b, 1, 0],
+            [0, 0, 1]
+        ];
+    
+        let newVert = [];
+    
+        // Aplica o cisalhamento a cada ponto do polígono
+        for (let i = 0; i < vertices.length; i++) {
+            let newCoord = multiplyMatrixVector(shearMatrix, [vertices[i].x, vertices[i].y, 1]);
+            newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
+        }
+    
+        // Desenha o polígono após o cisalhamento
+        desenharQuadrado(newVert);
+    }
+    function multiplyMatrixVector(matrix, vector) {
+    let result = [];
+    for (let i = 0; i < matrix.length; i++) {
+        let sum = 0;
+        for (let j = 0; j < vector.length; j++) {
+            sum += matrix[i][j] * vector[j];
+        }
+        result.push(sum);
+    }
+
+    
+    return result;
+    }
+    document.getElementById('btnAplicarCisalhamento').addEventListener('click', () => {
+        applyShearing();
+    });
+    
     
     // Adiciona o ouvinte de evento para o botão "Aplicar Translação"
     btnAplicarTranslacao.addEventListener('click', applyTranslation);
