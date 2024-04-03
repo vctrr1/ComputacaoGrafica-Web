@@ -45,6 +45,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAplicarTranslacao = document.getElementById('btnAplicarTranslacao');
     const btnAplicarRotacao = document.getElementById('btnAplicarRotacao');
     const btnAplicarEscala = document.getElementById('btnAplicarEscala');
+    const btnAplicarReflexaoX = document.getElementById('btnAplicarReflexaoX');
+    const btnAplicarReflexaoY = document.getElementById('btnAplicarReflexaoY');
+    const btnAplicarCisalhamento = document.getElementById('btnAplicarCisalhamento');
     const btnLimpar = document.getElementById('btnLimpar');
     let vertices = [];
 
@@ -306,16 +309,7 @@ document.addEventListener('DOMContentLoaded', () => {
     
     
     // Função para desenhar o polígono
-    function desenharQuadrado(vertices) {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.beginPath();
-        ctx.moveTo(vertices[0].x, vertices[0].y);
-        for (let i = 1; i < vertices.length; i++) {
-            ctx.lineTo(vertices[i].x, vertices[i].y);
-        }
-        ctx.closePath();
-        ctx.stroke();
-    }
+    
     function applyReflectionX() {
         // Define a matriz de reflexão em x
         var reflectionMatrixX = [
@@ -323,15 +317,15 @@ document.addEventListener('DOMContentLoaded', () => {
             [0, -1, 0],
             [0, 0, 1]
         ];
-    
+        
         let newVert = [];
-    
+        
         // Aplica a reflexão em x a cada ponto do polígono
         for (let i = 0; i < vertices.length; i++) {
             let newCoord = multiplyMatrixVector(reflectionMatrixX, [vertices[i].x, vertices[i].y, 1]);
             newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
         }
-    
+        
         // Desenha o polígono após a reflexão em x
         desenharQuadrado(newVert);
     }
@@ -343,29 +337,20 @@ document.addEventListener('DOMContentLoaded', () => {
             [0, 1, 0],
             [0, 0, 1]
         ];
-    
+        
         let newVert = [];
-    
+        
         // Aplica a reflexão em y a cada ponto do polígono
         for (let i = 0; i < vertices.length; i++) {
             let newCoord = multiplyMatrixVector(reflectionMatrixY, [vertices[i].x, vertices[i].y, 1]);
             newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
         }
-    
+        
         // Desenha o polígono após a reflexão em y
         desenharQuadrado(newVert);
     }
     
-    // Adiciona o ouvinte de evento para o botão "Aplicar Reflexão em X"
-    document.getElementById('btnAplicarReflexaoX').addEventListener('click', () => {
-        applyReflectionX();
-    });
     
-    // Adiciona o ouvinte de evento para o botão "Aplicar Reflexão em Y"
-    document.getElementById('btnAplicarReflexaoY').addEventListener('click', () => {
-        applyReflectionY();
-    });
-
     function applyShearing() {
         // Obtém os valores de cisalhamento em x e y
         var a = parseFloat(document.getElementById("inputAx").value);
@@ -377,35 +362,52 @@ document.addEventListener('DOMContentLoaded', () => {
             [b, 1, 0],
             [0, 0, 1]
         ];
-    
+        
         let newVert = [];
-    
+        
         // Aplica o cisalhamento a cada ponto do polígono
         for (let i = 0; i < vertices.length; i++) {
             let newCoord = multiplyMatrixVector(shearMatrix, [vertices[i].x, vertices[i].y, 1]);
             newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
         }
-    
+        
         // Desenha o polígono após o cisalhamento
         desenharQuadrado(newVert);
     }
-    function multiplyMatrixVector(matrix, vector) {
-    let result = [];
-    for (let i = 0; i < matrix.length; i++) {
-        let sum = 0;
-        for (let j = 0; j < vector.length; j++) {
-            sum += matrix[i][j] * vector[j];
+    
+    function desenharQuadrado(vertices) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.moveTo(vertices[0].x, vertices[0].y);
+        for (let i = 1; i < vertices.length; i++) {
+            ctx.lineTo(vertices[i].x, vertices[i].y);
         }
-        result.push(sum);
+        ctx.closePath();
+        ctx.stroke();
+    }
+    
+    function multiplyMatrixVector(matrix, vector) {
+        let result = [];
+        for (let i = 0; i < matrix.length; i++) {
+            let sum = 0;
+            for (let j = 0; j < vector.length; j++) {
+                sum += matrix[i][j] * vector[j];
+            }
+            result.push(sum);
+        }
+        
+        
+        return result;
     }
 
+    // Adiciona o ouvinte de evento para o botão "Aplicar Reflexão em X"
+    btnAplicarReflexaoX.addEventListener('click',applyReflectionX);
     
-    return result;
-    }
-    document.getElementById('btnAplicarCisalhamento').addEventListener('click', () => {
-        applyShearing();
-    });
-    
+    // Adiciona o ouvinte de evento para o botão "Aplicar Reflexão em Y"
+    btnAplicarReflexaoY.addEventListener('click',applyReflectionY);
+
+    // Adiciona o ouvinte de evento para o botão "Cisalhamento"
+    btnAplicarCisalhamento.addEventListener('click',applyShearing);
     
     // Adiciona o ouvinte de evento para o botão "Aplicar Translação"
     btnAplicarTranslacao.addEventListener('click', applyTranslation);
