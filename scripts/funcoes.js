@@ -42,9 +42,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // inputs de entradas das transformações
     //const xTranslacao = document.getElementById('xTranslacao').value;
     //const yTranslacao = document.getElementById('yTranslacao').value;
-    const xEscala = document.getElementById('xEscala');
-    const yEscala = document.getElementById('yEscala');
-    const AnguloRotacao = document.getElementById('AnguloRotacao');
+    //const xEscala = document.getElementById('xEscala');
+    //const yEscala = document.getElementById('yEscala');
+    //const AnguloRotacao = document.getElementById('AnguloRotacao');
     const xCisalhamento = document.getElementById('xCisalhamento');
     const yCisalhamento = document.getElementById('yCisalhamento');
 
@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
     } 
 
-    
+    // Função de Translação
     function Translacao(matrizBase, tx, ty) {
         //console.log('Translação aplicada: tx =', tx, 'ty =', ty);
     
@@ -284,6 +284,41 @@ document.addEventListener('DOMContentLoaded', () => {
     
         return matrizResultado;
     }
+
+    // Função de Escala
+    function Escala(matrizBase, sx, sy) {
+        // Calcular a matriz de transformação de escala
+        const matrizEscala = [
+            [sx, 0, (1 - sx) * centroX],
+            [0, sy, (1 - sy) * centroY],
+            [0, 0, 1]
+        ];
+
+        // Aplicar a transformação de escala
+        const matrizResultado = multiplicarMatrizes(matrizEscala, matrizBase);
+
+        return matrizResultado;
+    }
+
+    // Função de Rotação
+    function Rotacao(matrizBase, angulo) {
+        // Calcular seno e cosseno do ângulo
+        const cos_theta = Math.cos(angulo);
+        const sin_theta = Math.sin(angulo);
+
+        // Matriz de transformação de rotação
+        const matrizRotacao = [
+            [cos_theta, -sin_theta, 0],
+            [sin_theta, cos_theta, 0],
+            [0, 0, 1]
+        ];
+
+        // Aplicar a transformação de rotação
+        const matrizResultado = multiplicarMatrizes(matrizRotacao, matrizBase);
+
+        return matrizResultado;
+    }
+
 
     // Função para multiplicar duas matrizes
     function multiplicarMatrizes(matrizA, matrizB) {
@@ -452,45 +487,90 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-
-
-
-
-// Função para adicionar ouvintes de eventos aos checkboxes
-function adicionarOuvintesCheckbox() {
-    checkboxes.forEach(function(checkbox) {
-        checkbox.addEventListener('change', function() {
-            //console.log('Checkbox', checkbox.id, 'clicado');
-            // Você pode adicionar mais lógica aqui se necessário
+    // Função para adicionar ouvintes de eventos aos checkboxes
+    function adicionarOuvintesCheckbox() {
+        checkboxes.forEach(function(checkbox) {
+            checkbox.addEventListener('change', function() {
+                //console.log('Checkbox', checkbox.id, 'clicado');
+                // Você pode adicionar mais lógica aqui se necessário
+            });
         });
-    });
-}
-
-// Função para aplicar a transformação desejada
-function aplicarTransformacao() {
-    // Verifica se o checkbox de translação está marcado
-    if (document.getElementById('checkTranslacao').checked) {
-        // Verifica se os valores de translação são válidos
-        const xTranslacao = parseInt(document.getElementById('xTranslacao').value);
-        const yTranslacao = parseInt(document.getElementById('yTranslacao').value);
-
-        if (!isNaN(xTranslacao) && !isNaN(yTranslacao)) {
-
-            matrizModificada = Translacao(matrizModificada, xTranslacao, -yTranslacao);    
-            
-            // Limpa o canvas
-            limpaTela();
-            
-            // Desenha os eixos
-            desenharEixos();
-            
-            // Desenha o quadrado com as novas coordenadas após a translação
-            desenharQuadrado(matrizModificada);
-        } else {
-            alert('Por favor, insira valores numéricos válidos para a translação.');
-        }
     }
-}
+
+    // Função para aplicar a transformação desejada
+    function aplicarTransformacao() {
+        // Verifica se o checkbox de translação está marcado
+        
+        if (document.getElementById('checkTranslacao').checked) {
+            
+            // Verifica se os valores de translação são válidos
+            const xTranslacao = parseFloat(document.getElementById('xTranslacao').value);
+            const yTranslacao = parseFloat(document.getElementById('yTranslacao').value);
+
+            if (!isNaN(xTranslacao) && !isNaN(yTranslacao)) {
+
+                matrizModificada = Translacao(matrizModificada, xTranslacao, -yTranslacao);    
+                
+                // Limpa o canvas
+                limpaTela();
+                
+                // Desenha os eixos
+                desenharEixos();
+                
+                // Desenha o quadrado com as novas coordenadas após a translação
+                desenharQuadrado(matrizModificada);
+            } else {
+                alert('Por favor, insira valores numéricos válidos para a translação.');
+            }
+        }
+
+        else if(document.getElementById('checkEscala').checked){
+
+            const xEscala = parseFloat(document.getElementById('xEscala').value);
+            const yEscala = parseFloat(document.getElementById('yEscala').value);
+
+            if(!isNaN(xEscala) && !isNaN(yEscala)){
+                matrizModificada = Escala(matrizModificada, xEscala, yEscala);
+                
+                // Limpa o canvas
+                limpaTela();
+                
+                // Desenha os eixos
+                desenharEixos();
+                
+                // Desenha o quadrado com as novas coordenadas após a translação
+                desenharQuadrado(matrizModificada);
+            }
+            else {
+                alert('Por favor, insira valores numéricos válidos para a Escala.');
+            }
+        }
+
+        /* FALTA CORRIGIR */
+
+        else if(document.getElementById('checkRotacao').checked){
+            
+            const AnguloRotacao = parseFloat(document.getElementById('AnguloRotacao').value);
+
+            if(!isNaN(AnguloRotacao)){
+                console.log("Valor do angulo : " + AnguloRotacao);
+                matrizModificada = Rotacao(matrizModificada, AnguloRotacao);
+                
+                // Limpa o canvas
+                limpaTela();
+                
+                // Desenha os eixos
+                desenharEixos();
+                
+                // Desenha o quadrado com as novas coordenadas após a translação
+                desenharQuadrado(matrizModificada);
+            }
+            else {
+                alert('Por favor, insira valores numéricos válidos para a Rotação.');
+            }
+        }
+
+    }
 
 // Adiciona ouvintes de eventos aos checkboxes
 adicionarOuvintesCheckbox();
