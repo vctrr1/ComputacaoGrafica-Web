@@ -39,12 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
 
-    // inputs de entradas das transformações
-    //const xTranslacao = document.getElementById('xTranslacao').value;
-    //const yTranslacao = document.getElementById('yTranslacao').value;
-    //const xEscala = document.getElementById('xEscala');
-    //const yEscala = document.getElementById('yEscala');
-    //const AnguloRotacao = document.getElementById('AnguloRotacao');
     const xCisalhamento = document.getElementById('xCisalhamento');
     const yCisalhamento = document.getElementById('yCisalhamento');
 
@@ -547,7 +541,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         /* FALTA CORRIGIR */
-
         else if(document.getElementById('checkRotacao').checked){
             
             const AnguloRotacao = parseFloat(document.getElementById('AnguloRotacao').value);
