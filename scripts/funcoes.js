@@ -473,8 +473,11 @@ function aplicarTransformacao() {
         const yTranslacao = parseFloat(document.getElementById('yTranslacao').value);
         
         if (!isNaN(xTranslacao) && !isNaN(yTranslacao)) {
-            // Aplica a translação à matriz de vértices
-            matrizModificada = Translacao(matrizModificada, xTranslacao, yTranslacao);
+
+            if( xTranslacao > 0 && yTranslacao> 0){
+                // Aplica a translação à matriz de vértices
+                matrizModificada = Translacao(matrizModificada, xTranslacao, -yTranslacao);
+            }
             
             // Limpa o canvas
             limpaTela();
