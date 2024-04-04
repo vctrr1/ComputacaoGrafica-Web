@@ -252,6 +252,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para desenhar os eixos X e Y para visualizar as transformações
     function desenharEixos() {
+
+        ctx.strokeStyle = 'black'; // 'black' representa a cor preta
         // Desenhar eixo X
         ctx.beginPath();
         ctx.moveTo(0, canvas.height / 2);
@@ -267,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     
     function Translacao(matrizBase, tx, ty) {
-        console.log('Translação aplicada: tx =', tx, 'ty =', ty);
+        //console.log('Translação aplicada: tx =', tx, 'ty =', ty);
     
         const matrizTranslacao = [
             [1, 0, tx],
@@ -277,8 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const matrizResultado = multiplicarMatrizes(matrizTranslacao, matrizBase);
     
-        console.log('Matriz resultante após translação:');
-        console.log(matrizResultado);
+        //console.log('Matriz resultante após translação:');
+        //console.log(matrizResultado);
     
         return matrizResultado;
     }
@@ -314,8 +316,8 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     function desenharQuadrado(vertices) {
-        console.log('Coordenadas dos vértices do quadrado:');
-        console.log(vertices);
+        //console.log('Coordenadas dos vértices do quadrado:');
+        //console.log(vertices);
     
         ctx.beginPath();
         ctx.moveTo(vertices[0][0], vertices[1][0]);
@@ -469,15 +471,12 @@ function aplicarTransformacao() {
     // Verifica se o checkbox de translação está marcado
     if (document.getElementById('checkTranslacao').checked) {
         // Verifica se os valores de translação são válidos
-        const xTranslacao = parseFloat(document.getElementById('xTranslacao').value);
-        const yTranslacao = parseFloat(document.getElementById('yTranslacao').value);
-        
+        const xTranslacao = parseInt(document.getElementById('xTranslacao').value);
+        const yTranslacao = parseInt(document.getElementById('yTranslacao').value);
+
         if (!isNaN(xTranslacao) && !isNaN(yTranslacao)) {
 
-            if( xTranslacao > 0 && yTranslacao> 0){
-                // Aplica a translação à matriz de vértices
-                matrizModificada = Translacao(matrizModificada, xTranslacao, -yTranslacao);
-            }
+            matrizModificada = Translacao(matrizModificada, xTranslacao, -yTranslacao);    
             
             // Limpa o canvas
             limpaTela();
