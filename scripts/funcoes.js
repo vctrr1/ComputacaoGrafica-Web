@@ -1,10 +1,3 @@
-class wcPt2D {
-    constructor(x, y) {
-        this.x = x;
-        this.y = y;
-    }
-}
-
 
 // Carregamento do DOM
 document.addEventListener('DOMContentLoaded', () => {
@@ -16,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const altura = parseFloat(painel2D.offsetHeight).toFixed(5);
     canvas.width = largura;
     canvas.height = altura;
-    
+
     //Botões
     const btnLimparPixel = document.getElementById('btnLimparCanvasPixel');
     const btnDesenharPixel = document.getElementById('btnDesenharPixel');
@@ -40,19 +33,32 @@ document.addEventListener('DOMContentLoaded', () => {
     //Seleciona o elemento do input Do Raio
     const inputRaio = document.getElementById('inputRaio');
 
-    //seleciona botoes das transformações
-    const btnDesenharQuadrado = document.getElementById('btnDesenharQuadrado');
-    const btnAplicarTranslacao = document.getElementById('btnAplicarTranslacao');
-    const btnAplicarRotacao = document.getElementById('btnAplicarRotacao');
-    const btnAplicarEscala = document.getElementById('btnAplicarEscala');
-    const btnAplicarReflexaoX = document.getElementById('btnAplicarReflexaoX');
-    const btnAplicarReflexaoY = document.getElementById('btnAplicarReflexaoY');
-    const btnAplicarCisalhamento = document.getElementById('btnAplicarCisalhamento');
-    const btnLimpar = document.getElementById('btnLimpar');
-    let vertices = [];
-
     const centroX = largura/2;
     const centroY = altura/2;
+
+    // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
+    const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
+
+    // inputs de entradas das transformações
+    //const xTranslacao = document.getElementById('xTranslacao').value;
+    //const yTranslacao = document.getElementById('yTranslacao').value;
+    const xEscala = document.getElementById('xEscala');
+    const yEscala = document.getElementById('yEscala');
+    const AnguloRotacao = document.getElementById('AnguloRotacao');
+    const xCisalhamento = document.getElementById('xCisalhamento');
+    const yCisalhamento = document.getElementById('yCisalhamento');
+
+    //Botões das transformações
+    const btnAplicaTransformacoes = document.getElementById('btnAplicaTransformacoes');
+    const btnLimpaTransformacoes = document.getElementById('btnLimpaTransformacoes');
+
+    const verticesIniciaisDoQuadrado = [
+        [centroX, centroX + 50, centroX + 50, centroX],
+        [centroY, centroY, centroY - 50, centroY - 50],
+        [1, 1, 1, 1]
+    ];
+
+    const inputOpcoes = document.getElementById("opcoes");
 
     /* **********************************************************
         Sobre as coordenadas e posição do mouse no canvas 
@@ -236,205 +242,93 @@ document.addEventListener('DOMContentLoaded', () => {
         ativaPixel(-x, y);
     }
 
-    function applyTranslation() {
-        // Obtém os valores de translação em x e y
-        var tx = parseInt(document.getElementById("inputTx").value);
-        var ty = parseInt(document.getElementById("inputTy").value);
-
-        let newVert = vertices;
-
-        for (let k = 0; k < vertices.length; k++) {
-            newVert[k].x = newVert[k].x + tx;
-            newVert[k].y = newVert[k].y + ty;
-        }
-
-        console.log(newVert);
-        
-        desenharQuadrado(newVert);
-    }
-
-    function applyRotation() {
-        let newVert = [];
-
-        let angulo = parseInt(document.getElementById('inputAnguloRotacao').value);
-        let theta = (angulo * Math.PI) / 180;
-
-        let pivPt = calcularPontoPivotal(vertices);
-
-        for (let k = 0; k < vertices.length; k++) {
-            let newX = pivPt.x + (vertices[k].x - pivPt.x) * Math.cos(theta) - (vertices[k].y - pivPt.y) * Math.sin(theta);
-            let newY = pivPt.y + (vertices[k].x - pivPt.x) * Math.sin(theta) + (vertices[k].y - pivPt.y) * Math.cos(theta);
-            newVert.push(new wcPt2D(newX, newY));
-        }
-        
-        desenharQuadrado(newVert);
-    }
-
-    function applyScale() {
-        
-        let sx = parseFloat(document.getElementById('inputSx').value);
-        let sy = parseFloat(document.getElementById('inputSy').value);
-        
-        let newVert = [];
-
-        let fixedPt = calcularPontoPivotal(vertices);
-        
-        for (let k = 0; k < vertices.length; k++) {
-            let newX = vertices[k].x * sx + fixedPt.x * (1 - sx);
-            let newY = vertices[k].y * sy + fixedPt.y * (1 - sy);
-            newVert.push(new wcPt2D(newX, newY));
-        }
-
-        desenharQuadrado(newVert);
-
-    }
-
-    function calcularPontoPivotal(v) {
-        let somaX = 0;
-        let somaY = 0;
-    
-        // Somar todas as coordenadas x e y
-        for (let i = 0; i < v.length; i++) {
-            somaX += v[i].x;
-            somaY += v[i].y;
-        }
-    
-        // Calcular as médias das coordenadas x e y
-        let mediaX = somaX / v.length;
-        let mediaY = somaY / v.length;
-    
-        // Retornar o ponto pivotal como um objeto wcPt2D
-        return new wcPt2D(mediaX, mediaY);
-    }
-    
-    
-    // Função para desenhar o polígono
-    
-    function applyReflectionX() {
-        // Define a matriz de reflexão em x
-        var reflectionMatrixX = [
-            [1, 0, 0],
-            [0, -1, 0],
-            [0, 0, 1]
-        ];
-        
-        let newVert = [];
-        
-        // Aplica a reflexão em x a cada ponto do polígono
-        for (let i = 0; i < vertices.length; i++) {
-            let newCoord = multiplyMatrixVector(reflectionMatrixX, [vertices[i].x, vertices[i].y, 1]);
-            newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
-        }
-        
-        // Desenha o polígono após a reflexão em x
-        desenharQuadrado(newVert);
-    }
-    
-    function applyReflectionY() {
-        // Define a matriz de reflexão em y
-        var reflectionMatrixY = [
-            [-1, 0, 0],
-            [0, 1, 0],
-            [0, 0, 1]
-        ];
-        
-        let newVert = [];
-        
-        // Aplica a reflexão em y a cada ponto do polígono
-        for (let i = 0; i < vertices.length; i++) {
-            let newCoord = multiplyMatrixVector(reflectionMatrixY, [vertices[i].x, vertices[i].y, 1]);
-            newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
-        }
-        
-        // Desenha o polígono após a reflexão em y
-        desenharQuadrado(newVert);
-    }
-    
-    
-    function applyShearing() {
-        // Obtém os valores de cisalhamento em x e y
-        var a = parseFloat(document.getElementById("inputAx").value);
-        var b = parseFloat(document.getElementById("inputBy").value);
-        
-        // Define a matriz de cisalhamento
-        var shearMatrix = [
-            [1, a, 0],
-            [b, 1, 0],
-            [0, 0, 1]
-        ];
-        
-        let newVert = [];
-        
-        // Aplica o cisalhamento a cada ponto do polígono
-        for (let i = 0; i < vertices.length; i++) {
-            let newCoord = multiplyMatrixVector(shearMatrix, [vertices[i].x, vertices[i].y, 1]);
-            newVert.push(new wcPt2D(newCoord[0], newCoord[1]));
-        }
-        
-        // Desenha o polígono após o cisalhamento
-        desenharQuadrado(newVert);
-    }
-    
-    function desenharQuadrado(vertices) {
+    //Função para limpar o canvas
+    function limpaTela(){
+        // Limpa o conteúdo do canvas
         ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    /* ***************************TRANSFORMAÇÕES*************************** */
+
+    // Função para desenhar os eixos X e Y para visualizar as transformações
+    function desenharEixos() {
+        // Desenhar eixo X
         ctx.beginPath();
-        ctx.moveTo(vertices[0].x, vertices[0].y);
-        for (let i = 1; i < vertices.length; i++) {
-            ctx.lineTo(vertices[i].x, vertices[i].y);
+        ctx.moveTo(0, canvas.height / 2);
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.stroke();
+
+        // Desenhar eixo Y
+        ctx.beginPath();
+        ctx.moveTo(canvas.width / 2, 0);
+        ctx.lineTo(canvas.width / 2, canvas.height);
+        ctx.stroke();
+    } 
+
+    
+    function Translacao(matrizBase, tx, ty) {
+        console.log('Translação aplicada: tx =', tx, 'ty =', ty);
+    
+        const matrizTranslacao = [
+            [1, 0, tx],
+            [0, 1, ty],
+            [0, 0, 1]
+        ];
+    
+        const matrizResultado = multiplicarMatrizes(matrizTranslacao, matrizBase);
+    
+        console.log('Matriz resultante após translação:');
+        console.log(matrizResultado);
+    
+        return matrizResultado;
+    }
+
+    // Função para multiplicar duas matrizes
+    function multiplicarMatrizes(matrizA, matrizB) {
+        const linhasA = matrizA.length;
+        const colunasA = matrizA[0].length;
+        const colunasB = matrizB[0].length;
+        const matrizResultado = [];
+
+        for (let i = 0; i < linhasA; i++) {
+            matrizResultado[i] = [];
+            for (let j = 0; j < colunasB; j++) {
+                let soma = 0;
+                for (let k = 0; k < colunasA; k++) {
+                    soma += matrizA[i][k] * matrizB[k][j];
+                }
+                matrizResultado[i][j] = soma;
+            }
         }
+
+        return matrizResultado;
+    }
+
+    //var matrizModificada = verticesIniciaisDoQuadrado;
+
+
+    let matrizModificada = [
+            [centroX, centroX + 50, centroX + 50, centroX],
+            [centroY, centroY, centroY - 50, centroY - 50],
+            [1, 1, 1, 1]
+    ];
+
+    function desenharQuadrado(vertices) {
+        console.log('Coordenadas dos vértices do quadrado:');
+        console.log(vertices);
+    
+        ctx.beginPath();
+        ctx.moveTo(vertices[0][0], vertices[1][0]);
+    
+        for (var i = 1; i < vertices[0].length; i++) {
+            ctx.lineTo(vertices[0][i], vertices[1][i]);
+        }
+    
         ctx.closePath();
+        ctx.strokeStyle = 'red';
         ctx.stroke();
     }
-    
-    function multiplyMatrixVector(matrix, vector) {
-        let result = [];
-        for (let i = 0; i < matrix.length; i++) {
-            let sum = 0;
-            for (let j = 0; j < vector.length; j++) {
-                sum += matrix[i][j] * vector[j];
-            }
-            result.push(sum);
-        }
-        
-        
-        return result;
-    }
 
-    // Adiciona o ouvinte de evento para o botão "Aplicar Reflexão em X"
-    btnAplicarReflexaoX.addEventListener('click',applyReflectionX);
-    
-    // Adiciona o ouvinte de evento para o botão "Aplicar Reflexão em Y"
-    btnAplicarReflexaoY.addEventListener('click',applyReflectionY);
-
-    // Adiciona o ouvinte de evento para o botão "Cisalhamento"
-    btnAplicarCisalhamento.addEventListener('click',applyShearing);
-    
-    // Adiciona o ouvinte de evento para o botão "Aplicar Translação"
-    btnAplicarTranslacao.addEventListener('click', applyTranslation);
-
-    btnAplicarRotacao.addEventListener('click', applyRotation)
-
-    btnAplicarEscala.addEventListener('click', applyScale)
-    
-    // Adiciona o ouvinte de evento para o botão "Desenhar Quadrado"
-    btnDesenharQuadrado.addEventListener('click', () => {
-        // Define as coordenadas do quadrado como desejado
-        vertices = [
-            new wcPt2D(-50, -50),
-            new wcPt2D(50, -50),
-            new wcPt2D(50, 50),
-            new wcPt2D(-50, 50)
-        ];
-        
-        // Desenha o quadrado no canvas
-        desenharQuadrado(vertices);
-    });
-    
-    // Adiciona o ouvinte de evento para o botão "Limpar Quadrado"
-    btnLimpar.addEventListener('click', () => {
-        // Limpa o canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-    });
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
     canvas.addEventListener("mousemove", atualizarCoordenadas);
@@ -442,18 +336,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ouvinte de evento para o botão "LimparPixel"
     btnLimparPixel.addEventListener('click', () => {
         // Limpa o conteúdo do canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        limpaTela();
     });
 
     // Ouvinte de evento para o botão "LimparRetas"
     btnLimparReta.addEventListener('click', () => {
         // Limpa o conteúdo do canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        limpaTela();
     });
 
     btnLimparCircunferencia.addEventListener('click', () =>{
         // Limpa o conteúdo do canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        limpaTela();
     })
 
     // Ouvinte de evento para o botão "DesenharPixel"
@@ -539,5 +433,67 @@ document.addEventListener('DOMContentLoaded', () => {
 
         }
     });
+
+    //Ouvinte para verificar se a opção selecionada foi a de transformações
+    inputOpcoes.addEventListener('change', () =>{
+
+        var opcaoSelecionada = inputOpcoes.value;
+
+        if(opcaoSelecionada === "opcao7"){
+
+            limpaTela();
+            desenharEixos();
+            //var verticesQuadrado = verticesIniciaisDoQuadrado(centroX, centroY);
+            desenharQuadrado(verticesIniciaisDoQuadrado);
+        }
+        
+
+    });
+
+
+
+
+
+// Função para adicionar ouvintes de eventos aos checkboxes
+function adicionarOuvintesCheckbox() {
+    checkboxes.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            //console.log('Checkbox', checkbox.id, 'clicado');
+            // Você pode adicionar mais lógica aqui se necessário
+        });
+    });
+}
+
+// Função para aplicar a transformação desejada
+function aplicarTransformacao() {
+    // Verifica se o checkbox de translação está marcado
+    if (document.getElementById('checkTranslacao').checked) {
+        // Verifica se os valores de translação são válidos
+        const xTranslacao = parseFloat(document.getElementById('xTranslacao').value);
+        const yTranslacao = parseFloat(document.getElementById('yTranslacao').value);
+        
+        if (!isNaN(xTranslacao) && !isNaN(yTranslacao)) {
+            // Aplica a translação à matriz de vértices
+            matrizModificada = Translacao(matrizModificada, xTranslacao, yTranslacao);
+            
+            // Limpa o canvas
+            limpaTela();
+            
+            // Desenha os eixos
+            desenharEixos();
+            
+            // Desenha o quadrado com as novas coordenadas após a translação
+            desenharQuadrado(matrizModificada);
+        } else {
+            alert('Por favor, insira valores numéricos válidos para a translação.');
+        }
+    }
+}
+
+// Adiciona ouvintes de eventos aos checkboxes
+adicionarOuvintesCheckbox();
+
+// Aplica a transformação desejada quando o botão é clicado
+btnAplicaTransformacoes.addEventListener('click', aplicarTransformacao);
 
 });
