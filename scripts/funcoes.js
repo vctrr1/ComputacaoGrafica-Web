@@ -295,21 +295,28 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Função de Rotação
-    function Rotacao(matrizBase, angulo) {
+    function Rotacao(matrizBase, anguloGraus) {
+        // Converte o ângulo de graus para radianos
+        const anguloRadianos = anguloGraus * Math.PI / 180;
+    
+        // Define o centro do polígono
+        const centroX = (matrizBase[0][0] + matrizBase[0][2]) / 2;
+        const centroY = (matrizBase[1][0] + matrizBase[1][2]) / 2;
+    
         // Calcular seno e cosseno do ângulo
-        const cos_theta = Math.cos(angulo);
-        const sin_theta = Math.sin(angulo);
-
+        const cos_theta = Math.cos(anguloRadianos);
+        const sin_theta = Math.sin(anguloRadianos);
+    
         // Matriz de transformação de rotação
         const matrizRotacao = [
-            [cos_theta, -sin_theta, 0],
-            [sin_theta, cos_theta, 0],
+            [cos_theta, sin_theta, centroX * (1 - cos_theta) - centroY * sin_theta],
+            [-sin_theta, cos_theta, centroY * (1 - cos_theta) + centroX * sin_theta],
             [0, 0, 1]
         ];
-
+    
         // Aplicar a transformação de rotação
         const matrizResultado = multiplicarMatrizes(matrizRotacao, matrizBase);
-
+    
         return matrizResultado;
     }
 
