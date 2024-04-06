@@ -1,6 +1,6 @@
-
 window.onload = function() {
     
+    //Manipulação de elementos para serem visíveis ou não, de acordo com opções selecionadas
     const checkbox2D = document.getElementById('2D');
     const checkbox3D = document.getElementById('3D');
     const div2D = document.querySelector('.configPanel2D');
@@ -22,8 +22,11 @@ window.onload = function() {
     const AnguloRotacao = document.getElementById('AnguloRotacao');
     const xCisalhamento = document.getElementById('xCisalhamento');
     const yCisalhamento = document.getElementById('yCisalhamento');
+    const xReflexao =  document.getElementById('xReflexao');
+    const yReflexao = document.getElementById('yReflexao');
 
 
+    //Função para desativar TODAS as entradas de valores
     function desativaEntradasDeValoresDasTransformacoes(){
         xTranslacao.disabled = true;
         yTranslacao.disabled = true;
@@ -32,10 +35,15 @@ window.onload = function() {
         AnguloRotacao.disabled = true;
         xCisalhamento.disabled = true;
         yCisalhamento.disabled = true;
+        xReflexao.disabled = true;
+        yReflexao.disabled = true;
+        xReflexao.checked = false;
+        yReflexao.checked = false;
 
         limpaCampoDasEntradas();
     }
 
+    //Função para limpar os campos de entradas
     function limpaCampoDasEntradas(){
         xTranslacao.value = "";
         yTranslacao.value = "";
@@ -46,8 +54,10 @@ window.onload = function() {
         yCisalhamento.value = "";
     }
 
+    //Chama a função que desativa as entradas assim que a página é carregada
     desativaEntradasDeValoresDasTransformacoes();
 
+    // Ativa/mostra as divs que correspondem a marcação do input do value
     checkbox2D.addEventListener('change', function() {
         if (this.checked) {
             checkbox3D.checked = false;
@@ -146,54 +156,76 @@ window.onload = function() {
                 break;
         }
     }
-
+ 
     // Adiciona um ouvinte de evento de mudança para cada checkbox
     checkboxes.forEach(function(checkbox) {
+        
         checkbox.addEventListener('change', function() {
 
             switch(this.id){
-
                 case "checkTranslacao":
                     desativaEntradasDeValoresDasTransformacoes();
                     xTranslacao.disabled = false;
                     yTranslacao.disabled = false;
-                break;
+                    break;
 
                 case "checkEscala":
                     desativaEntradasDeValoresDasTransformacoes();
                     xEscala.disabled = false;
                     yEscala.disabled = false;
-                break;
+                    break;
 
                 case "checkRotacao":
                     desativaEntradasDeValoresDasTransformacoes();
                     AnguloRotacao.disabled = false;
-                break;
+                    break;
 
                 case "checkCisalhamento":
                     desativaEntradasDeValoresDasTransformacoes();
                     xCisalhamento.disabled = false;
                     yCisalhamento.disabled = false;
-                break;
+                    break;
 
+                case "checkReflexao":
+                    desativaEntradasDeValoresDasTransformacoes();
+                    xReflexao.disabled = false;
+                    yReflexao.disabled = false;
+                break;
+                    
             }
 
+        
             // Se o checkbox foi marcado
             if (this.checked) {
+                //console.log(this.checked);
+
+                const parent = this.closest('.configPanel2D_opcoes_transformacoes');
+                const checkboxesInSub = parent.querySelectorAll('.transformacoes2D_sub input[type="checkbox"]');
+                let checkReflexaoMarcado = false;
+
+                // Verifica se algum checkbox diferente de "xReflexao" e "yReflexao" está marcado
+                checkboxesInSub.forEach(function(cb) {
+                    if (cb.id !== "xReflexao" && cb.id !== "yReflexao" && cb.checked) {
+                        checkReflexaoMarcado = true;
+                    }
+                });
+
                 // Desmarca todos os outros checkboxes dentro do mesmo bloco pai
-                const checkboxesInSameParent = this.closest('.configPanel2D_opcoes_transformacoes').querySelectorAll('input[type="checkbox"]');
-                checkboxesInSameParent.forEach(function(cb) {
-                    if (cb !== checkbox) {
+                checkboxesInSub.forEach(function(cb) {
+                    if (cb !== checkbox && cb.id !== "xReflexao" && cb.id !== "yReflexao") {
                         cb.checked = false;
                     }
                 });
+
+                // Mantem "checkReflexao" marcado se "xReflexao" ou "yReflexao" estiverem marcados
+                if ((checkbox.id === "xReflexao" || checkbox.id === "yReflexao") && checkReflexaoMarcado) {
+                    document.getElementById("checkReflexao").checked = true;
+                }
             }
+
+            
         });
     });
-
-
-
-
 
 
 };

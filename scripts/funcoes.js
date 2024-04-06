@@ -263,7 +263,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função de Translação
     function Translacao(matrizBase, tx, ty) {
-        //console.log('Translação aplicada: tx =', tx, 'ty =', ty);
     
         const matrizTranslacao = [
             [1, 0, tx],
@@ -273,22 +272,18 @@ document.addEventListener('DOMContentLoaded', () => {
     
         const matrizResultado = multiplicarMatrizes(matrizTranslacao, matrizBase);
     
-        //console.log('Matriz resultante após translação:');
-        //console.log(matrizResultado);
-    
         return matrizResultado;
     }
 
     // Função de Escala
     function Escala(matrizBase, sx, sy) {
-        // Calcular a matriz de transformação de escala
+
         const matrizEscala = [
             [sx, 0, (1 - sx) * centroX],
             [0, sy, (1 - sy) * centroY],
             [0, 0, 1]
         ];
 
-        // Aplicar a transformação de escala
         const matrizResultado = multiplicarMatrizes(matrizEscala, matrizBase);
 
         return matrizResultado;
@@ -296,23 +291,53 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função de Rotação
     function Rotacao(matrizBase, angulo) {
+        // Define o centro do polígono
+        const centroX = (matrizBase[0][0] + matrizBase[0][2]) / 2;
+        const centroY = (matrizBase[1][0] + matrizBase[1][2]) / 2;
+
         // Calcular seno e cosseno do ângulo
         const cos_theta = Math.cos(angulo);
         const sin_theta = Math.sin(angulo);
 
         // Matriz de transformação de rotação
         const matrizRotacao = [
-            [cos_theta, -sin_theta, 0],
-            [sin_theta, cos_theta, 0],
+            [cos_theta, sin_theta, centroX * (1 - cos_theta) - centroY * sin_theta],
+            [-sin_theta, cos_theta, centroY * (1 - cos_theta) + centroX * sin_theta],
             [0, 0, 1]
         ];
 
-        // Aplicar a transformação de rotação
         const matrizResultado = multiplicarMatrizes(matrizRotacao, matrizBase);
 
         return matrizResultado;
     }
 
+    // Função para aplicar a reflexão em X
+    function aplicarReflexaoX() {
+        // Matriz de reflexão em X
+        const matrizReflexaoX = [
+            [1, 0, 0],
+            [0, -1, 0],
+            [0, 0, 1]
+        ];
+
+        // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
+        matrizModificada = multiplicarMatrizes(matrizReflexaoX, matrizModificada);
+
+    }
+
+    // Função para aplicar a reflexão em Y
+    function aplicarReflexaoY() {
+        // Matriz de reflexão em Y
+        const matrizReflexaoY = [
+            [-1, 0, 0],
+            [0, 1, 0],
+            [0, 0, 1]
+        ];
+
+        // Aplicar a reflexão em Y multiplicando a matriz do polígono pela matriz de reflexão
+        matrizModificada = multiplicarMatrizes(matrizReflexaoY, matrizModificada);
+
+    }
 
     // Função para multiplicar duas matrizes
     function multiplicarMatrizes(matrizA, matrizB) {
@@ -337,7 +362,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //var matrizModificada = verticesIniciaisDoQuadrado;
 
-
     let matrizModificada = [
             [centroX, centroX + 50, centroX + 50, centroX],
             [centroY, centroY, centroY - 50, centroY - 50],
@@ -359,7 +383,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.strokeStyle = 'red';
         ctx.stroke();
     }
-
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
     canvas.addEventListener("mousemove", atualizarCoordenadas);
@@ -513,11 +536,16 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Desenha o quadrado com as novas coordenadas após a translação
                 desenharQuadrado(matrizModificada);
-            } else {
+            } 
+            else {
                 alert('Por favor, insira valores numéricos válidos para a translação.');
             }
         }
 
+        /* ***********************************FALTA CORRIGIR*********************************** 
+            Além de escalar o objeto 2D, ele também efetua uma translação quando o objeto estar fora da origem central do canvas,
+            o que precisa ser corrigido
+        */
         else if(document.getElementById('checkEscala').checked){
 
             const xEscala = parseFloat(document.getElementById('xEscala').value);
@@ -540,7 +568,9 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        /* FALTA CORRIGIR */
+        /* ***********************************FALTA CORRIGIR*********************************** 
+            Os valores das rotações não está coerente, acredito que seja o calculo da matriz
+        */
         else if(document.getElementById('checkRotacao').checked){
             
             const AnguloRotacao = parseFloat(document.getElementById('AnguloRotacao').value);
@@ -562,13 +592,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Por favor, insira valores numéricos válidos para a Rotação.');
             }
         }
+        
+        else if (document.getElementById('checkReflexao').checked) {
+            
+            if (document.getElementById('xReflexao').checked && !document.getElementById('yReflexao').checked) {
+                console.log("REFLEXAO EM X DEVE SER APLICADO");
+                //aplicarReflexaoX();
+            }
+        
+            else if (document.getElementById('yReflexao').checked && !document.getElementById('xReflexao').checked) {
+                console.log("REFLEXAO EM Y DEVE SER APLICADO");
+                //aplicarReflexaoY();
+            }
+            else if(document.getElementById('xReflexao').checked && document.getElementById('yReflexao').checked){
+                console.log("REFLEXAO EM X e EM Y DEVE SER APLICADO");
+            }
+            else{
+                alert("Marque alguma opção de REFLEXÃO!!");
+            }
+        }
 
     }
+           
 
-// Adiciona ouvintes de eventos aos checkboxes
-adicionarOuvintesCheckbox();
+    // Adiciona ouvintes de eventos aos checkboxes
+    adicionarOuvintesCheckbox();
 
-// Aplica a transformação desejada quando o botão é clicado
-btnAplicaTransformacoes.addEventListener('click', aplicarTransformacao);
+    // Aplica a transformação desejada quando o botão é clicado
+    btnAplicaTransformacoes.addEventListener('click', aplicarTransformacao);
 
 });
