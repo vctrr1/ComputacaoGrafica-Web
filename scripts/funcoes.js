@@ -289,31 +289,33 @@ document.addEventListener('DOMContentLoaded', () => {
         return matrizResultado;
     }
 
-    // Função de Rotação
     function Rotacao(matrizBase, angulo) {
+        // Converte o ângulo para radianos
+        angulo = angulo * (Math.PI / 180);
+    
         // Define o centro do polígono
         const centroX = (matrizBase[0][0] + matrizBase[0][2]) / 2;
         const centroY = (matrizBase[1][0] + matrizBase[1][2]) / 2;
-
+    
         // Calcular seno e cosseno do ângulo
         const cos_theta = Math.cos(angulo);
         const sin_theta = Math.sin(angulo);
-
-        // Matriz de transformação de rotação
+    
+        // Matriz de transformação de rotação anti-horário
         const matrizRotacao = [
             [cos_theta, sin_theta, centroX * (1 - cos_theta) - centroY * sin_theta],
             [-sin_theta, cos_theta, centroY * (1 - cos_theta) + centroX * sin_theta],
             [0, 0, 1]
         ];
-
+    
         const matrizResultado = multiplicarMatrizes(matrizRotacao, matrizBase);
-
+    
         return matrizResultado;
     }
 
     // Função para aplicar a reflexão em X
-    function aplicarReflexaoX() {
-        // Matriz de reflexão em X
+    function aplicarReflexaoX(matrizBase) {
+    // Matriz de reflexão em X
         const matrizReflexaoX = [
             [1, 0, 0],
             [0, -1, 0],
@@ -321,12 +323,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
-        matrizModificada = multiplicarMatrizes(matrizReflexaoX, matrizModificada);
+        const matrizResultado = multiplicarMatrizes(matrizReflexaoX, matrizBase);
+        return matrizResultado
 
     }
 
     // Função para aplicar a reflexão em Y
-    function aplicarReflexaoY() {
+    function aplicarReflexaoY(matrizBase) {
         // Matriz de reflexão em Y
         const matrizReflexaoY = [
             [-1, 0, 0],
@@ -334,9 +337,9 @@ document.addEventListener('DOMContentLoaded', () => {
             [0, 0, 1]
         ];
 
-        // Aplicar a reflexão em Y multiplicando a matriz do polígono pela matriz de reflexão
-        matrizModificada = multiplicarMatrizes(matrizReflexaoY, matrizModificada);
-
+        // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
+        const matrizResultado = multiplicarMatrizes(matrizReflexaoY, matrizBase);
+        return matrizResultado
     }
 
     // Função para multiplicar duas matrizes
@@ -594,18 +597,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         
         else if (document.getElementById('checkReflexao').checked) {
-            
             if (document.getElementById('xReflexao').checked && !document.getElementById('yReflexao').checked) {
                 console.log("REFLEXAO EM X DEVE SER APLICADO");
-                //aplicarReflexaoX();
+                matrizModificada = aplicarReflexaoX(matrizModificada);
+                
+                // Limpa o canvas
+                limpaTela();
+                
+                // Desenha os eixos
+                desenharEixos();
+                
+                // Desenha o polígono com as novas coordenadas após a reflexão
+                desenharQuadrado(matrizModificada);
             }
-        
             else if (document.getElementById('yReflexao').checked && !document.getElementById('xReflexao').checked) {
                 console.log("REFLEXAO EM Y DEVE SER APLICADO");
-                //aplicarReflexaoY();
+                matrizModificada = aplicarReflexaoY(matrizModificada);
+                
+                // Limpa o canvas
+                limpaTela();
+                
+                // Desenha os eixos
+                desenharEixos();
+                
+                // Desenha o polígono com as novas coordenadas após a reflexão
+                desenharQuadrado(matrizModificada);
             }
             else if(document.getElementById('xReflexao').checked && document.getElementById('yReflexao').checked){
                 console.log("REFLEXAO EM X e EM Y DEVE SER APLICADO");
+                aplicarReflexaoX(matrizModificada);
+                aplicarReflexaoY(matrizModificada);
+
+                // Limpa o canvas
+                limpaTela();
+                
+                // Desenha os eixos
+                desenharEixos();
+                
+                // Desenha o polígono com as novas coordenadas após a reflexão
+                desenharQuadrado(matrizModificada);
             }
             else{
                 alert("Marque alguma opção de REFLEXÃO!!");
