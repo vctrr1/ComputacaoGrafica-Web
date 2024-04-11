@@ -33,21 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
     //Seleciona o elemento do input Do Raio
     const inputRaio = document.getElementById('inputRaio');
 
+    //Botões das transformações
+    const btnAplicaTransformacoes = document.getElementById('btnAplicaTransformacoes');
+    const btnLimpaTransformacoes = document.getElementById('btnLimpaTransformacoes');
+
     //Definindo o a origem no centro do canvas
     ctx.translate(largura/2, altura/2);
 
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
 
-    //Botões das transformações
-    const btnAplicaTransformacoes = document.getElementById('btnAplicaTransformacoes');
-    const btnLimpaTransformacoes = document.getElementById('btnLimpaTransformacoes');
-
     const inputOpcoes = document.getElementById("opcoes");
-
-    /* **********************************************************
-        Sobre as coordenadas e posição do mouse no canvas 
-    */
 
     // Função para obter as coordenadas do mouse no canvas
     function obterPosicaoDoMouse(event) {
@@ -372,9 +368,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     let matrizBaseGeral = [
-            [0, 50, 50, 0],
-            [0, 0, -50, -50],
-            [1, 1, 1, 1]
+        [0, 50, 50, 0],
+        [0, 0, -50, -50],
+        [1, 1, 1, 1]
     ];
 
     function desenharQuadrado(vertices) {
@@ -411,6 +407,20 @@ document.addEventListener('DOMContentLoaded', () => {
     btnLimparCircunferencia.addEventListener('click', () =>{
         // Limpa o conteúdo do canvas
         limpaTela();
+    })
+
+    btnLimpaTransformacoes.addEventListener('click', () => {
+        const matrizOriginal = [
+            [0, 50, 50, 0],
+            [0, 0, -50, -50],
+            [1, 1, 1, 1]
+        ];
+
+        matrizBaseGeral = matrizOriginal;
+        
+        limpaTela();
+        desenharEixos();
+        desenharQuadrado(matrizBaseGeral);
     })
 
     // Ouvinte de evento para o botão "DesenharPixel"
