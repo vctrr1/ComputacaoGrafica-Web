@@ -82,7 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("coordNorm").querySelector("p").innerText = "X: " + ndcx.toFixed(10) + "\n Y: " + ndcy.toFixed(10);
         document.getElementById("coordTela").querySelector("p").innerText = "X: " + dcx + "\nY: " + dcy ;
     }
-
+    
     // Função para ativar um pixel
     function ativaPixel(X, Y) {
         var ctx = canvas.getContext('2d');    
@@ -313,35 +313,48 @@ document.addEventListener('DOMContentLoaded', () => {
         return matrizResultado;
     }
 
-    // Função para aplicar a reflexão em X
+    function cisalhamento(matrizBase, shx, shy) {
+        
+        const matrizCisalhamento = [
+            [1, shx, 0],
+            [shy, 1, 0],
+            [0, 0, 1]
+        ];
+        
+        const matrizResultado = multiplicarMatrizes(matrizCisalhamento, matrizBase);
+
+        return matrizResultado;
+    }
+
+    // Função para aplicar a reflexão em X em relação à parte inferior do plano cartesiano
     function aplicarReflexaoX(matrizBase) {
-    // Matriz de reflexão em X
+        // Matriz de reflexão em X com relação à parte inferior do plano cartesiano
         const matrizReflexaoX = [
             [1, 0, 0],
-            [0, -1, 0],
+            [0, -1, matrizBase[1][0] * 2], // Ajuste para manter o polígono na parte inferior
             [0, 0, 1]
         ];
 
         // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
         const matrizResultado = multiplicarMatrizes(matrizReflexaoX, matrizBase);
-        return matrizResultado
 
+        return matrizResultado;
     }
 
-    // Função para aplicar a reflexão em Y
+    // Função para aplicar a reflexão em Y em relação à parte esquerda do plano cartesiano
     function aplicarReflexaoY(matrizBase) {
-        // Matriz de reflexão em Y
+        // Matriz de reflexão em Y com relação à parte esquerda do plano cartesiano
         const matrizReflexaoY = [
-            [-1, 0, 0],
+            [-1, 0, matrizBase[0][0] * 2], // Ajuste para manter o polígono na parte esquerda
             [0, 1, 0],
             [0, 0, 1]
         ];
 
-        // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
+        // Aplicar a reflexão em Y multiplicando a matriz do polígono pela matriz de reflexão
         const matrizResultado = multiplicarMatrizes(matrizReflexaoY, matrizBase);
-        return matrizResultado
-    }
 
+        return matrizResultado;
+    }
     // Função para multiplicar duas matrizes
     function multiplicarMatrizes(matrizA, matrizB) {
         const linhasA = matrizA.length;
@@ -539,6 +552,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Desenha o quadrado com as novas coordenadas após a translação
                 desenharQuadrado(matrizModificada);
+                alert("Coordenadas atuais do polígono após translação: " + JSON.stringify(matrizModificada));
             } 
             else {
                 alert('Por favor, insira valores numéricos válidos para a translação.');
@@ -595,47 +609,69 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('Por favor, insira valores numéricos válidos para a Rotação.');
             }
         }
+
+        else if(document.getElementById('checkCisalhamento').checked) {
+            
+            const xCisalhamento = parseFloat(document.getElementById('xCisalhamento').value);
+            const yCisalhamento = parseFloat(document.getElementById('yCisalhamento').value);
+            
+            if(!isNaN(xCisalhamento) && !isNaN(yCisalhamento)){
+                console.log("Shx = " + xCisalhamento + " Shy = " + yCisalhamento);
+                matrizModificada = cisalhamento(matrizModificada, xCisalhamento, yCisalhamento);
+                limpaTela();
+                desenharEixos();
+                desenharQuadrado(matrizModificada);
+            }else{
+                console.alert("Digite um numero valido.");
+            }
+
+
+        }
         
         else if (document.getElementById('checkReflexao').checked) {
             if (document.getElementById('xReflexao').checked && !document.getElementById('yReflexao').checked) {
                 console.log("REFLEXAO EM X DEVE SER APLICADO");
                 matrizModificada = aplicarReflexaoX(matrizModificada);
-                
+                console.log("Coordenadas após reflexão em X:", matrizModificada);
                 // Limpa o canvas
                 limpaTela();
                 
                 // Desenha os eixos
                 desenharEixos();
                 
-                // Desenha o polígono com as novas coordenadas após a reflexão
+                // Desenha o quadrado com as novas coordenadas após a reflexão
+                
                 desenharQuadrado(matrizModificada);
+                alert("Coordenadas atuais do polígono após reflexão em X: " + JSON.stringify(matrizModificada));
             }
             else if (document.getElementById('yReflexao').checked && !document.getElementById('xReflexao').checked) {
                 console.log("REFLEXAO EM Y DEVE SER APLICADO");
                 matrizModificada = aplicarReflexaoY(matrizModificada);
-                
+                console.log("Coordenadas após reflexão em Y:", matrizModificada);
                 // Limpa o canvas
                 limpaTela();
                 
                 // Desenha os eixos
                 desenharEixos();
                 
-                // Desenha o polígono com as novas coordenadas após a reflexão
+                // Desenha o quadrado com as novas coordenadas após a reflexão
                 desenharQuadrado(matrizModificada);
+                alert("Coordenadas atuais do polígono após reflexão em Y: " + JSON.stringify(matrizModificada));
             }
             else if(document.getElementById('xReflexao').checked && document.getElementById('yReflexao').checked){
                 console.log("REFLEXAO EM X e EM Y DEVE SER APLICADO");
-                aplicarReflexaoX(matrizModificada);
-                aplicarReflexaoY(matrizModificada);
-
+                matrizModificada = aplicarReflexaoX(matrizModificada);
+                matrizModificada = aplicarReflexaoY(matrizModificada);
+                console.log("Coordenadas após reflexão em X e Y:", matrizModificada);
                 // Limpa o canvas
                 limpaTela();
                 
                 // Desenha os eixos
                 desenharEixos();
                 
-                // Desenha o polígono com as novas coordenadas após a reflexão
+                // Desenha o quadrado com as novas coordenadas após a reflexão
                 desenharQuadrado(matrizModificada);
+                alert("Coordenadas atuais do polígono após reflexão em X e Y: " + JSON.stringify(matrizModificada));
             }
             else{
                 alert("Marque alguma opção de REFLEXÃO!!");
@@ -643,7 +679,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     }
-           
+  
 
     // Adiciona ouvintes de eventos aos checkboxes
     adicionarOuvintesCheckbox();
