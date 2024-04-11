@@ -1,4 +1,5 @@
 // Carregamento do DOM
+//Teste
 document.addEventListener('DOMContentLoaded', () => {
 
     const painel2D = document.querySelector('.main_conteudo-painelDesenho');
