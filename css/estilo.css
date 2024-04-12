@@ -135,8 +135,8 @@ head div, h1{
 }
 
 .configPanel2D_opcoes_pixel h6{
-    margin-top: 1px;
-    margin-bottom: 2px;
+    margin-top: 5px;
+    margin-bottom: 12px;
 }
 
 .configPanel2D_opcoes_retas{
@@ -150,8 +150,8 @@ head div, h1{
 }
 
 .configPanel2D_opcoes_retas h6{
-    margin-top: 1px;
-    margin-bottom: 2px;
+    margin-top: 5px;
+    margin-bottom: 12px;
 }
 
 .configPanel2D_opcoes_retas_pontos{
@@ -184,8 +184,8 @@ head div, h1{
 }
 
 .configPanel2D_opcoes_circunferencias h6{
-    margin-top: 1px;
-    margin-bottom: 2px;
+    margin-top: 5px;
+    margin-bottom: 12px;
 }
 
 .configPanel2D_opcoes_transformacoes{
@@ -234,3 +234,17 @@ head div, h1{
 }
 
 
+.configPanel2D_cohen-sutherland{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-bottom: 10px;
+
+}
+
+.configPanel2D_cohen-sutherland h5{
+    margin-top: 12px;
+    margin-bottom: 10px;
+}

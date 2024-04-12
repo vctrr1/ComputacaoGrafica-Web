@@ -10,6 +10,7 @@ window.onload = function() {
     const divRetas = document.querySelector('.configPanel2D_opcoes_retas');
     const divCircunferencias = document.querySelector('.configPanel2D_opcoes_circunferencias');
     const divTransformacoes = document.querySelector('.configPanel2D_opcoes_transformacoes');
+    const divCohenSutherland = document.querySelector('.configPanel2D_cohen-sutherland');
     
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
@@ -81,6 +82,9 @@ window.onload = function() {
                 case 'opcao7':
                     divTransformacoes.style.display = 'block';
                     break;
+                case 'opcao8':
+                    divCohenSutherland.style.display = 'block';
+                    break;
                 default:
                     break;
             }
@@ -91,6 +95,7 @@ window.onload = function() {
             divRetas.style.display = 'none';
             divCircunferencias.style.display = 'none';
             divTransformacoes.style.display = 'none';
+            divCohenSutherland.style.display = 'none';
         }
     });
 
@@ -111,6 +116,7 @@ window.onload = function() {
         divRetas.style.display = 'none';
         divCircunferencias.style.display = 'none';
         divTransformacoes.style.display = 'none';
+        divCohenSutherland.style.display = 'none';
 
         // Exibe a div correspondente à opção selecionada no select
         switch (selectOpcoes.value) {
@@ -128,6 +134,9 @@ window.onload = function() {
                 break;
             case 'opcao7':
                 divTransformacoes.style.display = 'block';
+                break;
+            case 'opcao8':
+                divCohenSutherland.style.display = 'block';
                 break;
             default:
                 break;
@@ -151,6 +160,9 @@ window.onload = function() {
                 break;
             case 'opcao7':
                 divTransformacoes.style.display = 'block';
+                break;
+            case 'opcao8':
+                divCohenSutherland.style.display = 'block';
                 break;
             default:
                 break;
