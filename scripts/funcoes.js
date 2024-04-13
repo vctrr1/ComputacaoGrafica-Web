@@ -1,7 +1,7 @@
 // Carregamento do DOM
 //Teste
 document.addEventListener('DOMContentLoaded', () => {
-
+    
     const painel2D = document.querySelector('.main_conteudo-painelDesenho');
     const canvas = painel2D.querySelector('canvas');
     const ctx = canvas.getContext('2d');
@@ -9,6 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const altura = parseFloat(painel2D.offsetHeight).toFixed(5);
     canvas.width = largura;
     canvas.height = altura;
+    //Definindo o a origem no centro do canvas
+    ctx.translate(largura/2, altura/2);
 
     //Botões
     const btnLimparPixel = document.getElementById('btnLimparCanvasPixel');
@@ -19,6 +21,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnLimparCircunferencia = document.getElementById('btnLimparCircunferencia');
     const btnDesenharCircunferencia = document.getElementById('btnDesenharCircunferencia');
+    
+    const btnAplicaTransformacoes = document.getElementById('btnAplicaTransformacoes');
+    const btnLimpaTransformacoes = document.getElementById('btnLimpaTransformacoes');
+
+    const btnDesenharRetaCohen = document.getElementById('btnDesenharRetaCohen');
+    const btnLimparRetaCohen = document.getElementById('btnLimparRetaCohen');
+    const btnAplicarCohen = document.getElementById('btnAplicarCohen');
 
     // Seleciona os elementos de input do PIXEL
     const inputXPixel = document.getElementById('inputXPixel');
@@ -33,16 +42,14 @@ document.addEventListener('DOMContentLoaded', () => {
     //Seleciona o elemento do input Do Raio
     const inputRaio = document.getElementById('inputRaio');
 
-    //Botões das transformações
-    const btnAplicaTransformacoes = document.getElementById('btnAplicaTransformacoes');
-    const btnLimpaTransformacoes = document.getElementById('btnLimpaTransformacoes');
-
-    //Definindo o a origem no centro do canvas
-    ctx.translate(largura/2, altura/2);
+    //Seleciona elementos de input retaCohen
+    let inputCohenX1 = document.getElementById('inputCohenX1');
+    let inputCohenX2 = document.getElementById('inputCohenX2');
+    let inputCohenY1 = document.getElementById('inputCohenY1');
+    let inputCohenY2 = document.getElementById('inputCohenY2');
 
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
-
     const inputOpcoes = document.getElementById("opcoes");
 
     // Função para obter as coordenadas do mouse no canvas
@@ -53,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return { x: x, y: y };
     }
 
-    /* Função para atualizar as coordenadas*/
+    // Função para atualizar as coordenadas
     function atualizarCoordenadas(event) {
         var coordenadas = obterPosicaoDoMouse(event);
         var Xmax = canvas.width;
@@ -78,6 +85,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.fillStyle = "red";
         ctx.fillRect( X, -Y, 1, 1); // Ativando 1 pixel de tamanho (1x1)
     }
+
+    //Função para limpar o canvas
+    function limpaTela(){
+        // Limpa o conteúdo do canvas
+        ctx.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+    }
+    
+
+    /* *********************************RETAS********************************* */
 
     //Função DDA para qualquer oitante
     function DDA(X1, Y1, X2, Y2) {
@@ -133,6 +149,8 @@ document.addEventListener('DOMContentLoaded', () => {
             console.log("X: " + x + "\tY: " + y);
         }
     }
+
+    /* *****************************CIRCUNFERÊNCIA***************************** */
 
     // Função para desenhar uma circunferencia com o método Polinomial
     function circunferenciaPolinomial(raio) {
@@ -223,18 +241,18 @@ document.addEventListener('DOMContentLoaded', () => {
         ativaPixel(-x, y);
     }
 
-    //Função para limpar o canvas
-    function limpaTela(){
-        // Limpa o conteúdo do canvas
-        ctx.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
-    }
+    /* ******************************TRANSFORMAÇÕES***************************** */
 
-    /* ***************************TRANSFORMAÇÕES*************************** */
+    let matrizBaseGeral = [
+        [0, 50, 50, 0],
+        [0, 0, -50, -50],
+        [1, 1, 1, 1]
+    ];
 
     // Função para desenhar os eixos X e Y para visualizar as transformações
     function desenharEixos() {
 
-        ctx.strokeStyle = 'black'; // 'black' representa a cor preta
+        ctx.strokeStyle = 'gray'; // 'black' representa a cor preta
         // Desenhar eixo X
         ctx.beginPath();
         ctx.moveTo(-canvas.width / 2, 0);
@@ -247,6 +265,25 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.lineTo(0, canvas.height / 2);
         ctx.stroke();
     } 
+
+    function desenharEixosCohenSutherland(){
+        const espacoExtraVertical = altura / 12;
+        const espacoExtraHorizontal = largura / 12; 
+
+        ctx.strokeStyle = 'gray';
+        // Desenhar as linhas verticais
+        ctx.beginPath();
+        ctx.moveTo(-largura / 6 - espacoExtraHorizontal, -altura / 2);
+        ctx.lineTo(-largura / 6 - espacoExtraHorizontal, altura / 2);
+        ctx.moveTo(largura / 6 + espacoExtraHorizontal, -altura / 2);
+        ctx.lineTo(largura / 6 + espacoExtraHorizontal, altura / 2);
+        // Desenhar as linhas horizontais
+        ctx.moveTo(-largura / 2, -altura / 6 - espacoExtraVertical);
+        ctx.lineTo(largura / 2, -altura / 6 - espacoExtraVertical);
+        ctx.moveTo(-largura / 2, altura / 6 + espacoExtraVertical);
+        ctx.lineTo(largura / 2, altura / 6 + espacoExtraVertical);
+        ctx.stroke();
+    }
 
     // Função de Translação
     function Translacao(matrizBase, tx, ty) {    
@@ -367,16 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return matrizResultado;
     }
 
-    let matrizBaseGeral = [
-        [0, 50, 50, 0],
-        [0, 0, -50, -50],
-        [1, 1, 1, 1]
-    ];
-
     function desenharQuadrado(vertices) {
-        //console.log('Coordenadas dos vértices do quadrado:');
-        //console.log(vertices);
-    
         ctx.beginPath();
         ctx.moveTo(vertices[0][0], vertices[1][0]);
     
@@ -388,6 +416,94 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.strokeStyle = 'red';
         ctx.stroke();
     }
+
+    /* *****************************COHEN-SUTHERLAND**************************** */
+
+    const matrizAreaDeRecorte = [
+        [-250, 250, 250, -250],
+        [-200, -200, 200, 200],
+        [1, 1, 1, 1]
+    ];
+
+    function desenhaAreaDeRecorteCohen(){
+        desenharQuadrado(matrizAreaDeRecorte);
+    }
+
+    // Função que implementa o algoritmo de Cohen-Sutherland para recortar uma linha
+    function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax) {
+        let cod1 = calculaCodigo(x1, y1, xmin, ymin, xmax, ymax);
+        let cod2 = calculaCodigo(x2, y2, xmin, ymin, xmax, ymax);
+        let accept = false;
+
+        while (true) {
+            if ((cod1 | cod2) === 0) { // Ambos os pontos estão dentro da janela
+                accept = true;
+                break;
+            } else if ((cod1 & cod2) !== 0) { // Ambos os pontos estão fora de uma mesma região, portanto a linha está completamente fora da janela
+                break;
+            } else { // Precisamos recalcular os códigos para os pontos fora da janela e, em seguida, ajustar suas coordenadas
+                let x, y, codOut;
+                if (cod1 !== 0) {
+                    codOut = cod1;
+                } else {
+                    codOut = cod2;
+                }
+
+                if ((codOut & 8) !== 0) { // Acima da janela
+                    x = x1 + (x2 - x1) * (ymax - y1) / (y2 - y1);
+                    y = ymax;
+                } else if ((codOut & 4) !== 0) { // Abaixo da janela
+                    x = x1 + (x2 - x1) * (ymin - y1) / (y2 - y1);
+                    y = ymin;
+                } else if ((codOut & 2) !== 0) { // À direita da janela
+                    y = y1 + (y2 - y1) * (xmax - x1) / (x2 - x1);
+                    x = xmax;
+                } else if ((codOut & 1) !== 0) { // À esquerda da janela
+                    y = y1 + (y2 - y1) * (xmin - x1) / (x2 - x1);
+                    x = xmin;
+                }
+
+                if (codOut === cod1) {
+                    x1 = x;
+                    y1 = y;
+                    cod1 = calculaCodigo(x1, y1, xmin, ymin, xmax, ymax);
+                } else {
+                    x2 = x;
+                    y2 = y;
+                    cod2 = calculaCodigo(x2, y2, xmin, ymin, xmax, ymax);
+                }
+            }
+        }
+
+        if (accept) {
+            limpaTela();
+            desenharEixosCohenSutherland();
+            desenhaAreaDeRecorteCohen();
+            DDA(x1, y1, x2, y2);
+        }
+    }
+
+    // Função para calcular o código de uma posição em relação à janela de recorte
+    function calculaCodigo(x, y, xmin, ymin, xmax, ymax) {
+        let code = 0;
+
+        if (x < xmin) { // à esquerda da janela
+            code |= 1;
+        } else if (x > xmax) { // à direita da janela
+            code |= 2;
+        }
+
+        if (y < ymin) { // abaixo da janela
+            code |= 4;
+        } else if (y > ymax) { // acima da janela
+            code |= 8;
+        }
+
+        return code;
+    }
+
+
+    /* ******************************BOTOES***************************** */
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
     canvas.addEventListener("mousemove", atualizarCoordenadas);
@@ -410,17 +526,23 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 
     btnLimpaTransformacoes.addEventListener('click', () => {
-        const matrizOriginal = [
+        const matrizObjetoOrigem = [
             [0, 50, 50, 0],
             [0, 0, -50, -50],
             [1, 1, 1, 1]
         ];
 
-        matrizBaseGeral = matrizOriginal;
-        
+        matrizBaseGeral = matrizObjetoOrigem;
+
         limpaTela();
         desenharEixos();
         desenharQuadrado(matrizBaseGeral);
+    })
+
+    btnLimparRetaCohen.addEventListener('click', () => {
+        limpaTela();
+        desenharEixosCohenSutherland();
+        desenhaAreaDeRecorteCohen();
     })
 
     // Ouvinte de evento para o botão "DesenharPixel"
@@ -507,8 +629,45 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    //Ouvinte para verificar se a opção selecionada foi a de transformações
-    inputOpcoes.addEventListener('change', () =>{
+    // Aplica a transformação desejada quando o botão é clicado
+    btnAplicaTransformacoes.addEventListener('click', aplicarTransformacao);
+
+    btnDesenharRetaCohen.addEventListener('click', () => {
+
+        let X1 = parseInt(inputCohenX1.value);
+        let X2 = parseInt(inputCohenX2.value);
+        let Y1 = parseInt(inputCohenY1.value);
+        let Y2 = parseInt(inputCohenY2.value);
+
+        if(isNaN(X1) || isNaN(X2) || isNaN(Y1) || isNaN(Y2)){
+            alert("Digite os valores validos para os pontos.");
+        }else {
+            DDA(X1, Y1, X2, Y2);
+        }
+
+    });
+
+    btnAplicarCohen.addEventListener('click', () => {
+
+        let X1 = parseInt(inputCohenX1.value);
+        let X2 = parseInt(inputCohenX2.value);
+        let Y1 = parseInt(inputCohenY1.value);
+        let Y2 = parseInt(inputCohenY2.value);
+
+        const xmin = matrizAreaDeRecorte[0][0];
+        const ymin = matrizAreaDeRecorte[1][0];
+        const xmax = matrizAreaDeRecorte[0][1];
+        const ymax = matrizAreaDeRecorte[1][2];
+
+        if(isNaN(X1) || isNaN(X2) || isNaN(Y1) || isNaN(Y2)){
+            alert("Digite os valores validos para os pontos.");
+        }else {
+            cohenSutherland(X1, Y1, X2, Y2, xmin, ymin, xmax, ymax);
+        }
+    });
+
+    //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
+    inputOpcoes.addEventListener('change', () => {
         var opcaoSelecionada = inputOpcoes.value;
 
         if(opcaoSelecionada === "opcao7"){
@@ -517,16 +676,18 @@ document.addEventListener('DOMContentLoaded', () => {
             desenharEixos();
             //var verticesQuadrado = verticesIniciaisDoQuadrado(centroX, centroY);
             desenharQuadrado(matrizBaseGeral);
-        }        
-
+        }else if(opcaoSelecionada === "opcao8"){
+            limpaTela();
+            desenharEixosCohenSutherland();
+            desenhaAreaDeRecorteCohen();
+        }
+        
     });
-
+    
     // Função para adicionar ouvintes de eventos aos checkboxes
     function adicionarOuvintesCheckbox() {
         checkboxes.forEach(function(checkbox) {
             checkbox.addEventListener('change', function() {
-                //console.log('Checkbox', checkbox.id, 'clicado');
-                // Você pode adicionar mais lógica aqui se necessário
             });
         });
     }
@@ -678,8 +839,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Adiciona ouvintes de eventos aos checkboxes
     adicionarOuvintesCheckbox();
-
-    // Aplica a transformação desejada quando o botão é clicado
-    btnAplicaTransformacoes.addEventListener('click', aplicarTransformacao);
 
 });
