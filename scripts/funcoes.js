@@ -425,10 +425,6 @@ document.addEventListener('DOMContentLoaded', () => {
         [1, 1, 1, 1]
     ];
 
-    function desenhaAreaDeRecorteCohen(){
-        desenharQuadrado(matrizAreaDeRecorte);
-    }
-
     // Função que implementa o algoritmo de Cohen-Sutherland para recortar uma linha
     function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax) {
         let cod1 = calculaCodigo(x1, y1, xmin, ymin, xmax, ymax);
@@ -478,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (accept) {
             limpaTela();
             desenharEixosCohenSutherland();
-            desenhaAreaDeRecorteCohen();
+            desenharQuadrado(matrizAreaDeRecorte);
             DDA(x1, y1, x2, y2);
         }
     }
@@ -542,7 +538,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnLimparRetaCohen.addEventListener('click', () => {
         limpaTela();
         desenharEixosCohenSutherland();
-        desenhaAreaDeRecorteCohen();
+        desenharQuadrado(matrizAreaDeRecorte);
     })
 
     // Ouvinte de evento para o botão "DesenharPixel"
@@ -679,7 +675,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }else if(opcaoSelecionada === "opcao8"){
             limpaTela();
             desenharEixosCohenSutherland();
-            desenhaAreaDeRecorteCohen();
+            desenharQuadrado(matrizAreaDeRecorte);
         }
         
     });
