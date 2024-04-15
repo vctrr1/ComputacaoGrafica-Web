@@ -1,3 +1,6 @@
+
+
+/* ***************************************** BODY ******************************************/
 body {
     margin: 0;
     padding: 0;
@@ -6,6 +9,7 @@ body {
     overflow: hidden; /* Para remover a barra de rolagem vertical */
 }
 
+/* ***************************************** HEADER ******************************************/
 header {
     background-color: #333;
     color: #fff;
@@ -17,10 +21,12 @@ header {
     border: 2px solid black;
 }
 
-head div, h1{
+/*Título da página*/
+header div, h1{
     padding: 0 10px; /* Adicionando padding horizontal de 10px e padding vertical de 0 */
 }
 
+/*Informações do grupo*/
 .nomesMembros{
     display: flex;
     flex-direction: row;
@@ -31,12 +37,14 @@ head div, h1{
     align-items: center;
 }
 
+/* ***************************************** MAIN ***************************************** */
 .main{
     height: 100%;
     width: 100%;
     background-color: #9a9a9a;
 }
 
+/* ***************************************** DIV main_conteudo-geral ***************************************** */
 .main_conteudo-geral{
     display: flex;
     flex-direction: row;
@@ -44,6 +52,7 @@ head div, h1{
     margin-right: 5px; /* Espaço à direita */    
 }
 
+/* ***************************************** SECTION main_conteudo_painelConfig ***************************************** */
 .main_conteudo_painelConfig{
     display: flex;
     flex-direction: column;
@@ -54,6 +63,7 @@ head div, h1{
     border: 3px double black;    
 }
 
+/* ************ DIV opcaoDeDesenho ************ */
 .opcaoDeDesenho{
     display: flex;
     flex-direction: row;
@@ -62,6 +72,7 @@ head div, h1{
     margin-top: 10px;
 }
 
+/* ************ DIV saidaDeCoordenadasTransformadas ************ */
 .saidaDeCoordenadasTransformadas{
     margin-top: 5px;
     border: 2px solid #000;
@@ -89,6 +100,7 @@ head div, h1{
     margin-bottom: 1px;
 }
 
+/* ************ DIV configPanel2D ************ */
 .configPanel2D{
     display: flex;
     flex-direction: row;
@@ -104,26 +116,7 @@ head div, h1{
     padding-bottom: 5px;
 }
 
-.main_conteudo-painelDesenho{
-    background-color: white; /* Fundo branco */
-    height: calc(98.3vh - 80px);
-    width: 100%;
-    border: 3px double black;
-    margin-left: 5px;
-}
-
-.botoesDeAtivarELimpar button{
-    margin-top: 5px;
-    width: 70px;
-    height: 20px;
-    transition: background-color 0.3s ease;
-}
-
-.botoesDeAtivarELimpar button:hover{
-    background-color: #333;
-    color: white;
-}
-
+/* ************ DIV configPanel2D_opcoes_pixel ************ */
 .configPanel2D_opcoes_pixel{
     display: flex;
     flex-direction: row;
@@ -139,6 +132,7 @@ head div, h1{
     margin-bottom: 12px;
 }
 
+/* ************ DIV configPanel2D_opcoes_retas ************ */
 .configPanel2D_opcoes_retas{
     display: flex;
     flex-direction: column;
@@ -165,6 +159,19 @@ head div, h1{
     height: 15px; /* Define a altura */ 
 }
 
+/*informações dos botoes*/
+.botoesDeAtivarELimpar button{
+    margin-top: 5px;
+    width: 70px;
+    height: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.botoesDeAtivarELimpar button:hover{
+    background-color: #333;
+    color: white;
+}
+
 .ponto1, .ponto2{
     display: flex;
     flex-direction: row;
@@ -173,6 +180,7 @@ head div, h1{
     margin-right: 5px;
 }
 
+/* ************ DIV configPanel2D_opcoes_circunferencias ************ */
 .configPanel2D_opcoes_circunferencias{
     display: flex;
     flex-direction: column;
@@ -188,6 +196,7 @@ head div, h1{
     margin-bottom: 12px;
 }
 
+/* ************ DIV configPanel2D_opcoes_transformacoes ************ */
 .configPanel2D_opcoes_transformacoes{
     display: flex;
     flex-direction: column;
@@ -196,8 +205,8 @@ head div, h1{
     padding-bottom: 10px;
 }
 
-/*Aplicando a regra a todas as classes transformacoes2D(menos na primeira encontrada) */
 .transformacoes2D:not(:first-child) {
+    /*Aplicando a regra a todas as classes transformacoes2D(menos na primeira encontrada) */
     border-top: 1px dashed #000;
 }
 
@@ -233,7 +242,7 @@ head div, h1{
     height: 15px; /* Define a altura */
 }
 
-
+/* ************ DIV configPanel2D_cohen-sutherland ************ */
 .configPanel2D_cohen-sutherland{
     display: flex;
     flex-direction: column;
@@ -248,3 +257,86 @@ head div, h1{
     margin-top: 12px;
     margin-bottom: 10px;
 }
+
+/* ***************************************** SECTION main_conteudo-painelDesenho ***************************************** */
+.main_conteudo-painelDesenho{
+    background-color: white; /* Fundo branco */
+    height: calc(98.3vh - 80px);
+    width: 100%;
+    border: 3px double black;
+    margin-left: 5px;
+}
+
+/* ***************************************** SECTION main_Saida-Dados ***************************************** */
+.main_Saida-Dados{
+    display: flex;
+    flex-direction: column;
+    background-color: #ddd;
+    width: 16%;
+    margin-left: 5px;
+    height: calc(97vh - 80px);
+    padding: 5px;
+    border: 3px double black;  
+}
+
+/* ************ DIV saidaViewPort ************ */
+.saidaViewPort{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50%;
+    margin-bottom: 5px;
+}
+
+.saidaViewPort h4{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+/* **** DIV delimitacaoViewPort **** */
+.delimitacaoViewPort{
+    background-color: white; /* Fundo branco */
+    height: calc(98.3vh - 80px);
+    width: 100%;
+    border: 3px double black;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-bottom: 3px;
+}
+
+/* ************ DIV saidaDeInformacoesGerais ************ */
+.saidaDeInformacoesGerais{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 50%;
+    border: 2px solid #000;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.saidaDeInformacoesGerais h4{
+    margin-top: 2px;
+    margin-bottom: 2px;
+}
+
+/* **** DIV demilitacaoTextarea **** */
+.demilitacaoTextarea{
+    width: 100%;
+    height: 100%;
+    overflow-x: auto; /* Adiciona barra de rolagem horizontal conforme necessário */
+    overflow-y: auto; /* Adiciona barra de rolagem vertical conforme necessário */
+}
+
+#textareaSaidaDeDados {
+    width: 95%; /* O textarea ocupa toda a largura da div pai */
+    height: 95%; /* O textarea ocupa toda a altura da div pai */
+    resize: none; /* Impede da textarea seja redimensionada pelo usuário*/
+    pointer-events: none; /*Impede que o usuário digite/modifique algo na textarea*/
+    background-color: #9a9a9a;
+    color: #000;
+    padding: 0; /* Removendo qualquer preenchimento interno */
+    margin: 0; /* Removendo qualquer margem */
+    white-space: nowrap; /* Impede que o texto quebre em novas linhas */
+}
+

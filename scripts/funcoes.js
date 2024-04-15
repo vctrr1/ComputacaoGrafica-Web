@@ -266,25 +266,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
     } 
 
-    function desenharEixosCohenSutherland(){
-        const espacoExtraVertical = altura / 12;
-        const espacoExtraHorizontal = largura / 12; 
-
-        ctx.strokeStyle = 'gray';
-        // Desenhar as linhas verticais
-        ctx.beginPath();
-        ctx.moveTo(-largura / 6 - espacoExtraHorizontal, -altura / 2);
-        ctx.lineTo(-largura / 6 - espacoExtraHorizontal, altura / 2);
-        ctx.moveTo(largura / 6 + espacoExtraHorizontal, -altura / 2);
-        ctx.lineTo(largura / 6 + espacoExtraHorizontal, altura / 2);
-        // Desenhar as linhas horizontais
-        ctx.moveTo(-largura / 2, -altura / 6 - espacoExtraVertical);
-        ctx.lineTo(largura / 2, -altura / 6 - espacoExtraVertical);
-        ctx.moveTo(-largura / 2, altura / 6 + espacoExtraVertical);
-        ctx.lineTo(largura / 2, altura / 6 + espacoExtraVertical);
-        ctx.stroke();
-    }
-
     // Função de Translação
     function Translacao(matrizBase, tx, ty) {    
         const matrizTranslacao = [
@@ -424,6 +405,26 @@ document.addEventListener('DOMContentLoaded', () => {
         [-200, -200, 200, 200],
         [1, 1, 1, 1]
     ];
+
+    function desenharEixosCohenSutherland(){
+        const espacoExtraVertical = altura / 12;
+        const espacoExtraHorizontal = largura / 12; 
+
+        ctx.strokeStyle = 'gray';
+        // Desenhar as linhas verticais
+        ctx.beginPath();
+        ctx.moveTo(-largura / 6 - espacoExtraHorizontal, -altura / 2);
+        ctx.lineTo(-largura / 6 - espacoExtraHorizontal, altura / 2);
+        ctx.moveTo(largura / 6 + espacoExtraHorizontal, -altura / 2);
+        ctx.lineTo(largura / 6 + espacoExtraHorizontal, altura / 2);
+        // Desenhar as linhas horizontais
+        ctx.moveTo(-largura / 2, -altura / 6 - espacoExtraVertical);
+        ctx.lineTo(largura / 2, -altura / 6 - espacoExtraVertical);
+        ctx.moveTo(-largura / 2, altura / 6 + espacoExtraVertical);
+        ctx.lineTo(largura / 2, altura / 6 + espacoExtraVertical);
+        ctx.stroke();
+    }
+
 
     function desenhaAreaDeRecorteCohen(){
         desenharQuadrado(matrizAreaDeRecorte);
