@@ -333,11 +333,16 @@ header div, h1{
     width: 95%; /* O textarea ocupa toda a largura da div pai */
     height: 95%; /* O textarea ocupa toda a altura da div pai */
     resize: none; /* Impede da textarea seja redimensionada pelo usuário*/
-    pointer-events: none; /*Impede que o usuário digite/modifique algo na textarea*/
+    /*pointer-events: none; Impede que o usuário digite/modifique algo na textarea*/
     background-color: #9a9a9a;
     color: #000;
     padding: 0; /* Removendo qualquer preenchimento interno */
     margin: 0; /* Removendo qualquer margem */
     white-space: nowrap; /* Impede que o texto quebre em novas linhas */
+}
+
+#btnLimparSaidaTextarea{
+    margin-top: 1px;
+    margin-bottom: 5px;
 }
 

@@ -29,6 +29,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnLimparRetaCohen = document.getElementById('btnLimparRetaCohen');
     const btnAplicarCohen = document.getElementById('btnAplicarCohen');
 
+    const btnLimparSaidaTextarea = document.getElementById('btnLimparSaidaTextarea');
+
     // Seleciona os elementos de input do PIXEL
     const inputXPixel = document.getElementById('inputXPixel');
     const inputYPixel = document.getElementById('inputYPixel');
@@ -51,6 +53,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
     const inputOpcoes = document.getElementById("opcoes");
+
+    // Area da saída de informações
+    let textareaSaidaDeDados = document.getElementById("textareaSaidaDeDados");
 
     // Função para obter as coordenadas do mouse no canvas
     function obterPosicaoDoMouse(event) {
@@ -109,16 +114,29 @@ document.addEventListener('DOMContentLoaded', () => {
         var Y = Y1;
     
         ativaPixel(Math.round(X), Math.round(Y));
+
+        limparSaidaDeDadosTextarea();
+
+        setarDadosParaSaidaDeDados("\n\nFunção de Reta DDA.\n\n" + 
+            "P1("+ X1 + ", " + Y1 + ")\tP2("+ X2 + ", " + Y2 + ")\n" +
+            "Delta X = " + deltaX + "\tDelta Y = " + deltaY +
+            "\nLength = " + length +
+            "\nXinc = " + Xinc + "\tYinc = " + Yinc +"\n\n"
+        );
     
         for (var i = 0; i < length; i++) {
             X += Xinc;
             Y += Yinc;
             ativaPixel(Math.round(X), Math.round(Y));
+            setarDadosParaSaidaDeDados("\n" + (i+1)+"º " + "NP("+ X + ", " + Y + ")\n");
         }
     }
 
     // Reta Ponto Médio
     function retaPontoMedio(X1, Y1, X2, Y2) {
+
+        limparSaidaDeDadosTextarea();
+
         // Verifica se X1 é maior que X2 e, se for, troca os pontos
         if (X1 > X2) {
             [X1, X2] = [X2, X1];
@@ -134,7 +152,12 @@ document.addEventListener('DOMContentLoaded', () => {
         var y = Y1;
 
         ativaPixel(x, y);
-        console.log("X: " + x + "\tY: " + y);
+        setarDadosParaSaidaDeDados("\n\nFunção de Reta Ponto Médio.\n\n" + 
+            "P1("+ X1 + ", " + Y1 + ")\tP2("+ X2 + ", " + Y2 + ")\n" + 
+            "Dx = " + dx + "\nDy = " + dy +
+            "\nIncE = " + incE + "\nIncNE = " + incNE +
+            "\nx = " + x + "\ty = " + y +"\n\n"
+        );
 
         while (x < X2) {
             if (d <= 0) {
@@ -146,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 y = y + 1;
             }
             ativaPixel(x, y);
-            console.log("X: " + x + "\tY: " + y);
+            setarDadosParaSaidaDeDados("\nX("+ x +")"+ "\tY(" + y + ")\n\n");
         }
     }
 
@@ -158,6 +181,12 @@ document.addEventListener('DOMContentLoaded', () => {
         let x = 0;
         let i = 1;
         let xend = raio;
+
+        limparSaidaDeDadosTextarea();
+
+        setarDadosParaSaidaDeDados("\n\nFunção de Circunferência Polinomial.\n\n" + 
+            "Raio : "+ raio +"\n\n"
+        );
 
         // Loop para desenhar o círculo
         while (x <= xend) {
@@ -183,6 +212,12 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Passo para incrementar o ângulo
         const passo = 1;
+
+        limparSaidaDeDadosTextarea();
+
+        setarDadosParaSaidaDeDados("\n\nFunção de Circunferência Trigonemétrica.\n\n" + 
+            "Raio : "+ raio +"\n\n"
+        );
 
         // Loop enquanto o círculo não for completamente desenhado
         while (!converted) {
@@ -214,6 +249,14 @@ document.addEventListener('DOMContentLoaded', () => {
         var y = raio;
         var d = (1-raio);
 
+        limparSaidaDeDadosTextarea();
+
+        setarDadosParaSaidaDeDados("\n\nFunção Circunferência Ponto Médio.\n\n" + 
+            "Raio : " + raio + "\n" + 
+            "X = " + x + "\nY = " + y +
+            "\nD = " + d + "\n\n"
+        );
+
         ponto_Circulo(x, y);
 
         while( y > x){
@@ -230,16 +273,32 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //Função para realizar 
-    function ponto_Circulo(x, y){
-        ativaPixel(x, y); 
+    function ponto_Circulo(x, y){ 
+        ativaPixel(x, y);
+        setarDadosParaSaidaDeDados("X : " + x + "\tY : " + y+"\n");
+
         ativaPixel(y, x);
+        setarDadosParaSaidaDeDados("Y : " + y + "\tX : " + x+"\n");
+
         ativaPixel(y, -x);
+        setarDadosParaSaidaDeDados("Y : " + y + "\tX : " + -x+"\n");
+
         ativaPixel(x, -y);
+        setarDadosParaSaidaDeDados("X : " + x + "\tY : " + -y+"\n");
+
         ativaPixel(-x, -y);
+        setarDadosParaSaidaDeDados("X : " + -x + "\tY : " + -y+"\n");
+
         ativaPixel(-y, -x);
+        setarDadosParaSaidaDeDados("Y : " + -y + "\tX : " + -x+"\n");
+
         ativaPixel(-y, x);
+        setarDadosParaSaidaDeDados("Y : " + -y + "\tX : " + x+"\n");
+
         ativaPixel(-x, y);
+        setarDadosParaSaidaDeDados("X : " + -x + "\tY : " + y+"\n\n\n");
     }
+
 
     /* ******************************TRANSFORMAÇÕES***************************** */
 
@@ -504,6 +563,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
+    /* ****************************** Saida de dados ***************************** */
+    function limparSaidaDeDadosTextarea(){
+        textareaSaidaDeDados.value = "";
+    }
+    
+    function setarDadosParaSaidaDeDados(informacoes){
+        textareaSaidaDeDados.value += informacoes;
+    }
+
     /* ******************************BOTOES***************************** */
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
@@ -521,11 +589,13 @@ document.addEventListener('DOMContentLoaded', () => {
         limpaTela();
     });
 
+    // Ouvinte de evento para o botão "LimparCircunferencias"
     btnLimparCircunferencia.addEventListener('click', () =>{
         // Limpa o conteúdo do canvas
         limpaTela();
     })
 
+    // Ouvinte de evento para o botão "LimparTransformações"
     btnLimpaTransformacoes.addEventListener('click', () => {
         const matrizObjetoOrigem = [
             [0, 50, 50, 0],
@@ -540,6 +610,7 @@ document.addEventListener('DOMContentLoaded', () => {
         desenharQuadrado(matrizBaseGeral);
     })
 
+    // Ouvinte de evento para o botão "LimparRetaCohen"
     btnLimparRetaCohen.addEventListener('click', () => {
         limpaTela();
         desenharEixosCohenSutherland();
@@ -665,6 +736,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }else {
             cohenSutherland(X1, Y1, X2, Y2, xmin, ymin, xmax, ymax);
         }
+    });
+
+    btnLimparSaidaTextarea.addEventListener('click', () => {
+        limparSaidaDeDadosTextarea();
     });
 
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
