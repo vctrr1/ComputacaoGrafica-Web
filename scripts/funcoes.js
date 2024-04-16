@@ -117,18 +117,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
         limparSaidaDeDadosTextarea();
 
-        setarDadosParaSaidaDeDados("\n\nFunção de Reta DDA.\n\n" + 
+        setarDadosParaSaidaDeDados("\nFunção de Reta DDA.\n\n" + 
             "P1("+ X1 + ", " + Y1 + ")\tP2("+ X2 + ", " + Y2 + ")\n" +
             "Delta X = " + deltaX + "\tDelta Y = " + deltaY +
             "\nLength = " + length +
-            "\nXinc = " + Xinc + "\tYinc = " + Yinc +"\n\n"
+            "\nXinc = " + Xinc + "\tYinc = " + Yinc.toFixed(3) +"\n\n"
         );
     
         for (var i = 0; i < length; i++) {
             X += Xinc;
             Y += Yinc;
             ativaPixel(Math.round(X), Math.round(Y));
-            setarDadosParaSaidaDeDados("\n" + (i+1)+"º " + "NP("+ X + ", " + Y + ")\n");
+            setarDadosParaSaidaDeDados((i+1)+"º " + "NP("+ X.toFixed(2) + ", " + Y.toFixed(2) + ")\n");
         }
     }
 
@@ -152,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var y = Y1;
 
         ativaPixel(x, y);
-        setarDadosParaSaidaDeDados("\n\nFunção de Reta Ponto Médio.\n\n" + 
+        setarDadosParaSaidaDeDados("\nFunção de Reta Ponto Médio.\n\n" + 
             "P1("+ X1 + ", " + Y1 + ")\tP2("+ X2 + ", " + Y2 + ")\n" + 
             "Dx = " + dx + "\nDy = " + dy +
             "\nIncE = " + incE + "\nIncNE = " + incNE +
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 y = y + 1;
             }
             ativaPixel(x, y);
-            setarDadosParaSaidaDeDados("\nX("+ x +")"+ "\tY(" + y + ")\n\n");
+            setarDadosParaSaidaDeDados("X("+ x +")"+ "\tY(" + y + ")\n");
         }
     }
 
@@ -184,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         limparSaidaDeDadosTextarea();
 
-        setarDadosParaSaidaDeDados("\n\nFunção de Circunferência Polinomial.\n\n" + 
+        setarDadosParaSaidaDeDados("\nCircunferência Polinomial.\n\n" + 
             "Raio : "+ raio +"\n\n"
         );
 
@@ -215,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         limparSaidaDeDadosTextarea();
 
-        setarDadosParaSaidaDeDados("\n\nFunção de Circunferência Trigonemétrica.\n\n" + 
+        setarDadosParaSaidaDeDados("\nCircunferência Trigonemétrica.\n\n" + 
             "Raio : "+ raio +"\n\n"
         );
 
@@ -251,7 +251,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         limparSaidaDeDadosTextarea();
 
-        setarDadosParaSaidaDeDados("\n\nFunção Circunferência Ponto Médio.\n\n" + 
+        setarDadosParaSaidaDeDados("\nCircunferência Ponto Médio.\n\n" + 
             "Raio : " + raio + "\n" + 
             "X = " + x + "\nY = " + y +
             "\nD = " + d + "\n\n"

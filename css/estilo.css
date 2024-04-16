@@ -131,6 +131,10 @@ header div, h1{
     margin-top: 5px;
     margin-bottom: 12px;
 }
+.configPanel2D_opcoes_pixel input{
+    width: 88%; /* Define a largura */
+    height: 15px; /* Define a altura */ 
+}
 
 /* ************ DIV configPanel2D_opcoes_retas ************ */
 .configPanel2D_opcoes_retas{
@@ -155,7 +159,7 @@ header div, h1{
 }
 
 .configPanel2D_opcoes_retas_pontos input[type="number"]{
-    width: 60px; /* Define a largura */
+    width: 88%; /* Define a largura */
     height: 15px; /* Define a altura */ 
 }
 
@@ -195,6 +199,11 @@ header div, h1{
 .configPanel2D_opcoes_circunferencias h6{
     margin-top: 5px;
     margin-bottom: 12px;
+}
+
+.configPanel2D_opcoes_circunferencias input{
+    width: 88%; /* Define a largura */
+    height: 15px; /* Define a altura */ 
 }
 
 /* ************ DIV configPanel2D_opcoes_transformacoes ************ */
@@ -330,8 +339,8 @@ header div, h1{
 }
 
 #textareaSaidaDeDados {
-    width: 95%; /* O textarea ocupa toda a largura da div pai */
-    height: 95%; /* O textarea ocupa toda a altura da div pai */
+    width: 99%; /* O textarea ocupa toda a largura da div pai */
+    height: 98%; /* O textarea ocupa toda a altura da div pai */
     resize: none; /* Impede da textarea seja redimensionada pelo usuário*/
     /*pointer-events: none; Impede que o usuário digite/modifique algo na textarea*/
     background-color: #9a9a9a;
@@ -339,6 +348,13 @@ header div, h1{
     padding: 0; /* Removendo qualquer preenchimento interno */
     margin: 0; /* Removendo qualquer margem */
     white-space: nowrap; /* Impede que o texto quebre em novas linhas */
+}
+/* Ocultar a barra de scroll pra economizar espaço (Nao desativa, apenas oculta)*/
+#textareaSaidaDeDados::-webkit-scrollbar {
+    display: none;
+}
+#textareaSaidaDeDados:focus {
+    outline: none;
 }
 
 #btnLimparSaidaTextarea{
