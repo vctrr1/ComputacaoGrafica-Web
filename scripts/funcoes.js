@@ -333,7 +333,16 @@ document.addEventListener('DOMContentLoaded', () => {
             [0, 0, 1]
         ];
     
-        const matrizResultado = multiplicarMatrizes(matrizTranslacao, matrizBase);    
+        const matrizResultado = multiplicarMatrizes(matrizTranslacao, matrizBase);  
+        
+        setarDadosParaSaidaDeDados("\nTranslação.\n\n" + 
+            "tx : " + tx + "\n" + 
+            "ty = " + ty + "\n\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Translação: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizTranslacao) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+        
         return matrizResultado;
     }
 
@@ -484,11 +493,6 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
     }
 
-
-    function desenhaAreaDeRecorteCohen(){
-        desenharQuadrado(matrizAreaDeRecorte);
-    }
-
     // Função que implementa o algoritmo de Cohen-Sutherland para recortar uma linha
     function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax) {
         let cod1 = calculaCodigo(x1, y1, xmin, ymin, xmax, ymax);
@@ -500,8 +504,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 accept = true;
                 break;
             } else if ((cod1 & cod2) !== 0) { // Ambos os pontos estão fora de uma mesma região, portanto a linha está completamente fora da janela
+                limpaTela();
+                desenharEixosCohenSutherland();
+                desenharQuadrado(matrizAreaDeRecorte);
                 break;
-            } else { // Precisamos recalcular os códigos para os pontos fora da janela e, em seguida, ajustar suas coordenadas
+            } else { // recalcula os códigos para os pontos fora da janela e, em seguida, ajustar suas coordenadas
                 let x, y, codOut;
                 if (cod1 !== 0) {
                     codOut = cod1;
@@ -538,7 +545,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (accept) {
             limpaTela();
             desenharEixosCohenSutherland();
-            desenhaAreaDeRecorteCohen();
+            desenharQuadrado(matrizAreaDeRecorte);
             DDA(x1, y1, x2, y2);
         }
     }
@@ -567,11 +574,23 @@ document.addEventListener('DOMContentLoaded', () => {
     function limparSaidaDeDadosTextarea(){
         textareaSaidaDeDados.value = "";
     }
-    
+
     function setarDadosParaSaidaDeDados(informacoes){
         textareaSaidaDeDados.value += informacoes;
     }
-
+    
+    function setarDadosParaSaidaDeDadosMatrizes(matriz){
+        let resultado = "";
+        for (let i = 0; i < matriz.length; i++) {
+            resultado += "\t[ ";
+            for (let j = 0; j < matriz[i].length; j++) {
+                resultado += matriz[i][j] + " ";
+            }
+            resultado += "]\n";
+        }
+        return resultado;
+    }
+    
     /* ******************************BOTOES***************************** */
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
@@ -614,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnLimparRetaCohen.addEventListener('click', () => {
         limpaTela();
         desenharEixosCohenSutherland();
-        desenhaAreaDeRecorteCohen();
+        desenharQuadrado(matrizAreaDeRecorte);
     })
 
     // Ouvinte de evento para o botão "DesenharPixel"
@@ -755,7 +774,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }else if(opcaoSelecionada === "opcao8"){
             limpaTela();
             desenharEixosCohenSutherland();
-            desenhaAreaDeRecorteCohen();
+            desenharQuadrado(matrizAreaDeRecorte);
         }
         
     });

@@ -353,6 +353,8 @@ header div, h1{
 #textareaSaidaDeDados::-webkit-scrollbar {
     display: none;
 }
+
+/*Desativa a borda de seleção de textarea*/
 #textareaSaidaDeDados:focus {
     outline: none;
 }
