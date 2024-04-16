@@ -444,8 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
         const matrizResultado = multiplicarMatrizes(matrizReflexaoY, matrizBase);
 
-        setarDadosParaSaidaDeDados("\n-----------------------------------------" + 
-            "\n\nReflexão Y.\n\n" + 
+        setarDadosParaSaidaDeDados("\n\nReflexão Y.\n\n" + 
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Reflexão Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizReflexaoY) + "\n\n" +
             "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
@@ -484,8 +483,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const matrizResultado = multiplicarMatrizes(matrizCisalhamentoY, matrizBase);
 
-        setarDadosParaSaidaDeDados("\n-----------------------------------------" + 
-            "\n\nCisalhamento Y.\n\n" + 
+        setarDadosParaSaidaDeDados("\n\nCisalhamento Y.\n\n" + 
             "shy : " + shy.toFixed(1) + "\n" +
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Cisalhamento Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoY) + "\n\n" +
@@ -686,6 +684,10 @@ document.addEventListener('DOMContentLoaded', () => {
         desenharQuadrado(matrizAreaDeRecorte);
     })
 
+    btnLimparSaidaTextarea.addEventListener('click', () => {
+        limparSaidaDeDadosTextarea();
+    });
+
     // Ouvinte de evento para o botão "DesenharPixel"
     btnDesenharPixel.addEventListener('click', () => {
 
@@ -771,7 +773,10 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // Aplica a transformação desejada quando o botão é clicado
-    btnAplicaTransformacoes.addEventListener('click', aplicarTransformacao);
+    btnAplicaTransformacoes.addEventListener('click', function() {
+        limparSaidaDeDadosTextarea();
+        aplicarTransformacao();
+    });
 
     btnDesenharRetaCohen.addEventListener('click', () => {
 
@@ -805,10 +810,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }else {
             cohenSutherland(X1, Y1, X2, Y2, xmin, ymin, xmax, ymax);
         }
-    });
-
-    btnLimparSaidaTextarea.addEventListener('click', () => {
-        limparSaidaDeDadosTextarea();
     });
 
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
@@ -919,6 +920,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             else if(!isNaN(valorCisalhamentoX) && !isNaN(valorCisalhamentoY)){
                 matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
+                setarDadosParaSaidaDeDados("\n-----------------------------------------");
                 matrizBaseGeral = cisalhamentoY(matrizBaseGeral, -valorCisalhamentoY);
 
                 limpaTela();
@@ -952,6 +954,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             else if(document.getElementById('xReflexao').checked && document.getElementById('yReflexao').checked){
                 matrizBaseGeral = ReflexaoX(matrizBaseGeral);
+                setarDadosParaSaidaDeDados("\n-----------------------------------------");
                 matrizBaseGeral = ReflexaoY(matrizBaseGeral);
 
                 limpaTela();
