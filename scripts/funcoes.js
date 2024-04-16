@@ -355,6 +355,15 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         const matrizResultado = multiplicarMatrizes(matrizEscala, matrizBase);
+
+        setarDadosParaSaidaDeDados("\Escala.\n\n" + 
+            "sx : " + sx + "\n" + 
+            "sy = " + sy + "\n\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Escala: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizEscala) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+
         return matrizResultado;
     }
 
@@ -378,7 +387,17 @@ document.addEventListener('DOMContentLoaded', () => {
             [0, 0, 1]
         ];
     
-        const matrizResultado = multiplicarMatrizes(matrizRotacao, matrizBase);    
+        const matrizResultado = multiplicarMatrizes(matrizRotacao, matrizBase);
+        
+        setarDadosParaSaidaDeDados("\Rotação.\n\n" + 
+            "Angulo : " + angulo.toFixed(4) + "\n" +
+            "Cos. Theta : " + cos_theta.toFixed(4) + "\n" +  
+            "Sin. Theta = " + sin_theta.toFixed(4) + "\n\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Rotação: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizRotacao) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+        
         return matrizResultado;
     }
 
@@ -392,6 +411,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
         const matrizResultado = multiplicarMatrizes(matrizReflexaoX, matrizBase);
+        
+        setarDadosParaSaidaDeDados("\nReflexão X.\n\n" + 
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Reflexão X: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizReflexaoX) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado) +
+            "\n-----------------------------------------"
+        );
+        
         return matrizResultado;
     }
 
@@ -405,6 +432,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
         const matrizResultado = multiplicarMatrizes(matrizReflexaoY, matrizBase);
+
+        setarDadosParaSaidaDeDados("\n\nReflexão Y.\n\n" + 
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Reflexão Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizReflexaoY) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+
         return matrizResultado
     }
 
@@ -417,6 +451,14 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         const matrizResultado = multiplicarMatrizes(matrizCisalhamentoX, matrizBase);
+
+        setarDadosParaSaidaDeDados("\nCisalhamento X.\n\n" + 
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Cisalhamento X: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoX) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado) +
+            "\n-----------------------------------------"
+        );
+
         return matrizResultado;
     }
 
@@ -429,6 +471,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ];
 
         const matrizResultado = multiplicarMatrizes(matrizCisalhamentoY, matrizBase);
+
+        setarDadosParaSaidaDeDados("\n\nCisalhamento Y.\n\n" + 
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Cisalhamento Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoY) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+
         return matrizResultado;
     }
 
@@ -584,13 +633,13 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 0; i < matriz.length; i++) {
             resultado += "\t[ ";
             for (let j = 0; j < matriz[i].length; j++) {
-                resultado += matriz[i][j] + " ";
+                resultado += matriz[i][j].toFixed(0) + " ";
             }
             resultado += "]\n";
         }
         return resultado;
     }
-    
+
     /* ******************************BOTOES***************************** */
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
