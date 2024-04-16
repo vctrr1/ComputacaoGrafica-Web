@@ -310,7 +310,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para desenhar os eixos X e Y para visualizar as transformações
     function desenharEixos() {
-
         ctx.strokeStyle = 'gray'; // 'black' representa a cor preta
         // Desenhar eixo X
         ctx.beginPath();
@@ -323,7 +322,20 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.moveTo(0, -canvas.height / 2);
         ctx.lineTo(0, canvas.height / 2);
         ctx.stroke();
-    } 
+    }
+
+    function desenharQuadrado(vertices) {
+        ctx.beginPath();
+        ctx.moveTo(vertices[0][0], vertices[1][0]);
+    
+        for (var i = 1; i < vertices[0].length; i++) {
+            ctx.lineTo(vertices[0][i], vertices[1][i]);
+        }
+    
+        ctx.closePath();
+        ctx.strokeStyle = 'red';
+        ctx.stroke();
+    }
 
     // Função de Translação
     function Translacao(matrizBase, tx, ty) {    
@@ -337,7 +349,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         setarDadosParaSaidaDeDados("\nTranslação.\n\n" + 
             "tx : " + tx + "\n" + 
-            "ty = " + ty + "\n\n" +
+            "ty : " + ty + "\n\n" +
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Translação: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizTranslacao) + "\n\n" +
             "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
@@ -358,7 +370,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         setarDadosParaSaidaDeDados("\Escala.\n\n" + 
             "sx : " + sx + "\n" + 
-            "sy = " + sy + "\n\n" +
+            "sy : " + sy + "\n\n" +
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Escala: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizEscala) + "\n\n" +
             "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
@@ -392,7 +404,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setarDadosParaSaidaDeDados("\Rotação.\n\n" + 
             "Angulo : " + angulo.toFixed(4) + "\n" +
             "Cos. Theta : " + cos_theta.toFixed(4) + "\n" +  
-            "Sin. Theta = " + sin_theta.toFixed(4) + "\n\n" +
+            "Sin. Theta : " + sin_theta.toFixed(4) + "\n\n" +
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Rotação: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizRotacao) + "\n\n" +
             "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
@@ -415,8 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
         setarDadosParaSaidaDeDados("\nReflexão X.\n\n" + 
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Reflexão X: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizReflexaoX) + "\n\n" +
-            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado) +
-            "\n-----------------------------------------"
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
         );
         
         return matrizResultado;
@@ -433,7 +444,8 @@ document.addEventListener('DOMContentLoaded', () => {
         // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
         const matrizResultado = multiplicarMatrizes(matrizReflexaoY, matrizBase);
 
-        setarDadosParaSaidaDeDados("\n\nReflexão Y.\n\n" + 
+        setarDadosParaSaidaDeDados("\n-----------------------------------------" + 
+            "\n\nReflexão Y.\n\n" + 
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Reflexão Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizReflexaoY) + "\n\n" +
             "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
@@ -443,9 +455,9 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Função para aplicar cisalhamento em X
-    function cisalhamentoX(matrizBase, a){
+    function cisalhamentoX(matrizBase, shx){
         const matrizCisalhamentoX = [
-            [1, a, 0],
+            [1, shx, 0],
             [0, 1, 0],
             [0, 0, 1]
         ];
@@ -453,26 +465,28 @@ document.addEventListener('DOMContentLoaded', () => {
         const matrizResultado = multiplicarMatrizes(matrizCisalhamentoX, matrizBase);
 
         setarDadosParaSaidaDeDados("\nCisalhamento X.\n\n" + 
+            "shx : " + shx.toFixed(1) + "\n" +
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Cisalhamento X: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoX) + "\n\n" +
-            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado) +
-            "\n-----------------------------------------"
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
         );
 
         return matrizResultado;
     }
 
     // Função para aplicar cisalhamento em Y
-    function cisalhamentoY(matrizBase, b){
+    function cisalhamentoY(matrizBase, shy){
         const matrizCisalhamentoY = [
             [1, 0, 0],
-            [b, 1, 0],
+            [shy, 1, 0],
             [0, 0, 1]
         ];
 
         const matrizResultado = multiplicarMatrizes(matrizCisalhamentoY, matrizBase);
 
-        setarDadosParaSaidaDeDados("\n\nCisalhamento Y.\n\n" + 
+        setarDadosParaSaidaDeDados("\n-----------------------------------------" + 
+            "\n\nCisalhamento Y.\n\n" + 
+            "shy : " + shy.toFixed(1) + "\n" +
             "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
             "Matriz de Cisalhamento Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoY) + "\n\n" +
             "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
@@ -500,19 +514,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         return matrizResultado;
-    }
-
-    function desenharQuadrado(vertices) {
-        ctx.beginPath();
-        ctx.moveTo(vertices[0][0], vertices[1][0]);
-    
-        for (var i = 1; i < vertices[0].length; i++) {
-            ctx.lineTo(vertices[0][i], vertices[1][i]);
-        }
-    
-        ctx.closePath();
-        ctx.strokeStyle = 'red';
-        ctx.stroke();
     }
 
     /* *****************************COHEN-SUTHERLAND**************************** */
@@ -629,15 +630,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     
     function setarDadosParaSaidaDeDadosMatrizes(matriz){
-        let resultado = "";
+        let aux = "";
         for (let i = 0; i < matriz.length; i++) {
-            resultado += "\t[ ";
+            aux += "\t[ ";
             for (let j = 0; j < matriz[i].length; j++) {
-                resultado += matriz[i][j].toFixed(0) + " ";
+                aux += matriz[i][j].toFixed(0) + " ";
             }
-            resultado += "]\n";
+            aux += "]\n";
         }
-        return resultado;
+        return aux;
     }
 
     /* ******************************BOTOES***************************** */
@@ -815,10 +816,8 @@ document.addEventListener('DOMContentLoaded', () => {
         var opcaoSelecionada = inputOpcoes.value;
 
         if(opcaoSelecionada === "opcao7"){
-
             limpaTela();
             desenharEixos();
-            //var verticesQuadrado = verticesIniciaisDoQuadrado(centroX, centroY);
             desenharQuadrado(matrizBaseGeral);
         }else if(opcaoSelecionada === "opcao8"){
             limpaTela();
@@ -838,7 +837,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Função para aplicar a transformação desejada
     function aplicarTransformacao() {
-        // Verifica se o checkbox de translação está marcado
         
         if (document.getElementById('checkTranslacao').checked) {
             
@@ -858,8 +856,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Desenha o quadrado com as novas coordenadas após a translação
                 desenharQuadrado(matrizBaseGeral);
-            } 
-            else {
+            } else {
                 alert('Por favor, insira valores numéricos válidos para a translação.');
             }
         }
@@ -872,16 +869,12 @@ document.addEventListener('DOMContentLoaded', () => {
             if(!isNaN(xEscala) && !isNaN(yEscala)){
                 matrizBaseGeral = Escala(matrizBaseGeral, xEscala, yEscala);
                 
-                // Limpa o canvas
                 limpaTela();
                 
-                // Desenha os eixos
                 desenharEixos();
                 
-                // Desenha o quadrado com as novas coordenadas após a translação
                 desenharQuadrado(matrizBaseGeral);
-            }
-            else {
+            }else {
                 alert('Por favor, insira valores numéricos válidos para a Escala.');
             }
         }
@@ -891,19 +884,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const AnguloRotacao = parseFloat(document.getElementById('AnguloRotacao').value);
 
             if(!isNaN(AnguloRotacao)){
-                console.log("Valor do angulo : " + AnguloRotacao);
                 matrizBaseGeral = Rotacao(matrizBaseGeral, AnguloRotacao);
                 
-                // Limpa o canvas
                 limpaTela();
                 
-                // Desenha os eixos
                 desenharEixos();
-                
-                // Desenha o quadrado com as novas coordenadas após a translação
+
                 desenharQuadrado(matrizBaseGeral);
-            }
-            else {
+            }else {
                 alert('Por favor, insira valores numéricos válidos para a Rotação.');
             }
         }
@@ -912,69 +900,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const valorCisalhamentoX = parseFloat(document.getElementById('xCisalhamento').value);
             const valorCisalhamentoY = parseFloat(document.getElementById('yCisalhamento').value);
+            
+            if(valorCisalhamentoX === 0){
+                matrizBaseGeral = cisalhamentoY(matrizBaseGeral, -valorCisalhamentoY);
+                limpaTela();
 
-            if(!isNaN(valorCisalhamentoX) && !isNaN(valorCisalhamentoY)){
-                console.log("asdasd");
+                desenharEixos();
+
+                desenharQuadrado(matrizBaseGeral);
+            }
+            else if(valorCisalhamentoY === 0){
+                matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
+                limpaTela();
+
+                desenharEixos();
+
+                desenharQuadrado(matrizBaseGeral);
+            }
+            else if(!isNaN(valorCisalhamentoX) && !isNaN(valorCisalhamentoY)){
                 matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
                 matrizBaseGeral = cisalhamentoY(matrizBaseGeral, -valorCisalhamentoY);
 
-                // Limpa o canvas
                 limpaTela();
 
-                // Desenha os eixos
                 desenharEixos();
 
-                // Desenha o quadrado com as novas coordenadas após a translação
                 desenharQuadrado(matrizBaseGeral);
-            }
-            else{
-                console.log(".....");
+            } else{
                 alert("Digite os valores de cisalhamento.\nCaso NÃO deseje cisalhar em algum eixo, digite o valor 0.");
             }
         }
         
         else if (document.getElementById('checkReflexao').checked) {
             if (document.getElementById('xReflexao').checked && !document.getElementById('yReflexao').checked) {
-                console.log("REFLEXAO EM X DEVE SER APLICADO");
                 matrizBaseGeral = ReflexaoX(matrizBaseGeral);
                 
-                // Limpa o canvas
                 limpaTela();
                 
-                // Desenha os eixos
                 desenharEixos();
                 
-                // Desenha o polígono com as novas coordenadas após a reflexão
                 desenharQuadrado(matrizBaseGeral);
             }
             else if (document.getElementById('yReflexao').checked && !document.getElementById('xReflexao').checked) {
-                console.log("REFLEXAO EM Y DEVE SER APLICADO");
                 matrizBaseGeral = ReflexaoY(matrizBaseGeral);
                 
-                // Limpa o canvas
                 limpaTela();
                 
-                // Desenha os eixos
                 desenharEixos();
                 
-                // Desenha o polígono com as novas coordenadas após a reflexão
                 desenharQuadrado(matrizBaseGeral);
             }
             else if(document.getElementById('xReflexao').checked && document.getElementById('yReflexao').checked){
-                console.log("REFLEXAO EM X e EM Y DEVE SER APLICADO");
                 matrizBaseGeral = ReflexaoX(matrizBaseGeral);
                 matrizBaseGeral = ReflexaoY(matrizBaseGeral);
 
-                // Limpa o canvas
                 limpaTela();
                 
-                // Desenha os eixos
                 desenharEixos();
                 
-                // Desenha o polígono com as novas coordenadas após a reflexão
                 desenharQuadrado(matrizBaseGeral);
-            }
-            else{
+            } else{
                 alert("Marque alguma opção de REFLEXÃO!!");
             }
         }
