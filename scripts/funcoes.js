@@ -506,11 +506,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* *****************************COHEN-SUTHERLAND**************************** */
 
-    const matrizAreaDeRecorte = [
+    /*
+        calcula o tamanho do quadrado central desenhado pelo desenharEixosCohenSutherland()
+        OBS: altera de alum jeito a coordenada da reta
+        function calcularVerticesQuadradoCentral() {
+            const espacoExtraVertical = altura / 12;
+            const espacoExtraHorizontal = largura / 12;
+            
+            const xEsquerda = -largura / 6 - espacoExtraHorizontal;
+            const xDireita = largura / 6 + espacoExtraHorizontal;
+            const yTopo = -altura / 6 - espacoExtraVertical;
+            const yBase = altura / 6 + espacoExtraVertical;
+        
+        
+            return [
+                [xEsquerda, xDireita, xDireita, xEsquerda], // Coordenadas X
+                [yTopo, yTopo, yBase, yBase] // Coordenadas Y
+            ];
+        }
+
+        matrizAreaDeRecorte = calcularVerticesQuadradoCentral();
+    */
+   
+   const matrizAreaDeRecorte = [
         [-250, 250, 250, -250],
         [-200, -200, 200, 200],
         [1, 1, 1, 1]
     ];
+   
 
     function desenharEixosCohenSutherland(){
         const espacoExtraVertical = altura / 12;
