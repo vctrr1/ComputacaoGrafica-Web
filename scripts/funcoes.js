@@ -115,8 +115,6 @@ document.addEventListener('DOMContentLoaded', () => {
     
         ativaPixel(Math.round(X), Math.round(Y));
 
-        limparSaidaDeDadosTextarea();
-
         setarDadosParaSaidaDeDados("\nFunção de Reta DDA.\n\n" + 
             "P1("+ X1 + ", " + Y1 + ")\tP2("+ X2 + ", " + Y2 + ")\n" +
             "Delta X = " + deltaX + "\tDelta Y = " + deltaY +
@@ -135,8 +133,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Reta Ponto Médio
     function retaPontoMedio(X1, Y1, X2, Y2) {
 
-        limparSaidaDeDadosTextarea();
-
         // Verifica se X1 é maior que X2 e, se for, troca os pontos
         if (X1 > X2) {
             [X1, X2] = [X2, X1];
@@ -153,9 +149,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         ativaPixel(x, y);
         setarDadosParaSaidaDeDados("\nFunção de Reta Ponto Médio.\n\n" + 
-            "P1("+ X1 + ", " + Y1 + ")\tP2("+ X2 + ", " + Y2 + ")\n" + 
-            "Dx = " + dx + "\nDy = " + dy +
-            "\nIncE = " + incE + "\nIncNE = " + incNE +
+            "P1("+ X1.toFixed(0) + ", " + Y1.toFixed(0) + ")\tP2("+ X2.toFixed(0) + ", " + Y2.toFixed(0) + ")\n" + 
+            "Dx = " + dx.toFixed(0) + "\nDy = " + dy.toFixed(0) +
+            "\nIncE = " + incE.toFixed(0) + "\nIncNE = " + incNE.toFixed(0) +
             "\nx = " + x + "\ty = " + y +"\n\n"
         );
 
@@ -181,8 +177,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let x = 0;
         let i = 1;
         let xend = raio;
-
-        limparSaidaDeDadosTextarea();
 
         setarDadosParaSaidaDeDados("\nCircunferência Polinomial.\n\n" + 
             "Raio : "+ raio +"\n\n"
@@ -212,8 +206,6 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // Passo para incrementar o ângulo
         const passo = 1;
-
-        limparSaidaDeDadosTextarea();
 
         setarDadosParaSaidaDeDados("\nCircunferência Trigonemétrica.\n\n" + 
             "Raio : "+ raio +"\n\n"
@@ -248,8 +240,6 @@ document.addEventListener('DOMContentLoaded', () => {
         var x = 0;
         var y = raio;
         var d = (1-raio);
-
-        limparSaidaDeDadosTextarea();
 
         setarDadosParaSaidaDeDados("\nCircunferência Ponto Médio.\n\n" + 
             "Raio : " + raio + "\n" + 
@@ -594,7 +584,9 @@ document.addEventListener('DOMContentLoaded', () => {
             limpaTela();
             desenharEixosCohenSutherland();
             desenharQuadrado(matrizAreaDeRecorte);
-            DDA(x1, y1, x2, y2);
+            limparSaidaDeDadosTextarea();
+            setarDadosParaSaidaDeDados("\nNOVAS COORDENADAS DA RETA.\n\n");
+            retaPontoMedio(x1, y1, x2, y2);
         }
     }
 
@@ -706,7 +698,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ouvinte de evento para o botão "DesenharRetas"
     btnDesenharReta.addEventListener('click', () => {
-
+        limparSaidaDeDadosTextarea();
         // Obtém os valores dos inputs
         var valorXP1 = parseInt(inputXP1.value);
         var valorYP1 = parseInt(inputYP1.value);
@@ -742,6 +734,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Ouvinte de evento para o botão "Desenhar Circunferencia"
     btnDesenharCircunferencia.addEventListener('click', () => {
+        limparSaidaDeDadosTextarea();
         //Obtem o raio
         var raio = parseInt(inputRaio.value);
 
@@ -788,7 +781,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isNaN(X1) || isNaN(X2) || isNaN(Y1) || isNaN(Y2)){
             alert("Digite os valores validos para os pontos.");
         }else {
-            DDA(X1, Y1, X2, Y2);
+            retaPontoMedio(X1, Y1, X2, Y2);
         }
 
     });
