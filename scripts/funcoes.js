@@ -2,15 +2,27 @@
 //Teste
 document.addEventListener('DOMContentLoaded', () => {
     
-    const painel2D = document.querySelector('.main_conteudo-painelDesenho');
-    const canvas = painel2D.querySelector('canvas');
-    const ctx = canvas.getContext('2d');
+    /*Canvas onde o usuário realiza os desenhos*/
+    const painel2D = document.querySelector('.main_conteudo-painelDesenho');     
+    const canvas = painel2D.querySelector('canvas');    
+    let ctx = canvas.getContext('2d');
     const largura = parseFloat(painel2D.offsetWidth).toFixed(5);
     const altura = parseFloat(painel2D.offsetHeight).toFixed(5);
     canvas.width = largura;
     canvas.height = altura;
     //Definindo o a origem no centro do canvas
     ctx.translate(largura/2, altura/2);
+
+    /*Canvas da ViewPort*/
+    const painelSaidaCanvasVP = document.querySelector('.delimitacaoViewPort');
+    const canvasViewPort = painelSaidaCanvasVP.querySelector('#viewPortDoProjeto');
+    let ctxViewPort = canvasViewPort.getContext('2d');
+    const larguraVP = parseFloat(painelSaidaCanvasVP.offsetWidth).toFixed(5);
+    const alturaVP = parseFloat(painelSaidaCanvasVP.offsetHeight).toFixed(5);
+    canvasViewPort.width = larguraVP;
+    canvasViewPort.height = alturaVP;
+    ctxViewPort.translate(larguraVP/2, alturaVP/2);
+
 
     //Botões
     const btnLimparPixel = document.getElementById('btnLimparCanvasPixel');
@@ -30,6 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnAplicarCohen = document.getElementById('btnAplicarCohen');
 
     const btnLimparSaidaTextarea = document.getElementById('btnLimparSaidaTextarea');
+
+    const btnTransferirParaViewPort = document.getElementById('btnTransferirParaViewPort');
 
     // Seleciona os elementos de input do PIXEL
     const inputXPixel = document.getElementById('inputXPixel');
@@ -82,26 +96,31 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("coordTela").querySelector("p").innerText = "X: " + dcx + "\nY: " + dcy ;
     }
 
+
     // Função para ativar um pixel
-    function ativaPixel(X, Y) {
-        var ctx = canvas.getContext('2d');    
+    function ativaPixel(tipoCanvas, X, Y) {    
         
         // Desenhar um pequeno ponto vermelho na posição passada por paramentro
-        ctx.fillStyle = "red";
-        ctx.fillRect( X, -Y, 1, 1); // Ativando 1 pixel de tamanho (1x1)
+        tipoCanvas.fillStyle = "red";
+        tipoCanvas.fillRect( X, -Y, 1, 1); // Ativando 1 pixel de tamanho (1x1)
     }
 
     //Função para limpar o canvas
     function limpaTela(){
         // Limpa o conteúdo do canvas
         ctx.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
+        //Limpa tudo da lista da viewPort
+        listaParaAViewPort = [];
     }
     
+    /* *********************************Variável para armazenar as informações para a viewPort********************************* */
+
+    var listaParaAViewPort = [];
 
     /* *********************************RETAS********************************* */
 
     //Função DDA para qualquer oitante
-    function DDA(X1, Y1, X2, Y2) {
+    function DDA(X1, Y1, X2, Y2, tipoCanvas) {
         var deltaX = X2 - X1;
         var deltaY = Y2 - Y1;
     
@@ -113,7 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var X = X1;
         var Y = Y1;
     
-        ativaPixel(Math.round(X), Math.round(Y));
+        ativaPixel(tipoCanvas, Math.round(X), Math.round(Y));
 
         setarDadosParaSaidaDeDados("\nFunção de Reta DDA.\n\n" + 
             "P1("+ X1 + ", " + Y1 + ")\tP2("+ X2 + ", " + Y2 + ")\n" +
@@ -125,13 +144,13 @@ document.addEventListener('DOMContentLoaded', () => {
         for (var i = 0; i < length; i++) {
             X += Xinc;
             Y += Yinc;
-            ativaPixel(Math.round(X), Math.round(Y));
+            ativaPixel(tipoCanvas, Math.round(X), Math.round(Y));
             setarDadosParaSaidaDeDados((i+1)+"º " + "NP("+ X.toFixed(2) + ", " + Y.toFixed(2) + ")\n");
         }
     }
 
     // Reta Ponto Médio
-    function retaPontoMedio(X1, Y1, X2, Y2) {
+    function retaPontoMedio(X1, Y1, X2, Y2, tipoCanvas) {
 
         // Verifica se X1 é maior que X2 e, se for, troca os pontos
         if (X1 > X2) {
@@ -147,7 +166,7 @@ document.addEventListener('DOMContentLoaded', () => {
         var x = X1;
         var y = Y1;
 
-        ativaPixel(x, y);
+        ativaPixel(tipoCanvas, x, y);
         setarDadosParaSaidaDeDados("\nFunção de Reta Ponto Médio.\n\n" + 
             "P1("+ X1.toFixed(0) + ", " + Y1.toFixed(0) + ")\tP2("+ X2.toFixed(0) + ", " + Y2.toFixed(0) + ")\n" + 
             "Dx = " + dx.toFixed(0) + "\nDy = " + dy.toFixed(0) +
@@ -164,7 +183,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 x = x + 1;
                 y = y + 1;
             }
-            ativaPixel(x, y);
+            ativaPixel(tipoCanvas, x, y);
             setarDadosParaSaidaDeDados("X("+ x +")"+ "\tY(" + y + ")\n");
         }
     }
@@ -172,7 +191,7 @@ document.addEventListener('DOMContentLoaded', () => {
     /* *****************************CIRCUNFERÊNCIA***************************** */
 
     // Função para desenhar uma circunferencia com o método Polinomial
-    function circunferenciaPolinomial(raio) {
+    function circunferenciaPolinomial(raio, tipoCanvas) {
         // Inicialização das variáveis
         let x = 0;
         let i = 1;
@@ -188,7 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let y = Math.round(Math.sqrt(raio * raio - x * x));
             
             // Plotar os pontos determinados pela simetria
-            ponto_Circulo(x, y);
+            ponto_Circulo(tipoCanvas, x, y);
 
             // Incrementar x
             x += i;
@@ -196,7 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Função para desenhar uma circunferencia com o método trigonometrico
-    function circunferenciaTrigonometrica(raio) {
+    function circunferenciaTrigonometrica(raio, tipoCanvas) {
         
         // Variável para armazenar o ângulo atual
         let theta = 0;
@@ -223,7 +242,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let y = Math.round(raio * Math.sin(radianos));
 
             // Plotar os pontos determinados pela simetria
-            ponto_Circulo(x, y);
+            ponto_Circulo(tipoCanvas, x, y);
 
             // Incrementar o ângulo
             theta += passo;
@@ -236,7 +255,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     //Função da circunferencia PM
-    function circunferenciaPontoMedio(raio){
+    function circunferenciaPontoMedio(raio, tipoCanvas){
         var x = 0;
         var y = raio;
         var d = (1-raio);
@@ -247,7 +266,7 @@ document.addEventListener('DOMContentLoaded', () => {
             "\nD = " + d + "\n\n"
         );
 
-        ponto_Circulo(x, y);
+        ponto_Circulo(tipoCanvas, x, y);
 
         while( y > x){
             if(d < 0 ){
@@ -258,37 +277,36 @@ document.addEventListener('DOMContentLoaded', () => {
                 y--;
             }
             x++;
-            ponto_Circulo(x, y);
+            ponto_Circulo(tipoCanvas, x, y);
         }
     }
 
-    //Função para realizar 
-    function ponto_Circulo(x, y){ 
-        ativaPixel(x, y);
+    //Função para realizar espelhamento dos pontos da circunferencia 
+    function ponto_Circulo(tipoCanvas, x, y){ 
+        ativaPixel(tipoCanvas, x, y);
         setarDadosParaSaidaDeDados("X : " + x + "\tY : " + y+"\n");
 
-        ativaPixel(y, x);
+        ativaPixel(tipoCanvas, y, x);
         setarDadosParaSaidaDeDados("Y : " + y + "\tX : " + x+"\n");
 
-        ativaPixel(y, -x);
+        ativaPixel(tipoCanvas, y, -x);
         setarDadosParaSaidaDeDados("Y : " + y + "\tX : " + -x+"\n");
 
-        ativaPixel(x, -y);
+        ativaPixel(tipoCanvas, x, -y);
         setarDadosParaSaidaDeDados("X : " + x + "\tY : " + -y+"\n");
 
-        ativaPixel(-x, -y);
+        ativaPixel(tipoCanvas, -x, -y);
         setarDadosParaSaidaDeDados("X : " + -x + "\tY : " + -y+"\n");
 
-        ativaPixel(-y, -x);
+        ativaPixel(tipoCanvas, -y, -x);
         setarDadosParaSaidaDeDados("Y : " + -y + "\tX : " + -x+"\n");
 
-        ativaPixel(-y, x);
+        ativaPixel(tipoCanvas, -y, x);
         setarDadosParaSaidaDeDados("Y : " + -y + "\tX : " + x+"\n");
 
-        ativaPixel(-x, y);
+        ativaPixel(tipoCanvas, -x, y);
         setarDadosParaSaidaDeDados("X : " + -x + "\tY : " + y+"\n\n\n");
     }
-
 
     /* ******************************TRANSFORMAÇÕES***************************** */
 
@@ -314,17 +332,17 @@ document.addEventListener('DOMContentLoaded', () => {
         ctx.stroke();
     }
 
-    function desenharQuadrado(vertices) {
-        ctx.beginPath();
-        ctx.moveTo(vertices[0][0], vertices[1][0]);
+    function desenharQuadrado(vertices, tipoCanvas) {
+        tipoCanvas.beginPath();
+        tipoCanvas.moveTo(vertices[0][0], vertices[1][0]);
     
         for (var i = 1; i < vertices[0].length; i++) {
-            ctx.lineTo(vertices[0][i], vertices[1][i]);
+            tipoCanvas.lineTo(vertices[0][i], vertices[1][i]);
         }
     
-        ctx.closePath();
-        ctx.strokeStyle = 'red';
-        ctx.stroke();
+        tipoCanvas.closePath();
+        tipoCanvas.strokeStyle = 'red';
+        tipoCanvas.stroke();
     }
 
     // Função de Translação
@@ -576,7 +594,7 @@ document.addEventListener('DOMContentLoaded', () => {
             } else if ((codigo1 & codigo2) != 0) {// Fora da janela
                 limpaTela();
                 desenharEixosCohenSutherland();
-                desenharQuadrado(matrizAreaDeRecorte);
+                desenharQuadrado(matrizAreaDeRecorte, ctx);
                 limparSaidaDeDadosTextarea();
                 setarDadosParaSaidaDeDados("\nLinha fora da area de recorte");
                 feito = true;
@@ -615,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (aceito) {
             limpaTela();
             desenharEixosCohenSutherland();
-            desenharQuadrado(matrizAreaDeRecorte);
+            desenharQuadrado(matrizAreaDeRecorte, ctx);
             limparSaidaDeDadosTextarea();
             setarDadosParaSaidaDeDados("\nNOVAS COORDENADAS DA RETA.\n\n");
             retaPontoMedio(x1, y1, x2, y2);
@@ -746,6 +764,111 @@ document.addEventListener('DOMContentLoaded', () => {
         return aux;
     }
 
+    /* ****************************** Funções para saida da viewPort ****************************** */
+
+    // Função para processar a lista de dados e aplicar a transformação de viewport
+    function processarListaViewport(lista, Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax, tipoCanvas) {
+        // Calculando a matriz de transformação de viewport `M`
+        const M = calcularMatrizViewport(Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax);
+        
+        // Percorre a lista `listaParaAViewPort`
+        for (let entrada of lista) {
+            if (entrada.tipo === "reta") {
+                // Aplicando a transformação `M` aos pontos da reta
+                const pontosTransformados = entrada.pontos.map(ponto => aplicarTransformacaoViewport(ponto, M));
+                
+                // Desenhe a reta transformada usando a função de desenho apropriada
+                DDA(pontosTransformados[0].x, pontosTransformados[0].y, pontosTransformados[1].x, pontosTransformados[1].y, tipoCanvas);
+            } 
+            else if (entrada.tipo === "circunferencia") {
+                // Aplique a transformação `M` ao centro da circunferência
+                //const centroTransformado = aplicarTransformacaoViewport(ctxViewPort.width, ctxViewPort.height, M);
+                
+                // O raio não muda com a transformação linear, então use o raio original
+                const raioTransformado = transformarRaio(entrada.raio, M);
+                
+                // Desenhe a circunferência transformada usando a função de desenho apropriada
+                circunferenciaPontoMedio(raioTransformado, tipoCanvas);
+            } 
+            else if (entrada.tipo === "matriz") {
+                // Aplique a transformação `M` aos pontos da matriz
+                const valoresTransformados = entrada.valores.map(ponto => aplicarTransformacaoViewport(ponto, M));
+                
+                // Desenhe a matriz transformada usando uma função de desenho apropriada
+                desenharMatrizTransformada(valoresTransformados, tipoCanvas);
+            }
+        }
+    } 
+    
+    // Função para transformar o raio da circunferência
+    function transformarRaio(raio, M) {
+        // Calcule as escalas de transformação
+        const scaleX = M[0][0];
+        const scaleY = M[1][1];
+        
+        // Calcule a média geométrica das escalas x e y para obter uma transformação proporcional
+        const escalaMedia = Math.sqrt(scaleX * scaleY);
+        
+        // Transforme o raio com base na média geométrica das escalas
+        const raioTransformado = raio * escalaMedia;
+        
+        return raioTransformado;
+    }
+
+    function calcularMatrizViewport(Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax) {
+        // Calcula a escala
+        const scaleX = (Umax - Umin) / (Xmax - Xmin);
+        const scaleY = (Vmax - Vmin) / (Ymax - Ymin);
+    
+        // Matriz de translação T(Um, Vm)
+        const matrizTranslacao = [
+            [1, 0, Umin],
+            [0, 1, Vmin],
+            [0, 0, 1]
+        ];
+        
+        // Matriz de escala S(Umax - Umin / Xmax - Xmin, Vmax - Vmin / Ymax - Ymin)
+        const matrizEscala = [
+            [scaleX, 0, 0],
+            [0, scaleY, 0],
+            [0, 0, 1]
+        ];
+        
+        // Matriz de translação reversa T(-Xmin, -Ymin)
+        const matrizTranslacaoReversa = [
+            [1, 0, -Xmin],
+            [0, 1, -Ymin],
+            [0, 0, 1]
+        ];
+        
+        // Multiplica as matrizes na ordem correta
+        const M1 = multiplicarMatrizes(matrizTranslacao, matrizEscala);
+        const M = multiplicarMatrizes(M1, matrizTranslacaoReversa);
+        
+        return M;
+    }
+    
+
+    function aplicarTransformacaoViewport(ponto, M) {
+        // Multiplique o ponto pela matriz `M`
+        const x = ponto.x;
+        const y = ponto.y;
+        
+        const novoX = M[0][0] * x + M[0][1] * y + M[0][2];
+        const novoY = M[1][0] * x + M[1][1] * y + M[1][2];
+        
+        return { x: novoX, y: novoY };
+    }
+
+    function desenharMatrizTransformada(valoresTransformados, tipoCanvas) {
+        for (const ponto of valoresTransformados) {
+            // Desenhe o ponto na viewport
+            ativaPixel(tipoCanvas, ponto.x, ponto.y);
+        }
+    }  
+
+    
+
     /* ******************************BOTOES***************************** */
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
@@ -781,16 +904,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
         limpaTela();
         desenharEixos();
-        desenharQuadrado(matrizBaseGeral);
+        desenharQuadrado(matrizBaseGeral, ctx);
     })
 
     // Ouvinte de evento para o botão "LimparRetaCohen"
     btnLimparRetaCohen.addEventListener('click', () => {
         limpaTela();
         desenharEixosCohenSutherland();
-        desenharQuadrado(matrizAreaDeRecorte);
+        desenharQuadrado(matrizAreaDeRecorte, ctx);
     })
 
+    //Ouvinte de evento para o botão limpar saida do textarea
     btnLimparSaidaTextarea.addEventListener('click', () => {
         limparSaidaDeDadosTextarea();
     });
@@ -806,7 +930,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Digite os valores do ponto.");
         }
         else{
-            ativaPixel(valorX, valorY);
+            ativaPixel(canvas.getContext('2d'), valorX, valorY);
         }        
         
     });
@@ -825,17 +949,25 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else{
 
+            listaParaAViewPort.push({
+                tipo: "reta",
+                pontos:[
+                    {x: valorXP1, y: valorYP1},
+                    {x: valorXP2, y: valorYP2}
+                ]
+            });
+
             // Obtém a opção selecionada
             var opcaoSelecionada = document.getElementById('opcoes').value;
 
             switch(opcaoSelecionada){
                 
                 case "opcao2":
-                    DDA(valorXP1, valorYP1, valorXP2, valorYP2);                    
+                    DDA(valorXP1, valorYP1, valorXP2, valorYP2, ctx);                    
                 break;
 
                 case "opcao3":
-                    retaPontoMedio(valorXP1, valorYP1, valorXP2, valorYP2);
+                    retaPontoMedio(valorXP1, valorYP1, valorXP2, valorYP2, ctx);
                 break;
 
                 default:
@@ -843,7 +975,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
 
             }
-        }        
+        }
+        
+        console.log(listaParaAViewPort);
         
     });
 
@@ -858,21 +992,26 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else{
 
+            listaParaAViewPort.push({
+                tipo: "circunferencia",
+                raio: raio
+            });
+
             // Obtém a opção selecionada
             var opcaoSelecionada = document.getElementById('opcoes').value;
 
             switch(opcaoSelecionada){
 
                 case "opcao4":
-                    circunferenciaPolinomial(raio);
+                    circunferenciaPolinomial(raio, ctx);
                 break;
 
                 case "opcao5":
-                    circunferenciaTrigonometrica(raio);
+                    circunferenciaTrigonometrica(raio, ctx);
                 break;
 
                 case "opcao6":
-                    circunferenciaPontoMedio(raio);
+                    circunferenciaPontoMedio(raio, ctx);
                 break;
 
             }
@@ -883,7 +1022,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // Aplica a transformação desejada quando o botão é clicado
     btnAplicaTransformacoes.addEventListener('click', function() {
         limparSaidaDeDadosTextarea();
+        listaParaAViewPort = [];
+        
         aplicarTransformacao();
+
+        listaParaAViewPort = [
+            {
+                tipo: "matriz",
+                valores: matrizBaseGeral
+            }
+        ]
     });
 
     btnDesenharRetaCohen.addEventListener('click', () => {
@@ -920,18 +1068,64 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
+    //Ouvinte para o botão transferir da viewPort
+    btnTransferirParaViewPort.addEventListener('click', () =>{
+        let Xmin = 0;
+        let Xmax = canvas.width;
+        let Ymin = 0;
+        let Ymax = canvas.height;
+
+        listaParaAViewPort.forEach(entrada => {
+            if (entrada.tipo === 'reta') {
+                entrada.pontos.forEach(ponto => {
+                    Xmin = Math.min(Xmin, ponto.x);
+                    Xmax = Math.max(Xmax, ponto.x);
+                    Ymin = Math.min(Ymin, ponto.y);
+                    Ymax = Math.max(Ymax, ponto.y);
+                });
+            } else if (entrada.tipo === 'circunferencia') {
+                const raio = entrada.raio;
+                
+                Xmin = Math.min(Xmin, -raio);
+                Xmax = Math.max(Xmax, raio);
+                Ymin = Math.min(Ymin, -raio);
+                Ymax = Math.max(Ymax, raio);
+            } else if (entrada.tipo === 'matriz') {
+                entrada.valores.forEach(ponto => {
+                    Xmin = Math.min(Xmin, ponto.x);
+                    Xmax = Math.max(Xmax, ponto.x);
+                    Ymin = Math.min(Ymin, ponto.y);
+                    Ymax = Math.max(Ymax, ponto.y);
+                });
+            }
+        });
+
+        let Umin = 0;
+        let Umax = larguraVP;
+        let Vmin = 0;
+        let Vmax = alturaVP;
+
+        processarListaViewport(listaParaAViewPort, Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax, ctxViewPort);
+    });
+
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
     inputOpcoes.addEventListener('change', () => {
         var opcaoSelecionada = inputOpcoes.value;
 
         if(opcaoSelecionada === "opcao7"){
             limpaTela();
+            limparSaidaDeDadosTextarea();
             desenharEixos();
-            desenharQuadrado(matrizBaseGeral);
+            desenharQuadrado(matrizBaseGeral, ctx);
         }else if(opcaoSelecionada === "opcao8"){
             limpaTela();
+            limparSaidaDeDadosTextarea();
             desenharEixosCohenSutherland();
-            desenharQuadrado(matrizAreaDeRecorte);
+            desenharQuadrado(matrizAreaDeRecorte, ctx);
+        }
+        else{
+            limpaTela();
+            limparSaidaDeDadosTextarea();
         }
         
     });
@@ -964,8 +1158,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 desenharEixos();
                 
                 // Desenha o quadrado com as novas coordenadas após a translação
-                desenharQuadrado(matrizBaseGeral);
-            } else {
+                desenharQuadrado(matrizBaseGeral, ctx);                
+
+            } 
+            else {
                 alert('Por favor, insira valores numéricos válidos para a translação.');
             }
         }
@@ -982,8 +1178,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 desenharEixos();
                 
-                desenharQuadrado(matrizBaseGeral);
-            }else {
+                desenharQuadrado(matrizBaseGeral, ctx);
+            }
+            else {
                 alert('Por favor, insira valores numéricos válidos para a Escala.');
             }
         }
@@ -999,8 +1196,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 desenharEixos();
 
-                desenharQuadrado(matrizBaseGeral);
-            }else {
+                desenharQuadrado(matrizBaseGeral, ctx);
+            }
+            else {
                 alert('Por favor, insira valores numéricos válidos para a Rotação.');
             }
         }
@@ -1016,7 +1214,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 desenharEixos();
 
-                desenharQuadrado(matrizBaseGeral);
+                desenharQuadrado(matrizBaseGeral, ctx);
             }
             else if(valorCisalhamentoY === 0){
                 matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
@@ -1024,7 +1222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 desenharEixos();
 
-                desenharQuadrado(matrizBaseGeral);
+                desenharQuadrado(matrizBaseGeral, ctx);
             }
             else if(!isNaN(valorCisalhamentoX) && !isNaN(valorCisalhamentoY)){
                 matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
@@ -1035,8 +1233,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 desenharEixos();
 
-                desenharQuadrado(matrizBaseGeral);
-            } else{
+                desenharQuadrado(matrizBaseGeral, ctx);
+            } 
+            else{
                 alert("Digite os valores de cisalhamento.\nCaso NÃO deseje cisalhar em algum eixo, digite o valor 0.");
             }
         }
@@ -1049,7 +1248,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 desenharEixos();
                 
-                desenharQuadrado(matrizBaseGeral);
+                desenharQuadrado(matrizBaseGeral, ctx);
             }
             else if (document.getElementById('yReflexao').checked && !document.getElementById('xReflexao').checked) {
                 matrizBaseGeral = ReflexaoY(matrizBaseGeral);
@@ -1058,7 +1257,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 desenharEixos();
                 
-                desenharQuadrado(matrizBaseGeral);
+                desenharQuadrado(matrizBaseGeral, ctx);
             }
             else if(document.getElementById('xReflexao').checked && document.getElementById('yReflexao').checked){
                 matrizBaseGeral = ReflexaoX(matrizBaseGeral);
@@ -1069,7 +1268,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 desenharEixos();
                 
-                desenharQuadrado(matrizBaseGeral);
+                desenharQuadrado(matrizBaseGeral, ctx);
             } else{
                 alert("Marque alguma opção de REFLEXÃO!!");
             }
