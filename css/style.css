@@ -168,11 +168,14 @@ header div, h1{
     margin-top: 5px;
     width: 70px;
     height: 20px;
-    transition: background-color 0.3s ease;
-    border-radius: 30px;
+    border-radius: 7px;
 }
 
-.botoesDeAtivarELimpar button:hover{
+.botoesDeAtivarELimpar button:enabled {
+    transition: background-color 0.3s ease;
+}
+
+.botoesDeAtivarELimpar button:hover:enabled{
     background-color: #333;
     color: white;
 }
@@ -322,7 +325,7 @@ header div, h1{
     height: 50%;
     border: 2px solid #000;
     text-align: center;
-    margin-top: 5px;
+    margin-top: 11px;
 }
 
 .saidaDeInformacoesGerais h4{

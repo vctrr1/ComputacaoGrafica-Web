@@ -5,12 +5,18 @@
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/estilo.css">
+    <link rel="stylesheet" href="css/style.css">
     
     <title>Computação Gráfica 2024</title>   
     
-    <script src="scripts/infoConfigTela.js" ></script>    
-    <script src="scripts/funcoes.js"></script>  
+    <script type="module" src="scripts/main.js" ></script>    
+    <script type="module" src="scripts/configTela.js"></script>
+    <script type="module" src="scripts/algoritimos/circunferencia.js" ></script>    
+    <script type="module" src="scripts/algoritimos/cohenShutherland.js" ></script>    
+    <script type="module" src="scripts/algoritimos/desenho.js"></script>
+    <script type="module" src="scripts/algoritimos/reta.js"></script>
+    <script type="module" src="scripts/algoritimos/trasformacoes.js"></script>
+    <script type="module" src="scripts/algoritimos/utils.js"></script>
 
 </head>
 
@@ -237,7 +243,7 @@
                     </div>                    
                     <div class="botoesDeAtivarELimpar">
                         <button id="btnTransferirParaViewPort">Transferir</button>
-                        <button id="btnLimparCanvasPixel">Limpar</button>
+                        <button id="btnLimparViewPort">Limpar</button>
                     </div>
                 </div>
 
