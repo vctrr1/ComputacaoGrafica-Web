@@ -80,7 +80,6 @@ export function circunferenciaPontoMedio(raio, tipoCanvas){
     }
 }
 
-
 //Função para realizar espelhamento dos pontos da circunferencia 
 export function ponto_Circulo(tipoCanvas, x, y){ 
     ativaPixel(tipoCanvas, x, y);

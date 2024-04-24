@@ -1,7 +1,7 @@
 import { multiplicarMatrizes } from '../utils/produtoDeMatrizes.js'
 import { DDA } from '../algoritimos/reta.js'
 import { circunferenciaPontoMedio } from '../algoritimos/circunferencia.js'
-import * as desenhar from '../algoritimos/desenho.js';
+import { Quadrado } from '../algoritimos/desenho.js';
 
 // Função para processar a lista de dados e aplicar a transformação de viewport
 export function processarListaViewport(lista, Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax, tipoCanvas) {
@@ -23,25 +23,21 @@ export function processarListaViewport(lista, Xmin, Xmax, Ymin, Ymax, Umin, Umax
 
     // Processa as entradas com base no tipo detectado
     if (tipoEntrada === 'reta') {
-        for (let entrada of lista) {
-            if (entrada.tipo === 'reta') {
-                const MR = calcularRetaViewport(Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax);
-                const pontosTransformados = entrada.pontos.map(ponto => aplicarTransformacaoViewport(ponto, MR));
-                DDA(pontosTransformados[0].x, pontosTransformados[0].y, pontosTransformados[1].x, pontosTransformados[1].y, tipoCanvas);
-            }
+        for (let entrada of lista) {            
+            const MR = calcularRetaViewport(Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax);
+            const pontosTransformados = entrada.pontos.map(ponto => aplicarTransformacaoViewport(ponto, MR));
+            DDA(pontosTransformados[0].x, pontosTransformados[0].y, pontosTransformados[1].x, pontosTransformados[1].y, tipoCanvas);        
         }
     } 
     else if (tipoEntrada === 'circunferencia') {
-        for (let entrada of lista) {
-            if (entrada.tipo === 'circunferencia') {
-                const raioTransformado = transformarRaio(entrada.raio, M);
-                circunferenciaPontoMedio(raioTransformado, tipoCanvas);
-            }
+        for (let entrada of lista) {            
+            const raioTransformado = transformarRaio(entrada.raio, M);
+            circunferenciaPontoMedio(raioTransformado, tipoCanvas);           
         }
     } 
     else {            
         const matrizViewport = multiplicarMatrizes(M, lista);
-        desenhar.Quadrado(matrizViewport, tipoCanvas);            
+        Quadrado(matrizViewport, tipoCanvas);            
     }
 }
 

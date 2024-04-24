@@ -24,12 +24,15 @@ export function Translacao(matrizBase, tx, ty) {
 
 // Função de Escala
 export function Escala(matrizBase, sx, sy) {
+    
     const matrizEscala = [
         [sx, 0, 0],
         [0, sy, 0],
         [0, 0, 1]
     ];
+
     const matrizResultado = multiplicarMatrizes(matrizEscala, matrizBase);
+
     setarDadosParaSaidaDeDados("\Escala.\n\n" + 
         "sx : " + sx + "\n" + 
         "sy : " + sy + "\n\n" +
@@ -37,6 +40,7 @@ export function Escala(matrizBase, sx, sy) {
         "Matriz de Escala: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizEscala) + "\n\n" +
         "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
     );
+
     return matrizResultado;
 }
 
@@ -76,6 +80,7 @@ export function Rotacao(matrizBase, angulo) {
 
 // Função para aplicar a reflexão em X
 export function ReflexaoX(matrizBase) {
+    
     const matrizReflexaoX = [
         [1, 0, 0],
         [0, -1, 0],
@@ -95,13 +100,16 @@ export function ReflexaoX(matrizBase) {
 
 // Função para aplicar a reflexão em Y
 export function ReflexaoY(matrizBase) {
+    
     const matrizReflexaoY = [
         [-1, 0, 0],
         [0, 1, 0],
         [0, 0, 1]
     ];
+
     // Aplicar a reflexão em X multiplicando a matriz do polígono pela matriz de reflexão
     const matrizResultado = multiplicarMatrizes(matrizReflexaoY, matrizBase);
+
     setarDadosParaSaidaDeDados("\n\nReflexão Y.\n\n" + 
         "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
         "Matriz de Reflexão Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizReflexaoY) + "\n\n" +
@@ -112,12 +120,15 @@ export function ReflexaoY(matrizBase) {
 
 // Função para aplicar cisalhamento em X
 export function cisalhamentoX(matrizBase, shx){
+    
     const matrizCisalhamentoX = [
         [1, shx, 0],
         [0, 1, 0],
         [0, 0, 1]
     ];
+
     const matrizResultado = multiplicarMatrizes(matrizCisalhamentoX, matrizBase);
+
     setarDadosParaSaidaDeDados("\nCisalhamento X.\n\n" + 
         "shx : " + shx.toFixed(1) + "\n" +
         "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
@@ -129,12 +140,15 @@ export function cisalhamentoX(matrizBase, shx){
 
 // Função para aplicar cisalhamento em Y
 export function cisalhamentoY(matrizBase, shy){
+    
     const matrizCisalhamentoY = [
         [1, 0, 0],
         [shy, 1, 0],
         [0, 0, 1]
     ];
+    
     const matrizResultado = multiplicarMatrizes(matrizCisalhamentoY, matrizBase);
+    
     setarDadosParaSaidaDeDados("\n\nCisalhamento Y.\n\n" + 
         "shy : " + shy.toFixed(1) + "\n" +
         "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +

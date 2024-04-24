@@ -1,7 +1,7 @@
 import { DDA, retaPontoMedio } from './algoritimos/reta.js';
 import { circunferenciaPolinomial, circunferenciaTrigonometrica, circunferenciaPontoMedio } from './algoritimos/circunferencia.js';
 import { Translacao, Escala, Rotacao, ReflexaoX, ReflexaoY, cisalhamentoX, cisalhamentoY } from './algoritimos/trasformacoes.js';
-import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea } from './utils/utils.js';
+import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaDeDados } from './utils/utils.js';
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
 import { processarListaViewport } from './viewPort/viewPort.js';
 import * as desenhar from './algoritimos/desenho.js';
@@ -118,7 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ****************************** Lista para saida da viewPort *********************************** */
     var listaParaAViewPort = [];
 
-
     /* ***************************************** BOTOES ********************************************* */
 
     // Adiciona um ouvinte de evento para o movimento do mouse no canvas para atualização das coordenadas
@@ -193,7 +192,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Ouvinte de evento para o botão "DesenharPixel"
     btnDesenharPixel.addEventListener('click', () => {
         //ativa o botão de transferir para viewPort
-        btnTransferirParaViewPort.disabled = false;
+        //btnTransferirParaViewPort.disabled = true;
 
         // Obtém os valores dos inputs
         var valorX = parseInt(inputXPixel.value);
@@ -204,6 +203,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         else{
             ativaPixel(canvas.getContext('2d'), valorX, valorY);
+            
+            setarDadosParaSaidaDeDados("\nFunção de Ativação de PIXEL.\n\n" + 
+                "P( X , Y )\n" +
+                "P("+ valorX.toFixed(0) + "," + valorY.toFixed(0) + ")\t\n" 
+            );
         }        
         
     });
