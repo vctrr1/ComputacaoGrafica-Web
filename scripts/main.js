@@ -130,6 +130,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Limpa o conteúdo do canvas
         limpaTela(ctx);
+        limparSaidaDeDadosTextarea();
     });
 
     // Ouvinte de evento para o botão "LimparRetas"
@@ -191,8 +192,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Ouvinte de evento para o botão "DesenharPixel"
     btnDesenharPixel.addEventListener('click', () => {
-        //ativa o botão de transferir para viewPort
-        //btnTransferirParaViewPort.disabled = true;
 
         // Obtém os valores dos inputs
         var valorX = parseInt(inputXPixel.value);
@@ -206,7 +205,7 @@ document.addEventListener('DOMContentLoaded', () => {
             
             setarDadosParaSaidaDeDados("\nFunção de Ativação de PIXEL.\n\n" + 
                 "P( X , Y )\n" +
-                "P("+ valorX.toFixed(0) + "," + valorY.toFixed(0) + ")\t\n" 
+                "P( "+ valorX.toFixed(0) + " , " + valorY.toFixed(0) + " )\t\n" 
             );
         }        
         
@@ -323,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if(isNaN(X1) || isNaN(X2) || isNaN(Y1) || isNaN(Y2)){
             alert("Digite os valores validos para os pontos.");
         }else {
-            retaPontoMedio(X1, Y1, X2, Y2, ctx);
+            DDA(X1, Y1, X2, Y2, ctx);
         }
 
     });
