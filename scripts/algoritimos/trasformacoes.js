@@ -24,22 +24,45 @@ export function Translacao(matrizBase, tx, ty) {
 
 // Função de Escala
 export function Escala(matrizBase, sx, sy) {
-    
+    let matrizResultado = [];
+
     const matrizEscala = [
         [sx, 0, 0],
         [0, sy, 0],
         [0, 0, 1]
     ];
 
-    const matrizResultado = multiplicarMatrizes(matrizEscala, matrizBase);
+    if(!estaNaOrigem(matrizBase)){
+        //armazena onde os obj estava antes da translação para origem
+        const tx = matrizBase[0][0];
+        const ty = matrizBase[1][0];
 
-    setarDadosParaSaidaDeDados("\Escala.\n\n" + 
-        "sx : " + sx + "\n" + 
-        "sy : " + sy + "\n\n" +
-        "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
-        "Matriz de Escala: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizEscala) + "\n\n" +
-        "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
-    );
+        // translada para ortigem (ja mostra na saida de dados)
+        matrizBase = transladarParaOrigem(matrizBase);
+
+        //aplica a escala e em seguida mostra as informações de escala na saida de dados
+        matrizResultado = multiplicarMatrizes(matrizEscala, matrizBase);
+        setarDadosParaSaidaDeDados("\Escala.\n\n" + 
+            "sx : " + sx + "\n" + 
+            "sy : " + sy + "\n\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Escala: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizEscala) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+        //aplica a translação para os coordenadas iniciais
+        matrizResultado = Translacao(matrizResultado,tx, ty);
+
+    }else {
+        matrizResultado = multiplicarMatrizes(matrizEscala, matrizBase);
+        setarDadosParaSaidaDeDados("\Escala.\n\n" + 
+            "sx : " + sx + "\n" + 
+            "sy : " + sy + "\n\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Escala: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizEscala) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+    }
+
 
     return matrizResultado;
 }
@@ -120,40 +143,100 @@ export function ReflexaoY(matrizBase) {
 
 // Função para aplicar cisalhamento em X
 export function cisalhamentoX(matrizBase, shx){
-    
+    let matrizResultado = [];
+
     const matrizCisalhamentoX = [
         [1, shx, 0],
         [0, 1, 0],
         [0, 0, 1]
     ];
 
-    const matrizResultado = multiplicarMatrizes(matrizCisalhamentoX, matrizBase);
+    if(!estaNaOrigem(matrizBase)){
+        //armazena as coordenadas iniciais
+        const tx = matrizBase[0][0];
+        const ty = matrizBase[1][0];
 
-    setarDadosParaSaidaDeDados("\nCisalhamento X.\n\n" + 
-        "shx : " + shx.toFixed(1) + "\n" +
-        "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
-        "Matriz de Cisalhamento X: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoX) + "\n\n" +
-        "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
-    );
+        //translada para origem
+        matrizBase = transladarParaOrigem(matrizBase);
+
+        // aplica o cisalhamento e em seguida mostra as informações na saida de dados
+        matrizResultado = multiplicarMatrizes(matrizCisalhamentoX, matrizBase);
+        setarDadosParaSaidaDeDados("\nCisalhamento X.\n\n" + 
+            "shx : " + shx.toFixed(1) + "\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Cisalhamento X: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoX) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+
+        //translada para as coordenadas iniciais 
+        matrizResultado = Translacao(matrizResultado, tx, ty);
+
+    }else {
+        //esta na origem, aplica o cisalhamento e exibe na saida de informações 
+        matrizResultado = multiplicarMatrizes(matrizCisalhamentoX, matrizBase);
+        setarDadosParaSaidaDeDados("\nCisalhamento X.\n\n" + 
+            "shx : " + shx.toFixed(1) + "\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Cisalhamento X: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoX) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+    }
+
     return matrizResultado;
 }
 
 // Função para aplicar cisalhamento em Y
 export function cisalhamentoY(matrizBase, shy){
-    
+    let matrizResultado = [];
+
     const matrizCisalhamentoY = [
         [1, 0, 0],
         [shy, 1, 0],
         [0, 0, 1]
     ];
-    
-    const matrizResultado = multiplicarMatrizes(matrizCisalhamentoY, matrizBase);
-    
-    setarDadosParaSaidaDeDados("\n\nCisalhamento Y.\n\n" + 
-        "shy : " + shy.toFixed(1) + "\n" +
-        "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
-        "Matriz de Cisalhamento Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoY) + "\n\n" +
-        "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
-    );
+
+    if(!estaNaOrigem(matrizBase)){
+        //armazena as coordenadas iniciais
+        const tx = matrizBase[0][0];
+        const ty = matrizBase[1][0];
+
+        //translada para origem
+        matrizBase = transladarParaOrigem(matrizBase);
+
+        //aplica o cisalhamento e em seguida exibe na saida de informações 
+        matrizResultado = multiplicarMatrizes(matrizCisalhamentoY, matrizBase);
+        setarDadosParaSaidaDeDados("\n\nCisalhamento Y.\n\n" + 
+            "shy : " + shy.toFixed(1) + "\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Cisalhamento Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoY) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+
+        //translada para posição inicial
+        matrizResultado = Translacao(matrizResultado, tx, ty);
+
+    }else {
+        //esta na origem, aplica o cisalhamento e exibe na saida de informações 
+        matrizResultado = multiplicarMatrizes(matrizCisalhamentoY, matrizBase);
+        setarDadosParaSaidaDeDados("\n\nCisalhamento Y.\n\n" + 
+            "shy : " + shy.toFixed(1) + "\n" +
+            "Matriz Base: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizBase) + "\n\n" +
+            "Matriz de Cisalhamento Y: " + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizCisalhamentoY) + "\n\n" +
+            "Matriz Resultado: "  + "\n" + setarDadosParaSaidaDeDadosMatrizes(matrizResultado)
+        );
+    }
+
     return matrizResultado;
+}
+
+// Função para verificar se a matriz está na origem
+function estaNaOrigem(matriz) {
+    return matriz[0][0] === 0 && matriz[1][0] === 0;
+}
+
+// Função para transladar a matriz para a origem
+function transladarParaOrigem(matriz) {
+    const tx = matriz[0][0];
+    const ty = matriz[1][0];
+    return Translacao(matriz, -tx, -ty);
 }

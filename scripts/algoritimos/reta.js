@@ -18,7 +18,7 @@ export function DDA(X1, Y1, X2, Y2, tipoCanvas) {
         "P1("+ X1.toFixed(0) + ", " + Y1.toFixed(0) + ")\tP2("+ X2.toFixed(0) + ", " + Y2.toFixed(0) + ")\n" +
         "Delta X = " + deltaX.toFixed(2) + "\tDelta Y = " + deltaY.toFixed(2) +
         "\nLength = " + length +
-        "\nXinc = " + Xinc + "\tYinc = " + Yinc.toFixed(3) +"\n\n"
+        "\nXinc = " + Xinc.toFixed(2) + "\tYinc = " + Yinc.toFixed(2) +"\n\n"
     );
 
     for (var i = 0; i < length; i++) {
