@@ -38,7 +38,7 @@ export function Escala(matrizBase, sx, sy) {
         const ty = matrizBase[1][0];
 
         // translada para ortigem (ja mostra na saida de dados)
-        matrizBase = transladarParaOrigem(matrizBase);
+        matrizBase = Translacao(matriz, -tx, -ty);
 
         //aplica a escala e em seguida mostra as informações de escala na saida de dados
         matrizResultado = multiplicarMatrizes(matrizEscala, matrizBase);
@@ -157,7 +157,7 @@ export function cisalhamentoX(matrizBase, shx){
         const ty = matrizBase[1][0];
 
         //translada para origem
-        matrizBase = transladarParaOrigem(matrizBase);
+        matrizBase = Translacao(matriz, -tx, -ty);
 
         // aplica o cisalhamento e em seguida mostra as informações na saida de dados
         matrizResultado = multiplicarMatrizes(matrizCisalhamentoX, matrizBase);
@@ -201,7 +201,7 @@ export function cisalhamentoY(matrizBase, shy){
         const ty = matrizBase[1][0];
 
         //translada para origem
-        matrizBase = transladarParaOrigem(matrizBase);
+        matrizBase = Translacao(matriz, -tx, -ty);
 
         //aplica o cisalhamento e em seguida exibe na saida de informações 
         matrizResultado = multiplicarMatrizes(matrizCisalhamentoY, matrizBase);
@@ -232,11 +232,4 @@ export function cisalhamentoY(matrizBase, shy){
 // Função para verificar se a matriz está na origem
 function estaNaOrigem(matriz) {
     return matriz[0][0] === 0 && matriz[1][0] === 0;
-}
-
-// Função para transladar a matriz para a origem
-function transladarParaOrigem(matriz) {
-    const tx = matriz[0][0];
-    const ty = matriz[1][0];
-    return Translacao(matriz, -tx, -ty);
 }
