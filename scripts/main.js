@@ -109,12 +109,13 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     
     /* *************************** Area de Recorte COHEN-SUTHERLAND ********************************** */
-    const matrizAreaDeRecorte = [
-        [-250, 250, 250, -250],
-        [-200, -200, 200, 200],
-        [1, 1, 1, 1]
-    ];
-   
+    const matrizAreaDeRecorte = desenhar.areaDeRecorteCohen(altura, largura); //a funcao areaDeRecorteCohen retorna uma matriz com as coordenadas exatas do quadrado central desenhado no canvas para ser desenhado como area de recorte
+    //const matrizAreaDeRecorte = [
+    //    [-250, 250, 250, -250],
+    //    [-200, -200, 200, 200],
+    //    [1, 1, 1, 1]
+    //];
+    
     /* ****************************** Lista para saida da viewPort *********************************** */
     var listaParaAViewPort = [];
 

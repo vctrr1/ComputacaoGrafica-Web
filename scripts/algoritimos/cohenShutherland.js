@@ -41,10 +41,10 @@ export function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax, ctx , al
         var codigo2 = obterCodigo(x2, y2, xmin, ymin, xmax, ymax);
 
         
-        if (codigo1 == 0 && codigo2 == 0) {// Dentro da janela
+        if (codigo1 == 0 && codigo2 == 0) {// reta dentro da area de recorte
             aceito = true;
             feito = true;
-        } else if ((codigo1 & codigo2) != 0) {// Fora da janela
+        } else if ((codigo1 & codigo2) != 0) {// Totalmente fora da area de recorte
             limpaTela(ctx);
             desenhar.CohenSutherland(ctx, altura, largura);
             desenhar.Quadrado(matrizAreaDeRecorte, ctx);

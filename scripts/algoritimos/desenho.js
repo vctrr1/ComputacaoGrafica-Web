@@ -46,3 +46,21 @@ export function CohenSutherland(ctx, altura, largura){
     ctx.lineTo(largura / 2, altura / 6 + espacoExtraVertical);
     ctx.stroke();
 }
+
+//calcula o tamanho do quadrado central desenhado pelo desenharEixosCohenSutherland()
+//OBS: altera de alum jeito a coordenada da reta
+export function areaDeRecorteCohen(altura, largura) {
+    const espacoExtraVertical = altura / 12;
+    const espacoExtraHorizontal = largura / 12;
+    
+    const xEsquerda = -largura / 6 - espacoExtraHorizontal;
+    const xDireita = largura / 6 + espacoExtraHorizontal;
+    const yTopo = -altura / 6 - espacoExtraVertical;
+    const yBase = altura / 6 + espacoExtraVertical;
+
+
+    return [
+        [xEsquerda, xDireita, xDireita, xEsquerda], // Coordenadas X
+        [yTopo, yTopo, yBase, yBase], // Coordenadas Y
+    ];
+}
