@@ -176,32 +176,27 @@ window.onload = function() {
 
             switch(this.id){
                 case "checkTranslacao":
-                    desativaEntradasDeValoresDasTransformacoes();
-                    xTranslacao.disabled = false;
-                    yTranslacao.disabled = false;
+                    xTranslacao.disabled = !this.checked;
+                    yTranslacao.disabled = !this.checked;
                     break;
 
                 case "checkEscala":
-                    desativaEntradasDeValoresDasTransformacoes();
-                    xEscala.disabled = false;
-                    yEscala.disabled = false;
+                    xEscala.disabled = !this.checked;
+                    yEscala.disabled = !this.checked;
                     break;
 
                 case "checkRotacao":
-                    desativaEntradasDeValoresDasTransformacoes();
-                    AnguloRotacao.disabled = false;
+                    AnguloRotacao.disabled = !this.checked;
                     break;
 
                 case "checkCisalhamento":
-                    desativaEntradasDeValoresDasTransformacoes();
-                    xCisalhamento.disabled = false;
-                    yCisalhamento.disabled = false;
+                    xCisalhamento.disabled = !this.checked;
+                    yCisalhamento.disabled = !this.checked;
                     break;
 
                 case "checkReflexao":
-                    desativaEntradasDeValoresDasTransformacoes();
-                    xReflexao.disabled = false;
-                    yReflexao.disabled = false;
+                    xReflexao.disabled = !this.checked;
+                    yReflexao.disabled = !this.checked;
                 break;
                     
             }
@@ -219,13 +214,6 @@ window.onload = function() {
                 checkboxesInSub.forEach(function(cb) {
                     if (cb.id !== "xReflexao" && cb.id !== "yReflexao" && cb.checked) {
                         checkReflexaoMarcado = true;
-                    }
-                });
-
-                // Desmarca todos os outros checkboxes dentro do mesmo bloco pai
-                checkboxesInSub.forEach(function(cb) {
-                    if (cb !== checkbox && cb.id !== "xReflexao" && cb.id !== "yReflexao") {
-                        cb.checked = false;
                     }
                 });
 
