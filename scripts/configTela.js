@@ -213,26 +213,11 @@ window.onload = function() {
 
             // Se o checkbox foi marcado
             if (this.checked) {
-                //verifica se x ou y de reflexão foi marcado e deixa o checkbox de reflexao marcado
-
-                const parent = this.closest('.configPanel2D_opcoes_transformacoes');
-                const checkboxesInSub = parent.querySelectorAll('.transformacoes2D_sub input[type="checkbox"]');
-                let checkReflexaoMarcado = false;
-
-                // Verifica se algum checkbox diferente de "xReflexao" e "yReflexao" está marcado
-                checkboxesInSub.forEach(function(cb) {
-                    if (cb.id !== "xReflexao" && cb.id !== "yReflexao" && cb.checked) {
-                        checkReflexaoMarcado = true;
-                    }
-                });
-
                 // Mantem "checkReflexao" marcado se "xReflexao" ou "yReflexao" estiverem marcados
-                if ((checkbox.id === "xReflexao" || checkbox.id === "yReflexao") && checkReflexaoMarcado) {
+                if ((checkbox.id === "xReflexao" || checkbox.id === "yReflexao")) {
                     document.getElementById("checkReflexao").checked = true;
                 }
             }
-
-            
         });
     });
 
