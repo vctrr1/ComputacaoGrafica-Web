@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 # Projeto de Computação Gráfica - UEPB
 
 **Desenvolvido por** *Arthur Felipe MS - Rafel - Victor*
@@ -58,3 +59,18 @@ I) 0  a 1(janela unitária de área 1)
 - 7º [x] - Criar a função de ativar o botão de limpar, depois de ter clicado no botão transferir da viewPort
 - 8º [x] - Criar a função de ativar o botão de transferir, depois de ter desenhado algo no canvas principal
 >>>>>>> composicaoDeTransformacao
+=======
+# Projeto de Computação Gráfica - UEPB
+
+**Desenvolvido por** *Arthur Felipe MS*
+
+#### Desenvolvido com:
+
+* *Visual Studio Code*
+
+#### Tecnologias
+
+* *Javascript*
+* *HTML*
+* *CSS*
+>>>>>>> 569d2aba4990233dde54cb4f06bd2430a6ce202d
