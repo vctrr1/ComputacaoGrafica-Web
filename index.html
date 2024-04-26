@@ -1,75 +1,269 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     
-    <title>Computação Gráfica</title>
-
-    <!-- Incluir o arquivo variaveisGlobais.js -->
-    <script src="scripts/variaveisGlobais.js" defer></script>
-
-    <!-- Incluir o arquivo desenharEixosXY.js -->
-    <script src="scripts/desenharEixosXY.js" defer></script>
-
-    <!-- Incluir o arquivo atualizarCoordenadas.js -->
-    <script src="scripts/atualizarCoordenadas.js" defer></script>
+    <title>Computação Gráfica 2024.1</title>   
     
-    <!-- Incluir o arquivo adicionarEventos.js -->
-    <script src="scripts/adicionarEventos.js" defer></script>
+    <script type="module" src="scripts/main.js" ></script>    
+    <script type="module" src="scripts/configTela.js"></script>
+    <script type="module" src="scripts/algoritimos/circunferencia.js" ></script>    
+    <script type="module" src="scripts/algoritimos/cohenShutherland.js" ></script>    
+    <script type="module" src="scripts/algoritimos/desenho.js"></script>
+    <script type="module" src="scripts/algoritimos/reta.js"></script>
+    <script type="module" src="scripts/algoritimos/trasformacoes.js"></script>
+    <script type="module" src="scripts/utils/utils.js"></script>
+    <script type="module" src="scripts/utils/produtoDeMatrizes.js"></script>
 
-    <!-- Incluir o arquivo obterPosicaoDoMouse.js -->
-    <script src="scripts/obterPosicaoDoMouse.js" defer></script>
-   
 </head>
 
 <body>
 
-    <header>
-
-        <div><h2>Computação Gráfica</h2></div>
-
-        <div><h2>Arthur Felipe Muniz Sales</h2></div>
+    <!-- Informações do cabeçalho do sistema -->
+    <header class="header">
+        <div>
+            <h1>Computação Gráfica 2024</h1>
+        </div>
         
+        <div class="nomesMembros">
+            <h6>Arthur Felipe Muniz Sales -</h6>
+            <h6>- Rafael freire tertuliano -</h6>
+            <h6>- Victor Emanoel M Cabral</h6>
+        </div>
     </header>
 
     <main class="main">
 
+        <!-- PARTE DA TELA QUE FICA AS ENTRADAS E O CANVAS -->
         <div class="main_conteudo-geral">
+    
+            <!-- TUDO REFERENTE AO PAINEL ESQUERDO - ENTRADAS DE DADOS E OPÇÕES DE ESCOLHA -->
+            <section class="main_conteudo_painelConfig">
 
-            <section class="main_content-painelInfo">
+                <!-- ESCOLHA DE DESENHOS 2D OU 3D -->
+                <div class="opcaoDeDesenho">                    
+                    <label><input type="checkbox" class="opcaoEscolhida" id="2D"> 2D </label><br>
+                    <label><input type="checkbox" class="opcaoEscolhida" id="3D" disabled> 3D </label><br>
+                </div>
+
+                <!-- INFORMAÇÕES DAS COORDENADAS GERAIS -->
+                <div class="saidaDeCoordenadasTransformadas">
+
+                    <h2>Coordenadas</h2>
+
+                    <div class="informacoes" id="coordMundo">
+                        <h6>Coord. Mundo - CW</h6>
+                        <p></p>
+                    </div>
+
+                    <div class="informacoes" id="coordNorm">
+                        <h6>Coord. Norm. - NDC</h6>
+                        <p></p>
+                    </div>
+
+                    <div class="informacoes" id="coordTela">
+                        <h6>Coord. Tela - DC</h6>
+                        <p></p>
+                    </div>
+
+                </div>
+
+                <!-- ESCOLHA DOS TIPOS DE DESENHOS 2D (PIXEL - RETAS - CIRCUNFERENCIAS E TRANSFORMAÇÕES) -->
+                <div class="configPanel2D" style="display: none;">                    
+                    
+                    <label for="opcoes">Opção:</label>
+                    <select id="opcoes">
+                        <option value="opcao1">Pixel</option>
+                        <option value="opcao2">DDA</option>
+                        <option value="opcao3">Reta P.M</option>
+                        <option value="opcao4">Circun. Polinomial</option>
+                        <option value="opcao5">Circun. Trigonométrica</option>
+                        <option value="opcao6">Circunferência P.M</option>
+                        <option value="opcao7">Transformações</option>
+                        <option value="opcao8">Cohen-Sutherland</option>
+                    </select>                    
                 
-                <h2>Informações</h2>
-
-                <div class="informacoes" id="coordMundo">
-                    <h3>Coord. Mundo - CW</h3>
-                    <p></p>
                 </div>
 
-                <div class="informacoes" id="coordNorm">
-                    <h3>Coord. Norm. - NDC</h3>
-                    <p></p>
+                <!-- PAINEL ENTRADA DAS COORDENADAS DO PIXEL X - Y -->
+                <div class="configPanel2D_opcoes_pixel" style="display: none;">
+                    <h6>Digite o ponto</h6>
+
+                    <div class="entradaDeDados">                        
+                        <label>X : <input type="number" id="inputXPixel"></label><br>                        
+                        <label>Y : <input type="number" id="inputYPixel"></label>
+                    </div>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnDesenharPixel">Desenhar</button>
+                        <button id="btnLimparCanvasPixel">Limpar</button>
+                    </div>
+                    
+                    
                 </div>
 
-                <div class="informacoes" id="coordTela">
-                    <h3>Coord. Tela - DC</h3>
-                    <p></p>
+                <!-- PAINEL ENTRADA DAS COORDENADAS DAS RETAS P1(X , Y) E P2(X , Y) -->
+                <div class="configPanel2D_opcoes_retas" style="display: none;">
+                    <h6>Digite os Pontos</h6>
+
+                    <div class="configPanel2D_opcoes_retas_pontos">
+                        
+                        <div class="ponto1">
+                            <label>X1 : <input type="number" id="inputXP1"></label>
+                            <label>Y1 : <input type="number" id="inputYP1"></label>
+                        </div>
+                        <div class="ponto2">
+                            <label>X2 : <input type="number" id="inputXP2"></label>
+                            <label>Y2 : <input type="number" id="inputYP2"></label>
+                        </div>
+
+                    </div>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnDesenharReta">Desenhar</button>
+                        <button id="btnLimparReta">Limpar</button>
+                    </div>
+
                 </div>
 
+                <!-- PAINEL ENTRADA DO RAIO DA CIRCUNFERENCIA -->
+                <div class="configPanel2D_opcoes_circunferencias" style="display: none;">
+                    <h6>Digite o Raio</h6>
+
+                    <label>Raio : <input type="number" id="inputRaio"></label>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnDesenharCircunferencia">Desenhar</button>
+                        <button id="btnLimparCircunferencia">Limpar</button>
+                    </div>
+                </div>
+
+                <!-- PAINEL ENTRADA DAS OPÇÕES DE TRANSFORMAÇÕES -->
+                <div class="configPanel2D_opcoes_transformacoes" style="display: none;">
+
+                    <div class="transformacoes2D">
+                        <div class="transformacoes2D_sub">
+                            <label><input type="checkbox" id="checkTranslacao" > Translação</label>                           
+                        </div>
+                        <div class="transformacoes2D_entradas">
+                            <label>X : <input type="number" id="xTranslacao"></label>
+                            <label>Y : <input type="number" id="yTranslacao"></label> 
+                        </div>                       
+                    </div>
+
+                    <div class="transformacoes2D">
+                        <div class="transformacoes2D_sub">
+                            <label><input type="checkbox" id="checkEscala" > Escala</label>                            
+                        </div>
+                        <div class="transformacoes2D_entradas">
+                            <label>X : <input type="number" id="xEscala"></label>
+                            <label>Y : <input type="number" id="yEscala"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes2D">
+                        <div class="transformacoes2D_sub">
+                            <label><input type="checkbox" id="checkRotacao" > Rotação</label>
+                        </div>
+                        <div class="transformacoes2D_entradas">
+                            <label>Angulo : <input type="number" id="AnguloRotacao"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes2D">
+                        <div class="transformacoes2D_sub">
+                            <label><input type="checkbox" id="checkCisalhamento" > Cisalhamento</label>
+                        </div>
+                        <div class="transformacoes2D_entradas">
+                            <label>X : <input type="number" id="xCisalhamento"></label>
+                            <label>Y : <input type="number" id="yCisalhamento"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes2D">
+                        <div class="transformacoes2D_sub">
+                            <label><input type="checkbox" id="checkReflexao" > Reflexão</label>
+                        </div>
+                        <div class="transformacoes2D_entradas">
+                            <label>X : <input type="checkbox" id="xReflexao"></label>
+                            <label>Y : <input type="checkbox" id="yReflexao"></label>
+                        </div>
+                    </div>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnAplicaTransformacoes">Aplicar</button>
+                        <button id="btnLimpaTransformacoes">Limpar</button>
+                    </div>
+
+                </div>
+
+                <div class="configPanel2D_cohen-sutherland" style="display: none;">
+                    <h6>Digite os Pontos da Reta</h6>
+                    <div class="configPanel2D_opcoes_retas_pontos">
+                        <div class="ponto1">
+                            <label>X1 : <input type="number" id="inputCohenX1"></label>
+                            <label>Y1 : <input type="number" id="inputCohenY1"></label>
+                        </div>
+                        <div class="ponto2">
+                            <label>X2 : <input type="number" id="inputCohenX2"></label>
+                            <label>Y2 : <input type="number" id="inputCohenY2"></label>
+                        </div>
+                        <div class="botoesDeAtivarELimpar">
+                            <button id="btnDesenharRetaCohen">Desenhar</button>
+                            <button id="btnAplicarCohen">Aplicar</button>
+                            <button id="btnLimparRetaCohen">Limpar</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FALTA CONFIGURAR -->
+                <div class="configPanel3D" style="display: none;">
+                    <h6>asdaaasdsd Teste 3d</h6>
+                </div>
+    
             </section>
-
-            <section class="main_content-painel">
-
-                <div class="painel2D">
-                    <canvas id="canvas"></canvas>
-                </div>                
+    
+            <!-- CANVAS - ONDE SERÁ VISUALIZADO OS DESENHOS ESCOLHIDOS -->
+            <section class="main_conteudo-painelDesenho">
+                
+                <canvas id="canvas"></canvas>                                
             
             </section>
 
-        </div>
+            <!-- Canvas ViewPort - Onde sairá os dados em coordenadas do dispositivo -->
+            <section class="main_Saida-Dados">
 
-    </main>    
+                <div class="saidaViewPort">
+                    <h4>View Port</h4>
+                    <div class="delimitacaoViewPort">
+                        <canvas id="viewPortDoProjeto"></canvas>
+                    </div>                    
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnTransferirParaViewPort">Transferir</button>
+                        <button id="btnLimparViewPort">Limpar</button>
+                    </div>
+                </div>
+
+                <div class="saidaDeInformacoesGerais">
+                    <h4>Saida de Informações</h4>
+                    <div class="demilitacaoTextarea">
+                        <textarea id="textareaSaidaDeDados" spellcheck="false"></textarea>
+                    </div>
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnLimparSaidaTextarea">Limpar</button>
+                    </div>
+                </div>
+
+            </section>
+    
+        </div>
+       
+    </main>
 
 </body>
+
 </html>
