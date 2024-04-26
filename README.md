@@ -1,7 +1,5 @@
 # Projeto de Computação Gráfica - UEPB
 
-**Desenvolvido por** _Arthur Felipe MS_
-
 #### Desenvolvido com:
 
 - _Visual Studio Code_
