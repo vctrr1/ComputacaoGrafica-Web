@@ -50,6 +50,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnTransferirParaViewPort = document.getElementById('btnTransferirParaViewPort');
     const btnLimparViewPort = document.getElementById('btnLimparViewPort');
+    //botões viewPort inicial desativados
     btnTransferirParaViewPort.disabled = true;
     btnLimparViewPort.disabled = true;
 
