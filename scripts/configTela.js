@@ -176,35 +176,44 @@ window.onload = function() {
 
             switch(this.id){
                 case "checkTranslacao":
-                    xTranslacao.disabled = !this.checked;
+                    xTranslacao.disabled = !this.checked; //desativa os inputs se nao estiver marcado, !checked
                     yTranslacao.disabled = !this.checked;
+                    if(!this.checked) {xTranslacao.value = ""; yTranslacao.value = "";} //limpa os valores do input quando desmarcado
                     break;
 
                 case "checkEscala":
                     xEscala.disabled = !this.checked;
                     yEscala.disabled = !this.checked;
+                    if(!this.checked) {xEscala.value = ""; yEscala.value = "";} //limpa os valores do input quando desmarcado
                     break;
 
                 case "checkRotacao":
                     AnguloRotacao.disabled = !this.checked;
+                    if(!this.checked) AnguloRotacao.value = "";
                     break;
 
                 case "checkCisalhamento":
                     xCisalhamento.disabled = !this.checked;
                     yCisalhamento.disabled = !this.checked;
+                    if(!this.checked) {xCisalhamento.value = ""; yCisalhamento.value = "";} //limpa os valores do input quando desmarcado
                     break;
 
                 case "checkReflexao":
                     xReflexao.disabled = !this.checked;
                     yReflexao.disabled = !this.checked;
+                    if(!this.checked) {
+                        xReflexao.checked = false //desmarca checkbox x se reflexao não estiver marcado
+                        yReflexao.checked = false //desmarca checkbox y se reflexao não estiver marcado
+                        xReflexao.disabled = true; //desativa checkbox x se reflexao não estiver marcado
+                        yReflexao.disabled = true; //desativa checkbox y se reflexao não estiver marcado
+                    }
                 break;
                     
             }
 
-        
             // Se o checkbox foi marcado
             if (this.checked) {
-                //console.log(this.checked);
+                //verifica se x ou y de reflexão foi marcado e deixa o checkbox de reflexao marcado
 
                 const parent = this.closest('.configPanel2D_opcoes_transformacoes');
                 const checkboxesInSub = parent.querySelectorAll('.transformacoes2D_sub input[type="checkbox"]');
