@@ -336,6 +336,8 @@ document.addEventListener('DOMContentLoaded', () => {
         limpaTela(ctx);
         desenhar.CohenSutherland(ctx, altura, largura);
         desenhar.Quadrado(matrizAreaDeRecorte, ctx);
+        limparSaidaDeDadosTextarea();
+        setarDadosParaSaidaDeDados("\nNovas Coordenadas das Retas: \n\n");
         
         //percorre a matriz de coordenadas e redesenha as retas que foram retornadas do alg de cohen
         for(const coord of matrizCoordRetas){
