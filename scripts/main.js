@@ -67,10 +67,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputRaio = document.getElementById('inputRaio');
 
     //Seleciona elementos de input retaCohen
-    let inputCohenX1 = document.getElementById('inputCohenX1');
-    let inputCohenX2 = document.getElementById('inputCohenX2');
-    let inputCohenY1 = document.getElementById('inputCohenY1');
-    let inputCohenY2 = document.getElementById('inputCohenY2');
+    let inputRetas = document.getElementById('inputRetas');
 
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
@@ -109,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
     
     /* *************************** Area de Recorte COHEN-SUTHERLAND ********************************** */
+    let matrizCoordRetas = [];
     const matrizAreaDeRecorte = desenhar.areaDeRecorteCohen(altura, largura); //a funcao areaDeRecorteCohen retorna uma matriz com as coordenadas exatas do quadrado central desenhado no canvas para ser desenhado como area de recorte
     //const matrizAreaDeRecorte = [
     //    [-250, 250, 250, -250],
@@ -303,36 +301,53 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     btnDesenharRetaCohen.addEventListener('click', () => {
-        let X1 = parseInt(inputCohenX1.value);
-        let X2 = parseInt(inputCohenX2.value);
-        let Y1 = parseInt(inputCohenY1.value);
-        let Y2 = parseInt(inputCohenY2.value);
+        let quantRetas = parseInt(inputRetas.value);
 
-        if(isNaN(X1) || isNaN(X2) || isNaN(Y1) || isNaN(Y2)){
+        if(isNaN(quantRetas) || quantRetas <= 0){
             alert("Digite os valores validos para os pontos.");
         }
-        else {
-            DDA(X1, Y1, X2, Y2, ctx);
+        //limpa as coordenadas anteriores
+        matrizCoordRetas = []
+
+        //preenche a matriz com coordenadas aleatorias no intervalo de -700 e 700
+        for(let i = 0; i < quantRetas; i++){
+            const min = -700;
+            const max = 700;
+            
+            let X1 = Math.random() * (max - min) + min;
+            let Y1 = Math.random() * (max - min) + min;
+            let X2 = Math.random() * (max - min) + min;
+            let Y2 = Math.random() * (max - min) + min;
+
+            matrizCoordRetas.push({ X1, Y1, X2, Y2 }); // Armazena as coordenadas no array
+            DDA(X1, Y1, X2, Y2, ctx); //deseha a reta
         }
 
     });
 
     btnAplicarCohen.addEventListener('click', () => {
-        let X1 = parseInt(inputCohenX1.value);
-        let X2 = parseInt(inputCohenX2.value);
-        let Y1 = parseInt(inputCohenY1.value);
-        let Y2 = parseInt(inputCohenY2.value);
+        //armazenando xmin ymin xmax ymax da area de recort
         const xmin = matrizAreaDeRecorte[0][3];
         const ymin = matrizAreaDeRecorte[1][0];
         const xmax = matrizAreaDeRecorte[0][1];
         const ymax = matrizAreaDeRecorte[1][2];
 
-        if(isNaN(X1) || isNaN(X2) || isNaN(Y1) || isNaN(Y2)){
-            alert("Digite os valores validos para os pontos.");
+        //limpa a tela antes de redesenhar as retas
+        limpaTela(ctx);
+        desenhar.CohenSutherland(ctx, altura, largura);
+        desenhar.Quadrado(matrizAreaDeRecorte, ctx);
+        
+        //percorre a matriz de coordenadas e redesenha as retas que foram retornadas do alg de cohen
+        for(const coord of matrizCoordRetas){
+            let newCoords = cohenSutherland(coord.X1, coord.Y1, coord.X2, coord.Y2, xmin, ymin, xmax, ymax);
+
+            if (newCoords) { //se o retorno de cohenSutherland n for null redesenha as retas recortadas
+                const { x1, y1, x2, y2 } = newCoords;
+                DDA(x1, y1, x2, y2, ctx); 
+            }
+
         }
-        else {
-            cohenSutherland(X1, Y1, X2, Y2, xmin, ymin, xmax, ymax, ctx, altura, largura, matrizAreaDeRecorte);
-        }
+
     });
 
     // Ouvinte para o botão transferir para ViewPort
