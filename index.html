@@ -85,6 +85,7 @@
                         <option value="opcao7">Transformações</option>
                         <option value="opcao8">Composição</option>
                         <option value="opcao9">Cohen-Sutherland</option>
+                        <option value="opcao9">Batimentos Cardiacos</option>
                     </select>                    
                 
                 </div>
@@ -202,15 +203,10 @@
                 </div>
 
                 <div class="configPanel2D_cohen-sutherland" style="display: none;">
-                    <h6>Digite os Pontos da Reta</h6>
+                    <h6>Digite a quatidade de Retas</h6>
                     <div class="configPanel2D_opcoes_retas_pontos">
-                        <div class="ponto1">
-                            <label>X1 : <input type="number" id="inputCohenX1"></label>
-                            <label>Y1 : <input type="number" id="inputCohenY1"></label>
-                        </div>
-                        <div class="ponto2">
-                            <label>X2 : <input type="number" id="inputCohenX2"></label>
-                            <label>Y2 : <input type="number" id="inputCohenY2"></label>
+                        <div class="inputRetas">
+                           <input type="number" id="inputRetas">
                         </div>
                         <div class="botoesDeAtivarELimpar">
                             <button id="btnDesenharRetaCohen">Desenhar</button>

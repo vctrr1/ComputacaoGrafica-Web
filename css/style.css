@@ -272,6 +272,9 @@ header div, h1{
     margin-top: 12px;
     margin-bottom: 10px;
 }
+.configPanel2D_cohen-sutherland .inputRetas {
+    align-items: center;
+}
 
 /* ***************************************** SECTION main_conteudo-painelDesenho ***************************************** */
 .main_conteudo-painelDesenho{
