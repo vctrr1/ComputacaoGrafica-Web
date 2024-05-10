@@ -11,6 +11,7 @@ window.onload = function() {
     const divCircunferencias = document.querySelector('.configPanel2D_opcoes_circunferencias');
     const divTransformacoes = document.querySelector('.configPanel2D_opcoes_transformacoes');
     const divCohenSutherland = document.querySelector('.configPanel2D_cohen-sutherland');
+    const divElipse = document.querySelector('.configPanel2D_opcoes_elipse');
     
     //checkBoxes das transformações/Composição
     const checkTranslacao = document.getElementById('checkTranslacao');
@@ -70,6 +71,7 @@ window.onload = function() {
         divCircunferencias.style.display = 'none';
         divTransformacoes.style.display = 'none';
         divCohenSutherland.style.display = 'none';
+        divElipse.style.display = 'none';
     }
 
     //Chama a função que desativa as entradas assim que a página é carregada
@@ -103,16 +105,19 @@ window.onload = function() {
                     break;
 
                 case 'opcao7':
+                    divElipse.style.display = 'block';
+                    break;
+                    
+                case 'opcao8':
                     divTransformacoes.style.display = 'block';
                     break;
 
-                case 'opcao8':
-                    alert('teste');
-                    break;
-
                 case 'opcao9':
+                    break;
+                    
+                case 'opcao10':
                     divCohenSutherland.style.display = 'block';
-                break;
+                    break;
 
                 default:
                     break;
@@ -163,16 +168,21 @@ window.onload = function() {
                 break;
 
             case 'opcao7':
-                divTransformacoes.style.display = 'block';
+                divElipse.style.display = 'block';
                 verificaTipoDeFuncionamentoCheckBoxes = 'opcao7';
                 break;
-
+                
             case 'opcao8':
                 divTransformacoes.style.display = 'block';
                 verificaTipoDeFuncionamentoCheckBoxes = 'opcao8';
                 break;
-
+                    
             case 'opcao9':
+                divTransformacoes.style.display = 'block';
+                verificaTipoDeFuncionamentoCheckBoxes = "";
+                break;
+                
+            case 'opcao10':
                 divCohenSutherland.style.display = 'block';
                 verificaTipoDeFuncionamentoCheckBoxes = "";
                 break;
@@ -196,7 +206,7 @@ window.onload = function() {
         checkbox.addEventListener('click', function() {
 
             //Informações para transformações dos checkboxes
-            if(verificaTipoDeFuncionamentoCheckBoxes === 'opcao7'){
+            if(verificaTipoDeFuncionamentoCheckBoxes === 'opcao8'){
                 if(this.id === "checkTranslacao"){                
                     if(checkbox.checked){
                         desmarcaCheckBoxesTransComp();
@@ -272,7 +282,7 @@ window.onload = function() {
             }
 
             //Informações para composição dos checkboxes
-            else if(verificaTipoDeFuncionamentoCheckBoxes === 'opcao8'){
+            else if(verificaTipoDeFuncionamentoCheckBoxes === 'opcao9'){
                 if(this.id === "checkTranslacao"){                
                     if(checkbox.checked){
                         xTranslacao.disabled = false;

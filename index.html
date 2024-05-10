@@ -77,14 +77,15 @@
                     <label for="opcoes">Opção:</label>
                     <select id="opcoes">
                         <option value="opcao1">Pixel</option>
-                        <option value="opcao2">DDA</option>
-                        <option value="opcao3">Reta P.M</option>
-                        <option value="opcao4">Circun. Polinomial</option>
-                        <option value="opcao5">Circun. Trigonométrica</option>
-                        <option value="opcao6">Circunferência P.M</option>
-                        <option value="opcao7">Transformações</option>
-                        <option value="opcao8">Composição</option>
-                        <option value="opcao9">Cohen-Sutherland</option>
+                        <option value="opcao2">Reta DDA</option>
+                        <option value="opcao3">Reta Ponto Medio</option>
+                        <option value="opcao4">Circunf. Polinomial</option>
+                        <option value="opcao5">Circunf. Trigonométrica</option>
+                        <option value="opcao6">Circunf. Ponto Medio</option>
+                        <option value="opcao7">Elipse</option>
+                        <option value="opcao8">Transformações</option>
+                        <option value="opcao9">Composição</option>
+                        <option value="opcao10">Cohen-Sutherland</option>
                     </select>                    
                 
                 </div>
@@ -140,6 +141,30 @@
                         <button id="btnDesenharCircunferencia">Desenhar</button>
                         <button id="btnLimparCircunferencia">Limpar</button>
                     </div>
+                </div>
+
+                <!-- PAINEL ENTRADA DO RAIO E ORIGEM DA ELIPSE -->
+                <div class="configPanel2D_opcoes_elipse" style="display: none;">
+                    <h6>Digite os Pontos</h6>
+
+                    <div class="configPanel2D_opcoes_elipse_pontos">
+                        
+                        <div class="ponto1">
+                            <label>X Origem: <input type="number" id="inputElipseX"></label>
+                            <label>Y Origem: <input type="number" id="inputElipseY"></label>
+                        </div>
+                        <div class="ponto2">
+                            <label>Raio X: <input type="number" id="inputElipseRaioX"></label>
+                            <label>Raio Y: <input type="number" id="inputElipseRaioY"></label>
+                        </div>
+
+                    </div>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnElipse">Desenhar</button>
+                        <button id="btnLimparElipse">Limpar</button>
+                    </div>
+
                 </div>
 
                 <!-- PAINEL ENTRADA DAS OPÇÕES DE TRANSFORMAÇÕES -->

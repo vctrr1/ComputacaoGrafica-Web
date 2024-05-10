@@ -45,6 +45,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const btnDesenharRetaCohen = document.getElementById('btnDesenharRetaCohen');
     const btnLimparRetaCohen = document.getElementById('btnLimparRetaCohen');
     const btnAplicarCohen = document.getElementById('btnAplicarCohen');
+    const inputRetas = document.getElementById('inputRetas');
 
     const btnLimparSaidaTextarea = document.getElementById('btnLimparSaidaTextarea');
 
@@ -65,9 +66,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Seleciona o elemento do input Do Raio
     const inputRaio = document.getElementById('inputRaio');
-
-    //Seleciona elementos de input retaCohen
-    let inputRetas = document.getElementById('inputRetas');
 
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
@@ -417,19 +415,19 @@ document.addEventListener('DOMContentLoaded', () => {
     inputOpcoes.addEventListener('change', () => {
         var opcaoSelecionada = inputOpcoes.value;
 
-        if(opcaoSelecionada === "opcao7"){
-            limpaTela(ctx);
-            limparSaidaDeDadosTextarea();
-            desenhar.Eixos2D(ctx, canvas);
-            desenhar.Quadrado(matrizBaseGeral, ctx);
-        }
-        else if(opcaoSelecionada === "opcao8"){
+        if(opcaoSelecionada === "opcao8"){
             limpaTela(ctx);
             limparSaidaDeDadosTextarea();
             desenhar.Eixos2D(ctx, canvas);
             desenhar.Quadrado(matrizBaseGeral, ctx);
         }
         else if(opcaoSelecionada === "opcao9"){
+            limpaTela(ctx);
+            limparSaidaDeDadosTextarea();
+            desenhar.Eixos2D(ctx, canvas);
+            desenhar.Quadrado(matrizBaseGeral, ctx);
+        }
+        else if(opcaoSelecionada === "opcao10"){
             limpaTela(ctx);
             limparSaidaDeDadosTextarea();
             desenhar.CohenSutherland(ctx, altura,largura);
