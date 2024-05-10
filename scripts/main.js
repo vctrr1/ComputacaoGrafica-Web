@@ -1,5 +1,6 @@
 import { DDA, retaPontoMedio } from './algoritimos/reta.js';
 import { circunferenciaPolinomial, circunferenciaTrigonometrica, circunferenciaPontoMedio } from './algoritimos/circunferencia.js';
+import { elipsePontoMedio } from './algoritimos/elipse.js';
 import { Translacao, Escala, Rotacao, ReflexaoX, ReflexaoY, cisalhamentoX, cisalhamentoY } from './algoritimos/trasformacoes.js';
 import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaDeDados } from './utils/utils.js';
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
@@ -38,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnLimparCircunferencia = document.getElementById('btnLimparCircunferencia');
     const btnDesenharCircunferencia = document.getElementById('btnDesenharCircunferencia');
+
+    const btnLimparElipse = document.getElementById('btnLimparElipse');
+    const btnDesenharElipse = document.getElementById('btnDesenharElipse');
     
     const btnAplicaTransformacoes = document.getElementById('btnAplicaTransformacoes');
     const btnLimpaTransformacoes = document.getElementById('btnLimpaTransformacoes');
@@ -66,6 +70,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Seleciona o elemento do input Do Raio
     const inputRaio = document.getElementById('inputRaio');
+
+    //seleciona os elementos de input da Elipse
+    const inputOrigemX = document.getElementById("inputElipseX");
+    const inputOrigemY = document.getElementById("inputElipseY");
+    const inputElipseRaioX = document.getElementById("inputElipseRaioX");
+    const inputElipseRaioY = document.getElementById("inputElipseRaioY");
 
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
@@ -148,7 +158,16 @@ document.addEventListener('DOMContentLoaded', () => {
         // Limpa o conteúdo do canvas
         limpaTela(ctx);
         limparSaidaDeDadosTextarea();
-    })
+    });
+
+    btnLimparElipse.addEventListener('click', () => {
+        //desativa os botoes da viewPort apos limpar desenho
+        btnTransferirParaViewPort.disabled = true;
+
+        // Limpa o conteúdo do canvas
+        limpaTela(ctx);
+        limparSaidaDeDadosTextarea();
+    });
 
     // Ouvinte de evento para o botão "LimparTransformações"
     btnLimpaTransformacoes.addEventListener('click', () => {
@@ -165,7 +184,7 @@ document.addEventListener('DOMContentLoaded', () => {
         desenhar.Eixos2D(ctx, canvas);
         desenhar.Quadrado(matrizBaseGeral, ctx);
         limparSaidaDeDadosTextarea();
-    })
+    });
 
     // Ouvinte de evento para o botão "LimparRetaCohen"
     btnLimparRetaCohen.addEventListener('click', () => {
@@ -173,14 +192,14 @@ document.addEventListener('DOMContentLoaded', () => {
         desenhar.CohenSutherland(ctx, altura,largura);
         desenhar.Quadrado(matrizAreaDeRecorte, ctx);
         limparSaidaDeDadosTextarea();
-    })
+    });
 
     btnLimparViewPort.addEventListener('click', () => {
         //desativa botão de limpar apos click
         btnLimparViewPort.disabled = true;
 
         limpaTela(ctxViewPort);
-    })
+    });
 
     //Ouvinte de evento para o botão limpar saida do textarea
     btnLimparSaidaTextarea.addEventListener('click', () => {
@@ -191,8 +210,8 @@ document.addEventListener('DOMContentLoaded', () => {
     btnDesenharPixel.addEventListener('click', () => {
 
         // Obtém os valores dos inputs
-        var valorX = parseInt(inputXPixel.value);
-        var valorY = parseInt(inputYPixel.value);
+        let valorX = parseInt(inputXPixel.value);
+        let valorY = parseInt(inputYPixel.value);
 
         if(isNaN(valorX) || isNaN(valorY)){
             alert("Digite os valores do ponto.");
@@ -200,8 +219,7 @@ document.addEventListener('DOMContentLoaded', () => {
         else{
             ativaPixel(canvas.getContext('2d'), valorX, valorY);            
             setarDadosParaSaidaDeDados("\nFunção de Ativação de PIXEL.\n\n" + 
-                "P( X , Y )\n" +
-                "P( "+ valorX.toFixed(0) + " , " + valorY.toFixed(0) + " )\t\n" 
+                "P( X: " + valorX.toFixed(0) + " , Y: " + valorY.toFixed(0) + " )\n"
             );
         }        
         
@@ -214,10 +232,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
         limparSaidaDeDadosTextarea();
         // Obtém os valores dos inputs
-        var valorXP1 = parseInt(inputXP1.value);
-        var valorYP1 = parseInt(inputYP1.value);
-        var valorXP2 = parseInt(inputXP2.value);
-        var valorYP2 = parseInt(inputYP2.value);
+        let valorXP1 = parseInt(inputXP1.value);
+        let valorYP1 = parseInt(inputYP1.value);
+        let valorXP2 = parseInt(inputXP2.value);
+        let valorYP2 = parseInt(inputYP2.value);
 
         if(isNaN(valorXP1) || isNaN(valorYP1) || isNaN(valorXP2) || isNaN(valorYP2) ){
             alert("Digite os valores dos pontos.");
@@ -232,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             });
             // Obtém a opção selecionada
-            var opcaoSelecionada = document.getElementById('opcoes').value;
+            let opcaoSelecionada = document.getElementById('opcoes').value;
 
             switch(opcaoSelecionada){                
                 case "opcao2":
@@ -258,7 +276,7 @@ document.addEventListener('DOMContentLoaded', () => {
         btnTransferirParaViewPort.disabled = false;
         limparSaidaDeDadosTextarea();
         //Obtem o raio
-        var raio = parseInt(inputRaio.value);
+        let raio = parseInt(inputRaio.value);
 
         if(isNaN(raio)){
             alert('Digite o Raio.');
@@ -271,7 +289,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Obtém a opção selecionada
-            var opcaoSelecionada = document.getElementById('opcoes').value;
+            let opcaoSelecionada = document.getElementById('opcoes').value;
 
             switch(opcaoSelecionada){
                 case "opcao4":
@@ -287,6 +305,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             }
         }
+    });
+
+    //Ouvinte de evento para o botão "Desenhar Elipse"
+    btnDesenharElipse.addEventListener('click', () => {
+        
+        let OrigemX = parseInt(inputOrigemX.value);
+        let OrigemY = parseInt(inputOrigemY.value);
+        let inputRaioX = parseInt(inputElipseRaioX.value);
+        let inputRaioY = parseInt(inputElipseRaioY.value);
+
+        if(isNaN(inputRaioX) || isNaN(inputRaioY)){
+            alert("Digite valores validos.");
+        }else {
+            //se deixar o input em branco abribui 0 as variaveis para ser desenhado com o centro na origem
+            if(!OrigemX && !OrigemY){OrigemX = 0; OrigemY = 0;}
+            //chama o algoritmo de desenho da elipse
+            elipsePontoMedio(OrigemX, OrigemY, inputRaioX, inputRaioY, ctx);
+        }
+
     });
 
     // Aplica a transformação desejada quando o botão é clicado
@@ -414,8 +451,12 @@ document.addEventListener('DOMContentLoaded', () => {
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
     inputOpcoes.addEventListener('change', () => {
         var opcaoSelecionada = inputOpcoes.value;
-
-        if(opcaoSelecionada === "opcao8"){
+        if(opcaoSelecionada === "opcao7"){
+            limpaTela(ctx);
+            limparSaidaDeDadosTextarea();
+            desenhar.Eixos2D(ctx, canvas);
+        }
+        else if(opcaoSelecionada === "opcao8"){
             limpaTela(ctx);
             limparSaidaDeDadosTextarea();
             desenhar.Eixos2D(ctx, canvas);
