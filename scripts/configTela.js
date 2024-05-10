@@ -169,7 +169,7 @@ window.onload = function() {
 
             case 'opcao7':
                 divElipse.style.display = 'block';
-                verificaTipoDeFuncionamentoCheckBoxes = 'opcao7';
+                verificaTipoDeFuncionamentoCheckBoxes = "";
                 break;
                 
             case 'opcao8':
@@ -179,7 +179,7 @@ window.onload = function() {
                     
             case 'opcao9':
                 divTransformacoes.style.display = 'block';
-                verificaTipoDeFuncionamentoCheckBoxes = "";
+                verificaTipoDeFuncionamentoCheckBoxes = "opcao9";
                 break;
                 
             case 'opcao10':
@@ -294,7 +294,7 @@ window.onload = function() {
                         yTranslacao.value = "";
                         xTranslacao.disabled = true;
                         yTranslacao.disabled = true;
-                    }                
+                    }
                 }
                 else if(this.id === "checkEscala"){                
                     if(checkbox.checked){                        
