@@ -25,3 +25,5 @@
 - 8º [x] - Criar a função de ativar o botão de transferir, depois de ter desenhado algo no canvas principal
 - 9º [] - Implementar funcionalidades do checkbox 3D
 - 10º [] - Implementar transformações 3d
+- 11º [x] - Implementar alg. Elipse Ponto Medio
+- 10º [] - Implementar transferencia de Elipse para viewPort

@@ -309,7 +309,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     //Ouvinte de evento para o botão "Desenhar Elipse"
     btnDesenharElipse.addEventListener('click', () => {
-        
+        btnTransferirParaViewPort.disabled = false;
+        limparSaidaDeDadosTextarea();
+
         let OrigemX = parseInt(inputOrigemX.value);
         let OrigemY = parseInt(inputOrigemY.value);
         let inputRaioX = parseInt(inputElipseRaioX.value);
@@ -451,12 +453,8 @@ document.addEventListener('DOMContentLoaded', () => {
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
     inputOpcoes.addEventListener('change', () => {
         var opcaoSelecionada = inputOpcoes.value;
-        if(opcaoSelecionada === "opcao7"){
-            limpaTela(ctx);
-            limparSaidaDeDadosTextarea();
-            desenhar.Eixos2D(ctx, canvas);
-        }
-        else if(opcaoSelecionada === "opcao8"){
+
+        if(opcaoSelecionada === "opcao8"){
             limpaTela(ctx);
             limparSaidaDeDadosTextarea();
             desenhar.Eixos2D(ctx, canvas);
