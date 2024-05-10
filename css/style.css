@@ -100,7 +100,7 @@ header div, h1{
     margin-bottom: 1px;
 }
 
-/* ************ DIV configPanel2D ************ */
+/* ******************* DIV configPanel2D ******************** */
 .configPanel2D{
     display: flex;
     flex-direction: row;
@@ -116,7 +116,7 @@ header div, h1{
     padding-bottom: 5px;
 }
 
-/* ************ DIV configPanel2D_opcoes_pixel ************ */
+/* ****************** DIV configPanel2D_opcoes_pixel ****************** */
 .configPanel2D_opcoes_pixel{
     display: flex;
     flex-direction: row;
@@ -137,7 +137,7 @@ header div, h1{
     height: 15px; /* Define a altura */ 
 }
 
-/* ************ DIV configPanel2D_opcoes_retas ************ */
+/* *************** DIV configPanel2D_opcoes_retas *************** */
 .configPanel2D_opcoes_retas{
     display: flex;
     flex-direction: column;
@@ -214,6 +214,38 @@ header div, h1{
     width: 88%; /* Define a largura */
     height: 15px; /* Define a altura */ 
 }
+
+/* ***************** DIV configPanel2D_opcoes_elipse ***************** */
+.configPanel2D_opcoes_elipse{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel2D_opcoes_elipse h6{
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+.configPanel2D_opcoes_elipse label {
+    font-size: 14px; /* Define o tamanho da fonte desejado */
+}
+
+.configPanel2D_opcoes_elipse_pontos{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.configPanel2D_opcoes_elipse_pontos input[type="number"]{
+    width: 88%; /* Define a largura */
+    height: 15px; /* Define a altura */ 
+}
+
 
 /* ************ DIV configPanel2D_opcoes_transformacoes ************ */
 .configPanel2D_opcoes_transformacoes{
@@ -377,32 +409,3 @@ header div, h1{
     margin-bottom: 5px;
 }
 
-.configPanel2D_opcoes_elipse{
-    display: flex;
-    flex-direction: column;
-    border: 2px solid #000;
-    text-align: center;
-    margin-bottom: 5px;
-    padding-top: 10px;
-    padding-bottom: 10px;
-}
-
-.configPanel2D_opcoes_elipse h6{
-    margin-top: 5px;
-    margin-bottom: 12px;
-}
-
-.configPanel2D_opcoes_elipse label {
-    font-size: 14px; /* Define o tamanho da fonte desejado */
-}
-
-.configPanel2D_opcoes_elipse_pontos{
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-}
-
-.configPanel2D_opcoes_elipse_pontos input[type="number"]{
-    width: 88%; /* Define a largura */
-    height: 15px; /* Define a altura */ 
-}
