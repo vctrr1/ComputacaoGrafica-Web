@@ -1,6 +1,6 @@
 window.onload = function() {
     
-    //Manipulação de elementos para serem visíveis ou não, de acordo com opções selecionadas
+    // Manipulação de elementos para serem visíveis ou não, de acordo com opções selecionadas
     const checkbox2D = document.getElementById('2D');
     const checkbox3D = document.getElementById('3D');
     const div2D = document.querySelector('.configPanel2D');
@@ -13,7 +13,7 @@ window.onload = function() {
     const divCohenSutherland = document.querySelector('.configPanel2D_cohen-sutherland');
     const divElipse = document.querySelector('.configPanel2D_opcoes_elipse');
     
-    //checkBoxes das transformações/Composição
+    // CheckBoxes das transformações/Composição
     const checkTranslacao = document.getElementById('checkTranslacao');
     const checkEscala = document.getElementById('checkEscala');
     const checkRotacao = document.getElementById('checkRotacao');
@@ -23,7 +23,7 @@ window.onload = function() {
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
 
-    // inputs de entradas das transformações
+    // Inputs de entradas das transformações
     const xTranslacao = document.getElementById('xTranslacao');
     const yTranslacao = document.getElementById('yTranslacao');
     const xEscala = document.getElementById('xEscala');
@@ -34,10 +34,10 @@ window.onload = function() {
     const xReflexao =  document.getElementById('xReflexao');
     const yReflexao = document.getElementById('yReflexao');    
 
-    //variavel para controle dos checkboxes das transformações/composição
+    // Variável para controle dos checkboxes das transformações/composição
     let verificaTipoDeFuncionamentoCheckBoxes = "";
 
-    //Função para desativar TODAS as entradas de valores
+    // Função para desativar TODAS as entradas de valores
     function desativaEntradasDeValoresDasTransformacoes(){
         xTranslacao.disabled = true;
         yTranslacao.disabled = true;
@@ -53,7 +53,7 @@ window.onload = function() {
         limpaCampoDasEntradas();
     }
 
-    //Função para limpar os campos de entradas
+    // Função para limpar os campos de entradas
     function limpaCampoDasEntradas(){
         xTranslacao.value = "";
         yTranslacao.value = "";
@@ -64,7 +64,7 @@ window.onload = function() {
         yCisalhamento.value = "";
     }
 
-    //Desativa todas as divs referentes a div 2D
+    // Desativa todas as divs referentes a div 2D
     function desativaDivs2D(){
         divPixel.style.display = 'none';
         divRetas.style.display = 'none';
@@ -74,12 +74,11 @@ window.onload = function() {
         divElipse.style.display = 'none';
     }
 
-    //Chama a função que desativa as entradas assim que a página é carregada
+    // Chama a função que desativa as entradas assim que a página é carregada
     desativaEntradasDeValoresDasTransformacoes();
 
     // Ativa/mostra as divs que correspondem a marcação do input do value
-    checkbox2D.addEventListener('change', function() {        
-        
+    checkbox2D.addEventListener('change', function() {         
         desativaDivs2D();
 
         if (this.checked) {
@@ -130,19 +129,7 @@ window.onload = function() {
         }
     });
 
-    /* ****** PARA O 3D
-    checkbox3D.addEventListener('change', function() {
-        if (this.checked) {
-            checkbox2D.checked = false;
-            div3D.style.display = 'block';
-            div2D.style.display = 'none';
-        } else {
-            div3D.style.display = 'none';
-        }
-    });
-    */
-
-     // Evento de alteração do select
+    // Evento de alteração do select
     selectOpcoes.addEventListener('change', function() {
         // Esconde todas as divs relacionadas à opção 2D
         desativaDivs2D();
@@ -192,7 +179,7 @@ window.onload = function() {
         }
     });    
 
-    // função para desmarcar todos os checkboxes
+    // Função para desmarcar todos os checkboxes
     function desmarcaCheckBoxesTransComp(){
         checkTranslacao.checked = false;
         checkEscala.checked = false;
@@ -205,7 +192,7 @@ window.onload = function() {
     checkboxes.forEach(function(checkbox) {        
         checkbox.addEventListener('click', function() {
 
-            //Informações para transformações dos checkboxes
+            // Informações para transformações dos checkboxes
             if(verificaTipoDeFuncionamentoCheckBoxes === 'opcao8'){
                 if(this.id === "checkTranslacao"){                
                     if(checkbox.checked){
@@ -281,7 +268,7 @@ window.onload = function() {
                 }
             }
 
-            //Informações para composição dos checkboxes
+            // Informações para composição dos checkboxes
             else if(verificaTipoDeFuncionamentoCheckBoxes === 'opcao9'){
                 if(this.id === "checkTranslacao"){                
                     if(checkbox.checked){
@@ -351,6 +338,6 @@ window.onload = function() {
             
         });
         
-    });
+    });    
 
 };

@@ -248,23 +248,23 @@
             </section>
     
             <!-- CANVAS - ONDE SERÁ VISUALIZADO OS DESENHOS ESCOLHIDOS -->
-            <section class="main_conteudo-painelDesenho">
-                
-                <canvas id="canvas"></canvas>                                
-            
+            <section class="main_conteudo-painelDesenho">                
+                <canvas id="canvas"></canvas>           
             </section>
 
             <!-- Canvas ViewPort - Onde sairá os dados em coordenadas do dispositivo -->
             <section class="main_Saida-Dados">
 
-                <div class="saidaViewPort">
+                <div class="saidaViewPort"> 
                     <h4>View Port</h4>
                     <div class="delimitacaoViewPort">
                         <canvas id="viewPortDoProjeto"></canvas>
-                    </div>                    
+                    </div>
+                                        
                     <div class="botoesDeAtivarELimpar">
                         <button id="btnTransferirParaViewPort">Transferir</button>
                         <button id="btnLimparViewPort">Limpar</button>
+                        <button id="btnVisualizar">VP User</button>
                     </div>
                 </div>
 
@@ -279,7 +279,22 @@
                 </div>
 
             </section>
-    
+            
+            <section id="canvasContainer" class="canvas-container" style="display: none;">
+                <canvas id="canvass"></canvas>
+                <button id="fecharCanvas">X</button>
+            </section>
+
+            <section id="canvasModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Defina o tamanho do canvas:</p>
+                    <input type="number" id="larguraCanvas" placeholder="Largura">
+                    <input type="number" id="alturaCanvas" placeholder="Altura">
+                    <button id="criarCanvas">Criar Canvas</button>
+                </div>
+            </section>
+            
         </div>
        
     </main>

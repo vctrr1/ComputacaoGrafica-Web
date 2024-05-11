@@ -76,6 +76,20 @@ function calcularMatrizViewport(Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax) 
     const scaleX = (Umax - Umin) / (Xmax - Xmin);
     const scaleY = (Vmax - Vmin) / (Ymax - Ymin);
 
+    // Matriz de translação reversa T(-Xmin, -Ymin)
+    const matrizTranslacaoReversa = [
+        [1, 0, -Xmin],
+        [0, 1, -Ymin],
+        [0, 0, 1]
+    ];
+
+    // Matriz de escala S(Umax - Umin / Xmax - Xmin, Vmax - Vmin / Ymax - Ymin)
+    const matrizEscala = [
+        [scaleX, 0, 0],
+        [0, scaleY, 0],
+        [0, 0, 1]
+    ];
+
     // Matriz de translação T(Um, Vm)
     const matrizTranslacao = [
         [1, 0, Umin],
@@ -83,23 +97,11 @@ function calcularMatrizViewport(Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax) 
         [0, 0, 1]
     ];
     
-    // Matriz de escala S(Umax - Umin / Xmax - Xmin, Vmax - Vmin / Ymax - Ymin)
-    const matrizEscala = [
-        [scaleX, 0, 0],
-        [0, scaleY, 0],
-        [0, 0, 1]
-    ];
-    
-    // Matriz de translação reversa T(-Xmin, -Ymin)
-    const matrizTranslacaoReversa = [
-        [1, 0, -Xmin],
-        [0, 1, -Ymin],
-        [0, 0, 1]
-    ];
-    
     // Multiplica as matrizes na ordem correta
-    const M1 = multiplicarMatrizes(matrizTranslacao, matrizEscala);
-    const M = multiplicarMatrizes(M1, matrizTranslacaoReversa);
+    //const M1 = multiplicarMatrizes(matrizTranslacao, matrizEscala);
+    //const M = multiplicarMatrizes(M1, matrizTranslacaoReversa);
+    const M1 = multiplicarMatrizes(matrizTranslacaoReversa, matrizEscala);
+    const M = multiplicarMatrizes(M1, matrizTranslacao);
     
     return M;
 }
