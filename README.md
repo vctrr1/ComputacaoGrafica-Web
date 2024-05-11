@@ -26,4 +26,5 @@
 - 9º [] - Implementar funcionalidades do checkbox 3D
 - 10º [] - Implementar transformações 3d
 - 11º [x] - Implementar alg. Elipse Ponto Medio
-- 10º [] - Implementar transferencia de Elipse para viewPort
+- 12º [] - Implementar transferencia de Elipse para viewPort
+- 13º [] - Implementar visualizações
