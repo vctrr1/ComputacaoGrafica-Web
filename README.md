@@ -23,7 +23,7 @@
 - 6º [x] - Criar a função( do botão) de limpar da viewPort
 - 7º [x] - Criar a função de ativar o botão de limpar, depois de ter clicado no botão transferir da viewPort
 - 8º [x] - Criar a função de ativar o botão de transferir, depois de ter desenhado algo no canvas principal
-- 9º [] - Implementar funcionalidades do checkbox 3D
+- 9º [x] - Implementar funcionalidades do checkbox 3D
 - 10º [] - Implementar transformações 3d
 - 11º [x] - Implementar alg. Elipse Ponto Medio
 - 12º [] - Implementar transferencia de Elipse para viewPort
