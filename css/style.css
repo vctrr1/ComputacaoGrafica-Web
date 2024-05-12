@@ -116,6 +116,22 @@ header div, h1{
     padding-bottom: 5px;
 }
 
+/* ******************* DIV configPanel3D ******************** */
+.configPanel3D{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel3D select {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
 /* ****************** DIV configPanel2D_opcoes_pixel ****************** */
 .configPanel2D_opcoes_pixel{
     display: flex;
@@ -291,6 +307,71 @@ header div, h1{
 .transformacoes2D_entradas input[type="number"]{
     width: 60px; /* Define a largura */
     height: 15px; /* Define a altura */
+}
+
+/* ************ DIV configPanel3D_opcoes_transformacoes ************ */
+.configPanel3D_opcoes_transformacoes{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.transformacoes3D:not(:first-child){
+     /*Aplicando a regra a todas as classes transformacoes3D(menos na primeira encontrada) */
+     border-top: 1px dashed #000;
+}
+
+.transformacoes3D{
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+}
+
+.transformacoes3D_sub{
+    display: flex;
+    flex-direction: row;
+    justify-content: left; 
+    text-align: center;
+    margin-top: 5px;   
+}
+
+.transformacoes3D_sub label{
+    font-size: 15px;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.transformacoes3D_entradas{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    margin-bottom: 5px;
+}
+
+.transformacoes3D_entradas input[type="number"]{
+    width: 30px; /* Define a largura */
+    height: 15px; /* Define a altura */
+}
+
+/* ************ DIV configPanel3D_opcoes_projecoes ************ */
+.configPanel3D_opcoes_projecoes{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.projecoes3D{
+    padding-bottom: 15px;
+}
+
+#btnAplicaProjecoes{
+    display: block;
+    margin: 0 auto;
 }
 
 /* ************ DIV configPanel2D_cohen-sutherland ************ */

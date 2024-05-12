@@ -12,7 +12,6 @@ export function ativaPixel(tipoCanvas, X, Y){
 export function limpaTela(ctx){
     // Limpa o conteúdo do canvas
     ctx.clearRect(-canvas.width / 2, -canvas.height / 2, canvas.width, canvas.height);
-    //Limpa tudo da lista da viewPort
 }
 
 /* ***************************** text area *********************************/

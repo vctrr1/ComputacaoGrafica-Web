@@ -78,7 +78,6 @@ export function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax) {
         //retorna os pontos da reja recortada para ser redenhada no canvas
         return {x1, y1, x2, y2};
     } else {
-        console.log("Linha Rejeitada");
         return null;
     }
 }

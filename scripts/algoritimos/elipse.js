@@ -10,7 +10,7 @@ export function elipsePontoMedio(xCenter, yCenter, Rx, Ry, ctx) {
     let y = Ry;
     let px = 0;
     let py = twoRx2 * y;
-
+    
     setarDadosParaSaidaDeDados("\nElipse Ponto Médio.\n\n" + 
         "X Origem: " + xCenter + "\nY Origem: " + yCenter + "\n" +
         "Raio de X: " + Rx + "\n" + 

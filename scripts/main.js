@@ -80,8 +80,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputElipseRaioY = document.getElementById("inputElipseRaioY");
 
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
-    const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
-    const inputOpcoes = document.getElementById("opcoes");
+    //const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
+    const inputOpcoes2D = document.getElementById("opcoes2D");
+
+    const inputOpcoes3D = document.getElementById('opcoes3D');
     
     //const canvas_container = document.querySelector('.canvas-container');
     
@@ -274,11 +276,6 @@ document.addEventListener('DOMContentLoaded', () => {
     /* *************************** Area de Recorte COHEN-SUTHERLAND ********************************** */
     let matrizCoordRetas = [];
     const matrizAreaDeRecorte = desenhar.areaDeRecorteCohen(altura, largura); //a funcao areaDeRecorteCohen retorna uma matriz com as coordenadas exatas do quadrado central desenhado no canvas para ser desenhado como area de recorte
-    //const matrizAreaDeRecorte = [
-    //    [-250, 250, 250, -250],
-    //    [-200, -200, 200, 200],
-    //    [1, 1, 1, 1]
-    //];
     
     /* ****************************** Lista para saida da viewPort *********************************** */
     var listaParaAViewPort = [];
@@ -425,7 +422,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 break;
             }
         }        
-        //console.log(listaParaAViewPort);
         
     });
 
@@ -560,8 +556,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let Ymin = 0;
         let Ymax = canvas.height;
 
-        //console.log("listaParaAViewPort", listaParaAViewPort);
-
         // Processa a lista de dados para ViewPort
         listaParaAViewPort.forEach(entrada => {
             if (entrada.tipo === 'reta') {
@@ -604,15 +598,31 @@ document.addEventListener('DOMContentLoaded', () => {
         let Umax = larguraVP;
         let Vmin = 0;
         let Vmax = alturaVP;
-        //console.log(`Xmin: ${Xmin}, Xmax: ${Xmax}, Ymin: ${Ymin}, Ymax: ${Ymax}`);
-        //console.log("listaParaAViewPort", listaParaAViewPort);
+
         // Chama a função processarListaViewport com os valores calculados
         processarListaViewport(listaParaAViewPort, Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax, ctxViewPort);
     });
 
+    inputOpcoes3D.addEventListener('change', () =>{
+        var opcao = inputOpcoes3D.value;
+
+        if(opcao === "opcao1"){
+            limpaTela(ctx);
+            limparSaidaDeDadosTextarea();
+            desenhar.Eixos3D(ctx, canvas);
+            /* CRIAR FUNÇÃO DE DESENHAR CUBO */
+        }
+        else if(opcao === "opcao2"){
+            limpaTela(ctx);
+            limparSaidaDeDadosTextarea();
+            desenhar.Eixos3D(ctx, canvas);
+            /* .... */
+        }
+    });
+
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
-    inputOpcoes.addEventListener('change', () => {
-        var opcaoSelecionada = inputOpcoes.value;
+    inputOpcoes2D.addEventListener('change', () => {
+        var opcaoSelecionada = inputOpcoes2D.value;
 
         if(opcaoSelecionada === "opcao8"){
             limpaTela(ctx);

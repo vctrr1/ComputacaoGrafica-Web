@@ -46,7 +46,7 @@
                 <!-- ESCOLHA DE DESENHOS 2D OU 3D -->
                 <div class="opcaoDeDesenho">                    
                     <label><input type="checkbox" class="opcaoEscolhida" id="2D"> 2D </label><br>
-                    <label><input type="checkbox" class="opcaoEscolhida" id="3D" disabled> 3D </label><br>
+                    <label><input type="checkbox" class="opcaoEscolhida" id="3D"> 3D </label><br>
                 </div>
 
                 <!-- INFORMAÇÕES DAS COORDENADAS GERAIS -->
@@ -71,11 +71,13 @@
 
                 </div>
 
+                <!-- ******************************************** 2D ********************************************-->
+
                 <!-- ESCOLHA DOS TIPOS DE DESENHOS 2D (PIXEL - RETAS - CIRCUNFERENCIAS E TRANSFORMAÇÕES) -->
                 <div class="configPanel2D" style="display: none;">                    
                     
-                    <label for="opcoes">Opção:</label>
-                    <select id="opcoes">
+                    <label for="opcoes2D">Opção:</label>
+                    <select id="opcoes2D">
                         <option value="opcao1">Pixel</option>
                         <option value="opcao2">Reta DDA</option>
                         <option value="opcao3">Reta Ponto Medio</option>
@@ -167,7 +169,7 @@
 
                 </div>
 
-                <!-- PAINEL ENTRADA DAS OPÇÕES DE TRANSFORMAÇÕES -->
+                <!-- PAINEL ENTRADA DAS OPÇÕES DE TRANSFORMAÇÕES 2D-->
                 <div class="configPanel2D_opcoes_transformacoes" style="display: none;">
 
                     <div class="transformacoes2D">
@@ -240,9 +242,100 @@
                     </div>
                 </div>
 
-                <!-- FALTA CONFIGURAR -->
+
+                <!-- ******************************************** 3D ********************************************-->
+
+                <!-- ESCOLHA DOS TIPOS DE OPÇÃO 3D (COMPOSIÇÃO OU VISUALIZAÇÃO) -->
                 <div class="configPanel3D" style="display: none;">
-                    <h6>asdaaasdsd Teste 3d</h6>
+                    <label for="opcoes3D">Opção:</label>
+                    <select id="opcoes3D">
+                        <option value="opcao1">Composição</option>
+                        <option value="opcao2">Projeção</option>
+                    </select> 
+                </div>
+
+                <!-- PAINEL ENTRADA DAS OPÇÕES DE TRANSFORMAÇÕES 3D-->
+                <div class="configPanel3D_opcoes_transformacoes" style="display: none;">
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkTranslacao3D" > Translação</label>                           
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>X<input type="number" id="xTranslacao3D"></label>
+                            <label>Y<input type="number" id="yTranslacao3D"></label>
+                            <label>Z<input type="number" id="zTranslacao3D"></label> 
+                        </div>                       
+                    </div>
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkEscala3D" > Escala</label>                            
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>X<input type="number" id="xEscala3D"></label>
+                            <label>Y<input type="number" id="yEscala3D"></label>
+                            <label>Z<input type="number" id="zEscala3D"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkRotacao3D" > Rotação</label>
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>Angulo : <input type="number" id="AnguloRotacao3D"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkCisalhamento3D" > Cisalhamento</label>
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>X<input type="number" id="xCisalhamento3D"></label>
+                            <label>Y<input type="number" id="yCisalhamento3D"></label>
+                            <label>Z<input type="number" id="zCisalhamento3D"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkReflexao3D" > Reflexão</label>
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>X<input type="checkbox" id="xReflexao3D"></label>
+                            <label>Y<input type="checkbox" id="yReflexao3D"></label>
+                            <label>Z<input type="checkbox" id="zReflexao3D"></label>
+                        </div>
+                    </div>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnAplicaTransformacoes">Aplicar</button>
+                        <button id="btnLimpaTransformacoes">Limpar</button>
+                    </div>
+
+                </div>
+
+                <!-- PAINEL ENTRADA DAS OPÇÕES DE PROJEÇÕES 3D-->
+                <div class="configPanel3D_opcoes_projecoes" style="display: none;">
+
+                    <div class="projecoes3D">
+                        <label><input type="checkbox" id="projecaoPerspectiva" > Perspectiva</label>                       
+                    </div>
+
+                    <div class="projecoes3D">
+                        <label><input type="checkbox" id="projecaoParalelaIsometrica" > Paralela Isométrica</label>
+                    </div>
+
+                    <div class="projecoes3D">
+                        <label><input type="checkbox" id="projecaoParalelaOrtografica" > Paralela Ortográfica</label>
+                    </div>                    
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnAplicaProjecoes">Aplicar</button>
+                    </div>
+
                 </div>
     
             </section>
