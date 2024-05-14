@@ -638,7 +638,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if(opcao === "opcao1"){
             limpaTela(ctx);
             limparSaidaDeDadosTextarea();
-            let gl = canvas.getContext('webgl');
             desenhar.Eixos3D(ctx, canvas);
             /* CRIAR FUNÇÃO DE DESENHAR CUBO */
         }else if(opcao === "opcao2"){
