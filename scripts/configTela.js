@@ -1,6 +1,3 @@
-import { limpaTela } from './utils/utils.js';
-import * as desenhar from './algoritimos/desenho.js';
-
 window.onload = function() {
     
     // Manipulação atravez da escolha 2D ou 3D
@@ -150,8 +147,10 @@ window.onload = function() {
             checkbox3D.checked = false;
             div2D.style.display = 'block';
             div3D.style.display = 'none';
+            selectOpcoes2D.value = "opcao1";
             divPixel.style.display = 'block';
             verificaTipoDeFuncionamentoCheckBoxes = "";
+
         } 
         else {
             div2D.style.display = 'none';
@@ -169,6 +168,7 @@ window.onload = function() {
             checkbox2D.checked = false;
             div3D.style.display = 'block';
             div2D.style.display = 'none';
+            selectOpcoes3D.value = 'opcao1';
             divTransformacoes3D.style.display = "block";
         }
         else {

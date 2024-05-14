@@ -18,7 +18,7 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.width = largura;
     canvas.height = altura;
     //Definindo o a origem no centro do canvas
-    ctx.translate(largura/2, altura/2);
+    ctx.translate(largura/2, altura/2);  
 
     /*Canvas da ViewPort*/
     const painelSaidaCanvasVP = document.querySelector('.delimitacaoViewPort');
@@ -82,8 +82,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     //const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
     const inputOpcoes2D = document.getElementById("opcoes2D");
-
     const inputOpcoes3D = document.getElementById('opcoes3D');
+    const checkboxEscolhido2dE3d = document.querySelectorAll('.opcaoEscolhida'); //checkbox 2d e 3d
     
     //const canvas_container = document.querySelector('.canvas-container');
     
@@ -406,7 +406,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 ]
             });
             // Obtém a opção selecionada
-            let opcaoSelecionada = document.getElementById('opcoes').value;
+            let opcaoSelecionada = document.getElementById('opcoes2D').value;
 
             switch(opcaoSelecionada){                
                 case "opcao2":
@@ -444,7 +444,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             // Obtém a opção selecionada
-            let opcaoSelecionada = document.getElementById('opcoes').value;
+            let opcaoSelecionada = document.getElementById('opcoes2D').value;
 
             switch(opcaoSelecionada){
                 case "opcao4":
@@ -603,27 +603,9 @@ document.addEventListener('DOMContentLoaded', () => {
         processarListaViewport(listaParaAViewPort, Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax, ctxViewPort);
     });
 
-    inputOpcoes3D.addEventListener('change', () =>{
-        var opcao = inputOpcoes3D.value;
-
-        if(opcao === "opcao1"){
-            limpaTela(ctx);
-            limparSaidaDeDadosTextarea();
-            desenhar.Eixos3D(ctx, canvas);
-            /* CRIAR FUNÇÃO DE DESENHAR CUBO */
-        }
-        else if(opcao === "opcao2"){
-            limpaTela(ctx);
-            limparSaidaDeDadosTextarea();
-            desenhar.Eixos3D(ctx, canvas);
-            /* .... */
-        }
-    });
-
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
     inputOpcoes2D.addEventListener('change', () => {
         var opcaoSelecionada = inputOpcoes2D.value;
-
         if(opcaoSelecionada === "opcao8"){
             limpaTela(ctx);
             limparSaidaDeDadosTextarea();
@@ -647,6 +629,48 @@ document.addEventListener('DOMContentLoaded', () => {
             limparSaidaDeDadosTextarea();
         }        
     });
+    const CUBE_VERTICES = [[-1, -1, -1],[1, -1, -1],[-1, 1, -1],[1, 1, -1],[-1, -1, 1],[1, -1, 1],[-1, 1, 1],[1, 1, 1]];
+    const CUBE_LINES = [[0, 1], [1, 3], [3, 2], [2, 0], [2, 6], [3, 7], [0, 4], [1, 5], [6, 7], [6, 4], [7, 5], [4, 5]];
+
+    inputOpcoes3D.addEventListener('click', () => {
+        let opcao = inputOpcoes3D.value;
+
+        if(opcao === "opcao1"){
+            limpaTela(ctx);
+            limparSaidaDeDadosTextarea();
+            let gl = canvas.getContext('webgl');
+            desenhar.Eixos3D(ctx, canvas);
+            /* CRIAR FUNÇÃO DE DESENHAR CUBO */
+        }else if(opcao === "opcao2"){
+            limpaTela(ctx);
+            limparSaidaDeDadosTextarea();
+            // desenhar galpão
+        }else {
+            // nengum selecionado
+            limpaTela(ctx);
+            
+        }
+    });
+
+    // limpa a tela se mudar de 2d para 3d ou vice versa, alem de atualizar o contexto do canvas entre 2d e 3d
+    checkboxEscolhido2dE3d.forEach(function(checkbox) {
+        checkbox.addEventListener('click', function() {
+            if (this.id === '2D') {
+                if (this.checked) {
+                    document.getElementById('3D').checked = false;
+                    limpaTela(ctx);
+                    
+                }
+            } else if (this.id === '3D') {
+                if (this.checked) {
+                    limpaTela(ctx);
+                    document.getElementById('2D').checked = false;
+
+                }
+            }
+        });
+    });
+
     
     /* Função para adicionar ouvintes de eventos aos checkboxes
     function adicionarOuvintesCheckbox() {
