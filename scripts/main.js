@@ -537,7 +537,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (newCoords) { //se o retorno de cohenSutherland n for null redesenha as retas recortadas
                 const { x1, y1, x2, y2 } = newCoords;
-                DDA(x1, y1, x2, y2, ctx); 
+                DDA(x1, y1, x2, y2, ctx, "lightseagreen"); 
             }
 
         }
@@ -629,8 +629,6 @@ document.addEventListener('DOMContentLoaded', () => {
             limparSaidaDeDadosTextarea();
         }        
     });
-    const CUBE_VERTICES = [[-1, -1, -1],[1, -1, -1],[-1, 1, -1],[1, 1, -1],[-1, -1, 1],[1, -1, 1],[-1, 1, 1],[1, 1, 1]];
-    const CUBE_LINES = [[0, 1], [1, 3], [3, 2], [2, 0], [2, 6], [3, 7], [0, 4], [1, 5], [6, 7], [6, 4], [7, 5], [4, 5]];
 
     inputOpcoes3D.addEventListener('click', () => {
         let opcao = inputOpcoes3D.value;
@@ -656,7 +654,7 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.addEventListener('click', function() {
             if (this.id === '2D') {
                 if (this.checked) {
-                    document.getElementById('3D').checked = false;
+                    document.getElementById('3D').checked = false; 
                     limpaTela(ctx);
                     
                 }

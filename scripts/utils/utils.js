@@ -2,9 +2,9 @@
 let textareaSaidaDeDados = document.getElementById("textareaSaidaDeDados");
 
 /* ******************************* Canvas ***********************************/
-export function ativaPixel(tipoCanvas, X, Y){    
+export function ativaPixel(tipoCanvas, X, Y, cor = 'red'){    
     // Desenhar um pequeno ponto vermelho na posição passada por paramentro
-    tipoCanvas.fillStyle = "red";
+    tipoCanvas.fillStyle = cor;
     tipoCanvas.fillRect( X, -Y, 1, 1); // Ativando 1 pixel de tamanho (1x1)
 }
 
