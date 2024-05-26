@@ -13,6 +13,7 @@ window.onload = function() {
     const divTransformacoes = document.querySelector('.configPanel2D_opcoes_transformacoes');
     const divCohenSutherland = document.querySelector('.configPanel2D_cohen-sutherland');
     const divElipse = document.querySelector('.configPanel2D_opcoes_elipse');
+    const divBatimentosCard = document.querySelector('.configPanel2D_opcoes_BatimentosCardiacos');
 
     // Manipulação de elementos para serem visíveis ou não, de acordo com opções selecionadas 3D
     const div3D = document.querySelector('.configPanel3D');
@@ -126,6 +127,7 @@ window.onload = function() {
         divTransformacoes.style.display = 'none';
         divCohenSutherland.style.display = 'none';
         divElipse.style.display = 'none';
+        divBatimentosCard.style.display = 'none';
     }
 
     // Desativa todas as divs referentes a div 3D
@@ -150,7 +152,7 @@ window.onload = function() {
             selectOpcoes2D.value = "opcao1";
             divPixel.style.display = 'block';
             verificaTipoDeFuncionamentoCheckBoxes = "";
-
+            
         } 
         else {
             div2D.style.display = 'none';
@@ -221,6 +223,11 @@ window.onload = function() {
                 
             case 'opcao10':
                 divCohenSutherland.style.display = 'block';
+                verificaTipoDeFuncionamentoCheckBoxes = "";
+                break;
+            
+            case 'opcao11':
+                divBatimentosCard.style.display = 'block';
                 verificaTipoDeFuncionamentoCheckBoxes = "";
                 break;
         }

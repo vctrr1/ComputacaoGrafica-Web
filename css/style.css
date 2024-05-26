@@ -393,6 +393,27 @@ header div, h1{
     align-items: center;
 }
 
+/* ****************** DIV configPanel2D_opcoes_batimentosCardiacos ****************** */
+.configPanel2D_opcoes_BatimentosCardiacos{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel2D_opcoes_BatimentosCardiacos h6{
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+.configPanel2D_opcoes_BatimentosCardiacos input{
+    width: 88%; /* Define a largura */
+    height: 15px; /* Define a altura */ 
+}
+
 /* ***************************************** SECTION main_conteudo-painelDesenho ***************************************** */
 .main_conteudo-painelDesenho{
     background-color: white; /* Fundo branco */
