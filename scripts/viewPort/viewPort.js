@@ -1,7 +1,12 @@
 import { multiplicarMatrizes } from '../utils/produtoDeMatrizes.js'
 import { DDA } from '../algoritimos/reta.js'
 import { circunferenciaPontoMedio } from '../algoritimos/circunferencia.js'
+import { elipsePontoMedio } from '../algoritimos/elipse.js';
 import { Quadrado } from '../algoritimos/desenho.js';
+
+// escala calculada em calcularMatrizViewport de forma global pra ser usada para desenhar a elipse
+let scaleX=0;
+let scaleY=0;
 
 // Função para processar a lista de dados e aplicar a transformação de viewport
 export function processarListaViewport(lista, Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax, tipoCanvas) {
@@ -16,7 +21,10 @@ export function processarListaViewport(lista, Xmin, Xmax, Ymin, Ymax, Umin, Umax
     } 
     else if (lista.some(item => item.tipo === 'circunferencia')) {
         tipoEntrada = 'circunferencia';
-    } 
+    }
+    else if(lista.some(item => item.tipo === 'elipse')){
+        tipoEntrada = 'elipse';
+    }
     else {
         tipoEntrada = 'matriz';
     }
@@ -34,7 +42,21 @@ export function processarListaViewport(lista, Xmin, Xmax, Ymin, Ymax, Umin, Umax
             const raioTransformado = transformarRaio(entrada.raio, M);
             circunferenciaPontoMedio(raioTransformado, tipoCanvas);           
         }
-    } 
+    }
+    else if(tipoEntrada === 'elipse'){
+        for (let entrada of lista) {
+            // Transforma a origem da elipse para a viewport
+            const origemXViewport = entrada.origemX * scaleX + Umin;
+            const origemYViewport = entrada.origemY * scaleY + Vmin;
+    
+            // Calcula os raios transformados
+            const raioXTransformado = entrada.raioX * scaleX;
+            const raioYTransformado = entrada.raioY * scaleY;
+    
+            // Desenha a elipse na viewport
+            elipsePontoMedio(origemXViewport, origemYViewport, raioXTransformado, raioYTransformado, tipoCanvas);
+        }
+    }
     else {            
         const matrizViewport = multiplicarMatrizes(M, lista);
         Quadrado(matrizViewport, tipoCanvas);            
@@ -73,8 +95,8 @@ function transformarRaio(raio, M) {
 
 function calcularMatrizViewport(Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax) {
     // Calcula a escala
-    const scaleX = (Umax - Umin) / (Xmax - Xmin);
-    const scaleY = (Vmax - Vmin) / (Ymax - Ymin);
+    scaleX = (Umax - Umin) / (Xmax - Xmin);
+    scaleY = (Vmax - Vmin) / (Ymax - Ymin);
 
     // Matriz de translação reversa T(-Xmin, -Ymin)
     const matrizTranslacaoReversa = [

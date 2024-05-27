@@ -476,7 +476,17 @@ document.addEventListener('DOMContentLoaded', () => {
             alert("Digite valores validos.");
         }else {
             //se deixar o input em branco abribui 0 as variaveis para ser desenhado com o centro na origem
-            if(!OrigemX && !OrigemY){OrigemX = 0; OrigemY = 0;}
+            if(!OrigemX && !OrigemY){ 
+                OrigemX = 0; 
+                OrigemY = 0;
+            }
+            listaParaAViewPort.push({
+                tipo: "elipse",
+                origemX: OrigemX,
+                origemY: OrigemY,
+                raioX: inputRaioX,
+                raioY: inputRaioY,
+            });
             //chama o algoritmo de desenho da elipse
             elipsePontoMedio(OrigemX, OrigemY, inputRaioX, inputRaioY, ctx);
         }
@@ -574,7 +584,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 Xmax = Math.max(Xmax, raio);
                 Ymin = Math.min(Ymin, -raio);
                 Ymax = Math.max(Ymax, raio);
-            } 
+            }
+            else if(entrada.tipo === 'elipse'){
+                // Processa elipse
+                const { origemX, origemY, raioX, raioY } = entrada;
+                Xmin = Math.min(Xmin, origemX - raioX);
+                Xmax = Math.max(Xmax, origemX + raioX);
+                Ymin = Math.min(Ymin, origemY - raioY);
+                Ymax = Math.max(Ymax, origemY + raioY);
+            }
             else {
                 const [xArray, yArray, wArray] = entrada;
                 // Percorra os arrays xArray e yArray para calcular os valores mínimos e máximos
@@ -751,7 +769,15 @@ document.addEventListener('DOMContentLoaded', () => {
                 Xmax = Math.max(Xmax, raio);
                 Ymin = Math.min(Ymin, -raio);
                 Ymax = Math.max(Ymax, raio);
-            } 
+            }
+            else if(entrada.tipo === 'elipse'){
+                // Processa elipse
+                const { origemX, origemY, raioX, raioY } = entrada;
+                Xmin = Math.min(Xmin, origemX - raioX);
+                Xmax = Math.max(Xmax, origemX + raioX);
+                Ymin = Math.min(Ymin, origemY - raioY);
+                Ymax = Math.max(Ymax, origemY + raioY);
+            }
             else {
                 const [xArray, yArray, wArray] = entrada;
                 // Percorra os arrays xArray e yArray para calcular os valores mínimos e máximos
