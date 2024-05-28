@@ -1,3 +1,5 @@
+import { limpaTela } from "../utils/utils.js";
+
 export function desenharECG(canvas, ctx, idade, situacao) {
     class Ponto {
         constructor(x, y) {
@@ -105,15 +107,16 @@ export function desenharECG(canvas, ctx, idade, situacao) {
         distancia_batimentos = situacoes[situacao];
         ecg.reset();
     }
+
     var ecg;
     function setup() {
-        posicaoInicial = new Ponto(0, canvas.height / 2);
+        posicaoInicial = new Ponto(-canvas.width / 2, 0);
         ecg = new ECG();
         ecg.criarPontos();
     }
 
     function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        limpaTela(ctx);
         ecg.mostrarPontos();
 
         requestAnimationFrame(draw);
