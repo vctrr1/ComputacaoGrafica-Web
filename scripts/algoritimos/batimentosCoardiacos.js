@@ -1,5 +1,8 @@
 import { limpaTela } from "../utils/utils.js";
 
+//variavel de controle do loop de execução para parar quando clicar no botao de limpar
+export let continuarExecucao;
+
 export function desenharECG(canvas, ctx, idade, situacao) {
     class Ponto {
         constructor(x, y) {
@@ -85,7 +88,11 @@ export function desenharECG(canvas, ctx, idade, situacao) {
         }
 
         mostrarPontos() {
-            ctx.strokeStyle = 'green';
+            // Pintar o fundo de preto
+            ctx.fillStyle = 'black';
+            ctx.fillRect(-canvas.width / 2, ((-canvas.height / 2)-5), canvas.width, canvas.height);
+
+            ctx.strokeStyle = 'Lime';
             ctx.lineWidth = 1;
             ctx.beginPath();
             for (var i = 1; i < this.indicePontoAtual; i++) {
@@ -119,7 +126,7 @@ export function desenharECG(canvas, ctx, idade, situacao) {
         limpaTela(ctx);
         ecg.mostrarPontos();
 
-        requestAnimationFrame(draw);
+        continuarExecucao = requestAnimationFrame(draw);
     }
 
     setup();
