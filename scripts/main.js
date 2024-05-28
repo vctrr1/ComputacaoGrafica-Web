@@ -6,6 +6,7 @@ import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaD
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
 import { processarListaViewport } from './viewPort/viewPort.js';
 import * as desenhar from './algoritimos/desenho.js';
+import { desenharECG } from './algoritimos/batimentosCoardiacos.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -78,6 +79,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const inputOrigemY = document.getElementById("inputElipseY");
     const inputElipseRaioX = document.getElementById("inputElipseRaioX");
     const inputElipseRaioY = document.getElementById("inputElipseRaioY");
+
+    //Seleciona o elemente do input do Batimento
+    const inputIdade = document.getElementById('inputIdade');
+    const inputSituacao = document.getElementById('inputSitucao');
+    const btnAplicarBatimentos = document.getElementById('btnAplicarBatimentos');
+    const btnLimparCanvasBatimentos = document.getElementById('btnLimparCanvasBatimentos');
 
     // Seletor para todos os checkboxes dentro de .configPanel2D_opcoes_transformacoes
     //const checkboxes = document.querySelectorAll('.configPanel2D_opcoes_transformacoes input[type="checkbox"]');
@@ -553,6 +560,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
     });
+
+    btnAplicarBatimentos.addEventListener('click', () => {
+        let idade = parseInt(inputIdade.value);
+        let situacao = parseInt(inputSituacao.value);
+
+        desenharECG(canvas,ctx, idade, situacao);
+    })
 
     // Ouvinte para o botão transferir para ViewPort
     btnTransferirParaViewPort.addEventListener('click', () => {
