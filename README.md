@@ -1,6 +1,6 @@
 # Projeto de Computação Gráfica - UEPB
 
-**Desenvolvido por** _Arthur Felipe MS_
+**Desenvolvido por** _Arthur Felipe MS - Rafel - Victor_
 
 #### Desenvolvido com:
 
@@ -26,5 +26,6 @@
 - 9º [x] - Implementar funcionalidades do checkbox 3D
 - 10º [] - Implementar transformações 3d
 - 11º [x] - Implementar alg. Elipse Ponto Medio
-- 12º [] - Implementar transferencia de Elipse para viewPort
+- 12º [x] - Implementar transferencia de Elipse para viewPort
 - 13º [] - Implementar visualizações
+- 14º [x] - Implementar batimentos cardiacos
