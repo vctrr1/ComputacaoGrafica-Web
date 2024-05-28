@@ -6,7 +6,7 @@ import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaD
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
 import { processarListaViewport } from './viewPort/viewPort.js';
 import * as desenhar from './algoritimos/desenho.js';
-import { desenharECG } from './algoritimos/batimentosCoardiacos.js';
+import { desenharECG, continuarExecucao } from './algoritimos/batimentosCoardiacos.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -356,6 +356,14 @@ document.addEventListener('DOMContentLoaded', () => {
         limparSaidaDeDadosTextarea();
     });
 
+    btnLimparCanvasBatimentos.addEventListener('click', () => {
+        if(continuarExecucao){
+            cancelAnimationFrame(continuarExecucao);
+        }
+        limpaTela(ctx);
+        desenhar.batimentosCardiacos(ctx);
+    })
+
     btnLimparViewPort.addEventListener('click', () => {
         //desativa botão de limpar apos click
         btnLimparViewPort.disabled = true;
@@ -564,8 +572,14 @@ document.addEventListener('DOMContentLoaded', () => {
     btnAplicarBatimentos.addEventListener('click', () => {
         let idade = parseInt(inputIdade.value);
         let situacao = parseInt(inputSituacao.value);
-
-        desenharECG(canvas,ctx, idade, situacao);
+        if(isNaN(idade) || isNaN(situacao)){
+            alert("Digite os valores dos pontos.");
+        }else{
+            if(continuarExecucao){
+                cancelAnimationFrame(continuarExecucao);
+            }
+            desenharECG(canvas,ctx, idade, situacao);
+        }
     })
 
     // Ouvinte para o botão transferir para ViewPort
@@ -655,6 +669,10 @@ document.addEventListener('DOMContentLoaded', () => {
             limparSaidaDeDadosTextarea();
             desenhar.CohenSutherland(ctx, altura,largura);
             desenhar.Quadrado(matrizAreaDeRecorte, ctx);
+        }
+        else if(opcaoSelecionada === "opcao11"){
+            limpaTela(ctx);
+            desenhar.batimentosCardiacos(ctx);
         }
         else{
             limpaTela(ctx);

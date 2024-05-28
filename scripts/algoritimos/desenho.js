@@ -105,3 +105,17 @@ export function areaDeRecorteCohen(altura, largura) {
         [yTopo, yTopo, yBase, yBase], // Coordenadas Y
     ];
 }
+
+export function batimentosCardiacos(ctx){
+    // Pintar o fundo de preto
+    ctx.fillStyle = 'black';
+    ctx.fillRect(-canvas.width / 2, ((-canvas.height / 2)-5), canvas.width, canvas.height);
+
+    // Desenhar a linha central horizontal
+    ctx.strokeStyle = 'Lime';  // Cor da linha
+    ctx.lineWidth = 1;  // Espessura da linha
+    ctx.beginPath();
+    ctx.moveTo(-canvas.width / 2, 0);
+    ctx.lineTo(canvas.width / 2, 0);
+    ctx.stroke();
+}
