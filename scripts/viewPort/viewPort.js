@@ -5,8 +5,8 @@ import { elipsePontoMedio } from '../algoritimos/elipse.js';
 import { Quadrado } from '../algoritimos/desenho.js';
 
 // escala calculada em calcularMatrizViewport de forma global pra ser usada para desenhar a elipse
-let scaleX=0;
-let scaleY=0;
+let scaleX = 0;
+let scaleY = 0;
 
 // Função para processar a lista de dados e aplicar a transformação de viewport
 export function processarListaViewport(lista, Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax, tipoCanvas) {

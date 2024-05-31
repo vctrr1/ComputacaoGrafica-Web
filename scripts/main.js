@@ -368,7 +368,7 @@ document.addEventListener('DOMContentLoaded', () => {
         //desativa botão de limpar apos click
         btnLimparViewPort.disabled = true;
         btnVisualizar.disabled = true;
-
+        listaParaAViewPort = [];
         limpaTela(ctxViewPort);
     });
 
