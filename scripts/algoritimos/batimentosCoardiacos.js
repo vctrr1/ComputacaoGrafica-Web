@@ -120,6 +120,7 @@ export function desenharECG(canvas, ctx, idade, situacao) {
         posicaoInicial = new Ponto(-canvas.width / 2, 0);
         ecg = new ECG();
         ecg.criarPontos();
+        aplicarValores();
     }
 
     function draw() {
