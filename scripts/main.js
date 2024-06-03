@@ -1,7 +1,7 @@
 import { DDA, retaPontoMedio } from './algoritimos/reta.js';
 import { circunferenciaPolinomial, circunferenciaTrigonometrica, circunferenciaPontoMedio } from './algoritimos/circunferencia.js';
 import { elipsePontoMedio } from './algoritimos/elipse.js';
-import { Translacao, Escala, Rotacao, ReflexaoX, ReflexaoY, cisalhamentoX, cisalhamentoY } from './algoritimos/trasformacoes.js';
+import { Translacao, Escala, Rotacao, ReflexaoX, ReflexaoY, cisalhamentoX, cisalhamentoY } from './algoritimos/transformacoes2D.js';
 import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaDeDados } from './utils/utils.js';
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
 import { processarListaViewport } from './viewPort/viewPort.js';
@@ -279,6 +279,8 @@ document.addEventListener('DOMContentLoaded', () => {
         [0, 0, -50, -50],
         [1, 1, 1, 1]
     ];
+
+    let matrizBaseGeral3D = [];
     
     /* *************************** Area de Recorte COHEN-SUTHERLAND ********************************** */
     let matrizCoordRetas = [];
@@ -710,8 +712,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             } else if (this.id === '3D') {
                 if (this.checked) {
-                    limpaTela(ctx);
                     document.getElementById('2D').checked = false;
+                    limpaTela(ctx);
 
                 }
             }
