@@ -33,7 +33,7 @@ window.onload = function() {
     // Seletor para todos os checkboxes dentro de .configPanel3D_opcoes_transformacoes
     const checkboxes3D = document.querySelectorAll('.configPanel3D_opcoes_transformacoes input[type="checkbox"]');
 
-    // Inputs de entradas das transformações 2D
+    // Inputs de entradas das transformações 3D
     const xTranslacao3D = document.getElementById('xTranslacao3D');
     const yTranslacao3D = document.getElementById('yTranslacao3D');
     const zTranslacao3D = document.getElementById('zTranslacao3D');
@@ -44,11 +44,11 @@ window.onload = function() {
     const xCisalhamento3D = document.getElementById('xCisalhamento3D');
     const yCisalhamento3D = document.getElementById('yCisalhamento3D');
     const zCisalhamento3D = document.getElementById('zCisalhamento3D');
-    const xReflexao3D =  document.getElementById('xReflexao3D');
-    const yReflexao3D = document.getElementById('yReflexao3D');
-    const zReflexao3D = document.getElementById('zReflexao3D');
+    const xyReflexao3D =  document.getElementById('xyReflexao3D');
+    const xzReflexao3D = document.getElementById('xzReflexao3D');
+    const yzReflexao3D = document.getElementById('yzReflexao3D');
     
-    // Inputs de entradas das transformações 3D
+    // Inputs de entradas das transformações 2D
     const xTranslacao = document.getElementById('xTranslacao');
     const yTranslacao = document.getElementById('yTranslacao');
     const xEscala = document.getElementById('xEscala');
@@ -88,9 +88,9 @@ window.onload = function() {
         xCisalhamento3D.disabled = true;
         yCisalhamento3D.disabled = true;
         zCisalhamento3D.disabled = true;
-        xReflexao3D.disabled = true;
-        yReflexao3D.disabled = true;
-        zReflexao3D.disabled = true;
+        xyReflexao3D.disabled = true;
+        xzReflexao3D.disabled = true;
+        yzReflexao3D.disabled = true;
         limpaCampoDasEntradas3D();
     }
 
@@ -463,18 +463,55 @@ window.onload = function() {
                 }
             }
             else if(this.id === "checkReflexao3D"){
-                if(checkbox.checked){
-                    xReflexao3D.disabled = false;
-                    yReflexao3D.disabled = false;
-                    zReflexao3D.disabled = false;
+                if(checkbox.checked){ // se reflex]ao estiver marcado habilita os checkbox XY, XZ, YZ
+                    xyReflexao3D.disabled = false;
+                    xzReflexao3D.disabled = false;
+                    yzReflexao3D.disabled = false;
+
+                    xyReflexao3D.addEventListener('change', function() { //se xy for marcado desabilita os outros
+                        if (this.checked) {
+                            xzReflexao3D.checked = false;
+                            xzReflexao3D.disabled = true;
+                            yzReflexao3D.checked = false;
+                            yzReflexao3D.disabled = true;
+                        } else {
+                            xzReflexao3D.disabled = false;
+                            yzReflexao3D.disabled = false;
+                        }
+                    });
+                
+                    xzReflexao3D.addEventListener('change', function() { //se xz for marcado desabilita os outros
+                        if (this.checked) {
+                            xyReflexao3D.checked = false;
+                            xyReflexao3D.disabled = true;
+                            yzReflexao3D.checked = false;
+                            yzReflexao3D.disabled = true;
+                        } else {
+                            xyReflexao3D.disabled = false;
+                            yzReflexao3D.disabled = false;
+                        }
+                    });
+                
+                    yzReflexao3D.addEventListener('change', function() { //se yz for marcado desabilita os outros
+                        if (this.checked) {
+                            xyReflexao3D.checked = false;
+                            xyReflexao3D.disabled = true;
+                            xzReflexao3D.checked = false;
+                            xzReflexao3D.disabled = true;
+                        } else {
+                            xyReflexao3D.disabled = false;
+                            xzReflexao3D.disabled = false;
+                        }
+                    });
+
                 }
-                else{
-                    xReflexao3D.disabled = true;
-                    yReflexao3D.disabled = true;
-                    zReflexao3D.disabled = true;
-                    xReflexao3D.checked = false;
-                    yReflexao3D.checked = false;
-                    zReflexao3D.checked = false;
+                else{ //desabilita tudo se checkbox reflexão n estiver marcado
+                    xyReflexao3D.disabled = true;
+                    xzReflexao3D.disabled = true;
+                    yzReflexao3D.disabled = true;
+                    xyReflexao3D.checked = false;
+                    xzReflexao3D.checked = false;
+                    yzReflexao3D.checked = false;
                 }
             }
         });        
