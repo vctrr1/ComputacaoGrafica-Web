@@ -50,12 +50,16 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const btnAplicaTransformacoes = document.getElementById('btnAplicaTransformacoes');
     const btnLimpaTransformacoes = document.getElementById('btnLimpaTransformacoes');
-
+    
     const btnDesenharRetaCohen = document.getElementById('btnDesenharRetaCohen');
     const btnLimparRetaCohen = document.getElementById('btnLimparRetaCohen');
     const btnAplicarCohen = document.getElementById('btnAplicarCohen');
     const inputRetas = document.getElementById('inputRetas');
-
+    
+    //botões transformação 3D
+    const btnAplicaTransformacoes3D = document.getElementById('btnAplicaTransformacoes3D');
+    const btnLimpaTransformacoes3D = document.getElementById('btnLimpaTransformacoes3D');
+    
     const btnLimparSaidaTextarea = document.getElementById('btnLimparSaidaTextarea');
 
     // botões da mini VP do 
@@ -236,7 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         limpaTela(ctx);
         desenhar.batimentosCardiacos(ctx);
-    })
+    });
+
+    btnLimpaTransformacoes3D.addEventListener('click', () => {
+        btnTransferirParaViewPort.disabled = true;
+        desenhar3D.Cubo(canvas3D);
+        limparSaidaDeDadosTextarea();
+    });
 
     btnLimparViewPort.addEventListener('click', () => {
         //desativa botão de limpar apos click
@@ -382,8 +392,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     });
 
-    // Aplica a transformação desejada quando o botão é clicado
-    btnAplicaTransformacoes.addEventListener('click', function() {
+    // chama a function aplicarTransformacao(), aplica a transformação desejada quando o botão é clicado
+    btnAplicaTransformacoes.addEventListener('click', () => {
         //ativa o botão de transferir para viewPort
         btnTransferirParaViewPort.disabled = false;
         limparSaidaDeDadosTextarea();
@@ -507,6 +517,69 @@ document.addEventListener('DOMContentLoaded', () => {
             else{
                 alert("Marque alguma opção de REFLEXÃO!!");
             }
+        }
+    }
+
+    function aplicarTransformacao3D(){
+        if(document.getElementById('checkTranslacao3D').checked){
+            const tx = parseFloat(document.getElementById('xTranslacao3D').value);
+            const ty = parseFloat(document.getElementById('yTranslacao3D').value);
+            const tz = parseFloat(document.getElementById('zTranslacao3D').value);
+
+            if(!isNaN(tx) && !isNaN(ty) && !isNaN(tz)){
+
+            }else{
+                alert('Digite um input valido.');
+            }
+        }
+        if(document.getElementById('checkEscala3D').checked){
+            const sx = parseFloat(document.getElementById('xEscala3D').value);
+            const sy = parseFloat(document.getElementById('yEscala3D').value);
+            const sz = parseFloat(document.getElementById('zEscala3D').value);
+
+            if(!isNaN(sx) && !isNaN(sy) && !isNaN(sz)){
+
+            }else{
+                alert('Digite um input valido.');
+            }
+        }
+        if(document.getElementById('checkRotacao3D').checked){
+            const angulo = parseFloat(document.getElementById('AnguloRotacao3D').value);
+            
+            if(!isNaN(angulo)){
+
+            }else{
+                alert('Digite um input valido.');
+            }
+        }
+        if(document.getElementById('checkCisalhamento3D').checked){
+            const shx = parseFloat(document.getElementById('xEscala3D').value);
+            const shy = parseFloat(document.getElementById('yEscala3D').value);
+            const shz = parseFloat(document.getElementById('zEscala3D').value);
+
+            if(!isNaN(shx) && !isNaN(shy) && !isNaN(shz)){
+
+            }else{
+                alert('Digite um input valido.');
+            }            
+        }
+        if(document.getElementById('checkReflexao3D').checked){
+            if(document.getElementById('xyReflexao3D').checked){
+                //reflexão em xy
+                
+            }
+            else if(document.getElementById('xzReflexao3D').checked){
+                //reflexão em xz
+                
+            }
+            else if(document.getElementById('yzReflexao3D').checked){
+                //reflexão em yz
+                
+            }
+            else {
+                alert('marque uma reflexão!');
+            }
+            
         }
     }
 
@@ -642,6 +715,10 @@ document.addEventListener('DOMContentLoaded', () => {
         processarListaViewport(listaParaAViewPort, Xmin, Xmax, Ymin, Ymax, Umin, Umax, Vmin, Vmax, ctxViewPort);
     });
 
+    btnAplicaTransformacoes3D.addEventListener('click', () => {
+        aplicarTransformacao3D();
+    })
+
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
     inputOpcoes2D.addEventListener('change', () => {
         var opcaoSelecionada = inputOpcoes2D.value;
@@ -673,7 +750,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }        
     });
 
-    inputOpcoes3D.addEventListener('click', () => {
+    inputOpcoes3D.addEventListener('change', () => {
         let opcao = inputOpcoes3D.value;
 
         if(opcao === "opcao1"){
@@ -681,8 +758,8 @@ document.addEventListener('DOMContentLoaded', () => {
             desenhar3D.Cubo(canvas3D);
             /* CRIAR FUNÇÃO DE DESENHAR CUBO */
         }else if(opcao === "opcao2"){
-            limpaTela(ctx);
             limparSaidaDeDadosTextarea();
+            desenhar3D.Casa(canvas3D);
             // desenhar galpão
         }else {
             // nengum selecionado
@@ -691,7 +768,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // limpa a tela se mudar de 2d para 3d ou vice versa, alem de atualizar o contexto do canvas entre 2d e 3d
+    // limpa a tela se mudar de 2d para 3d ou vice versa, alem de mudar o canvas de 2d pra 3d
     checkboxEscolhido2dE3d.forEach(function(checkbox) {
         checkbox.addEventListener('click', function() {
             if (this.id === '2D') {
@@ -708,6 +785,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     canvas.style.display = 'none';
                     canvas3D.style.display = 'block';
                     desativarAtualizacaoCoordenadas();
+                    desenhar3D.Cubo(canvas3D);
                     limpaTela(ctx);
 
                 }
