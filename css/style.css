@@ -421,6 +421,15 @@ header div, h1{
     width: 100%;
     border: 3px double black;
     margin-left: 5px;
+    position: relative; /* Adiciona position relative para controlar a posição dos filhos */
+}
+
+#canvas, #canvas3D {
+    width: 100%;
+    height: 100%;
+    position: absolute; /* Posiciona os canvases absolutamente dentro da seção pai */
+    top: 0;
+    left: 0;
 }
 
 /* ***************************************** SECTION main_Saida-Dados ***************************************** */
