@@ -24,8 +24,9 @@
 - 7º [x] - Criar a função de ativar o botão de limpar, depois de ter clicado no botão transferir da viewPort
 - 8º [x] - Criar a função de ativar o botão de transferir, depois de ter desenhado algo no canvas principal
 - 9º [x] - Implementar funcionalidades do checkbox 3D
-- 10º [] - Implementar transformações 3d
-- 11º [x] - Implementar alg. Elipse Ponto Medio
-- 12º [x] - Implementar transferencia de Elipse para viewPort
-- 13º [] - Implementar visualizações
-- 14º [x] - Implementar batimentos cardiacos
+- 10º [x] - Implementar alg. Elipse Ponto Medio
+- 11º [x] - Implementar transferencia de Elipse para viewPort
+- 12º [x] - Implementar batimentos cardiacos
+- 13º [] - Implementar transformações 3d
+- 14º [] - Implementar visualizações
+- 15º [] - Corrigir Bug (Ao transferir para VP um objeto do tipo reta, ao mudar para circunferencia, desenhar objeto e transferir para vp, não é transferido a circunferencia e sim uma reta novamente, esta acontecendo com todos os tipos de desenho)
