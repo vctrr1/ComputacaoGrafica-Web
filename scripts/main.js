@@ -138,6 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("coordTela").querySelector("p").innerText = "X: " + dcx + "\nY: " + dcy ;
     }
 
+    //desativa a atualização de coordenadas quando seleciona o checkbox 3D, (é mais complicado ter coordenadas x, y e z com o canvas no contexto Webgl)
     function desativarAtualizacaoCoordenadas() {
         document.getElementById("coordMundo").querySelector("p").innerText = "";
         document.getElementById("coordNorm").querySelector("p").innerText = "";
