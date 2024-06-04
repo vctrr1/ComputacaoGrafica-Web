@@ -14,46 +14,6 @@ export function Eixos2D(ctx, canvas) {
     ctx.stroke();
 }
 
-export function Eixos3D(ctx, canvas) {
-    // Limpa o canvas
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    // Define as configurações de estilo para os eixos
-    ctx.strokeStyle = 'gray'; // cor cinza
-    ctx.lineWidth = 2; // largura da linha
-    ctx.fillStyle = 'black'; // cor preta
-    ctx.font = '12px Arial'; // tamanho e fonte do texto
-
-    // Define as coordenadas dos eixos
-    const halfWidth = canvas.width / 2;
-    const halfHeight = canvas.height / 2;
-    const labelOffset = 20; // Offset para os textos de etiqueta
-
-    // Desenha o eixo X
-    ctx.beginPath();
-    ctx.moveTo(-halfWidth, -halfHeight);
-    ctx.lineTo(halfWidth, halfHeight);
-    ctx.stroke();
-    ctx.fillText('-Z', halfWidth - labelOffset - 20, -halfHeight + labelOffset);
-    ctx.fillText('+Z', -halfWidth + labelOffset, halfHeight - labelOffset);
-
-    // Desenha o eixo Y
-    ctx.beginPath();
-    ctx.moveTo(halfWidth, -halfHeight);
-    ctx.lineTo(-halfWidth, halfHeight);
-    ctx.stroke();
-    ctx.fillText('-X', -halfWidth + labelOffset, -halfHeight + labelOffset + 20);
-    ctx.fillText('+X', halfWidth - labelOffset, halfHeight - labelOffset);
-
-    // Desenha o eixo Z
-    ctx.beginPath();
-    ctx.moveTo(0, -halfHeight);
-    ctx.lineTo(0, halfHeight);
-    ctx.stroke();
-    ctx.fillText('+Y', 10, -halfHeight + labelOffset + 20);
-    ctx.fillText('-Y', 10, halfHeight - labelOffset);
-}
-
 //desenha quadrado
 export function Quadrado(vertices, tipoCanvas) {
     tipoCanvas.beginPath();
