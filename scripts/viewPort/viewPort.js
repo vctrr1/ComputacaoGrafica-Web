@@ -2,7 +2,7 @@ import { multiplicarMatrizes } from '../utils/produtoDeMatrizes.js'
 import { DDA } from '../algoritimos/reta.js'
 import { circunferenciaPontoMedio } from '../algoritimos/circunferencia.js'
 import { elipsePontoMedio } from '../algoritimos/elipse.js';
-import { Quadrado } from '../algoritimos/desenho.js';
+import { Quadrado } from '../algoritimos/desenho2D.js';
 
 // escala calculada em calcularMatrizViewport de forma global pra ser usada para desenhar a elipse
 let scaleX = 0;

@@ -5,8 +5,9 @@ import { Translacao, Escala, Rotacao, ReflexaoX, ReflexaoY, cisalhamentoX, cisal
 import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaDeDados } from './utils/utils.js';
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
 import { processarListaViewport } from './viewPort/viewPort.js';
-import * as desenhar from './algoritimos/desenho.js';
+import * as desenhar from './algoritimos/desenho2D.js';
 import { desenharECG, continuarExecucao } from './algoritimos/batimentosCoardiacos.js';
+import {desenharCubo} from './algoritimos/desenho3D.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -19,7 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
     canvas.width = largura;
     canvas.height = altura;
     //Definindo o a origem no centro do canvas
-    ctx.translate(largura/2, altura/2);  
+    ctx.translate(largura/2, altura/2);
+    
+    /*Canvas desenho 3D*/
+    const canvas3D = document.getElementById('canvas3D');
 
     /*Canvas da ViewPort*/
     const painelSaidaCanvasVP = document.querySelector('.delimitacaoViewPort');
@@ -686,9 +690,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let opcao = inputOpcoes3D.value;
 
         if(opcao === "opcao1"){
-            limpaTela(ctx);
             limparSaidaDeDadosTextarea();
-            desenhar.Eixos3D(ctx, canvas);
+            desenharCubo(canvas3D);
             /* CRIAR FUNÇÃO DE DESENHAR CUBO */
         }else if(opcao === "opcao2"){
             limpaTela(ctx);
@@ -706,13 +709,17 @@ document.addEventListener('DOMContentLoaded', () => {
         checkbox.addEventListener('click', function() {
             if (this.id === '2D') {
                 if (this.checked) {
-                    document.getElementById('3D').checked = false; 
+                    document.getElementById('3D').checked = false;
+                    canvas3D.style.display = 'none';
+                    canvas.style.display = 'block'; 
                     limpaTela(ctx);
                     
                 }
             } else if (this.id === '3D') {
                 if (this.checked) {
                     document.getElementById('2D').checked = false;
+                    canvas.style.display = 'none';
+                    canvas3D.style.display = 'block';
                     limpaTela(ctx);
 
                 }

@@ -14,8 +14,10 @@
     <script type="module" src="scripts/algoritimos/circunferencia.js" ></script>    
     <script type="module" src="scripts/algoritimos/cohenShutherland.js" ></script>    
     <script type="module" src="scripts/algoritimos/desenho.js"></script>
+    <script type="module" src="scripts/algoritimos/desenho3D.js"></script>
     <script type="module" src="scripts/algoritimos/reta.js"></script>
-    <script type="module" src="scripts/algoritimos/trasformacoes.js"></script>
+    <script type="module" src="scripts/algoritimos/transformacoes2D.js"></script>
+    <script type="module" src="scripts/algoritimos/transformacoes3D.js"></script>
     <script type="module" src="scripts/utils/utils.js"></script>
 
 </head>
@@ -357,7 +359,8 @@
     
             <!-- CANVAS - ONDE SERÁ VISUALIZADO OS DESENHOS ESCOLHIDOS -->
             <section class="main_conteudo-painelDesenho">                
-                <canvas id="canvas"></canvas>           
+                <canvas id="canvas" style="display: none;"></canvas>
+                <canvas id="canvas3D" style="display: none;"></canvas>         
             </section>
 
             <!-- Canvas ViewPort - Onde sairá os dados em coordenadas do dispositivo -->
