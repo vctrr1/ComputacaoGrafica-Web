@@ -6,8 +6,8 @@ import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaD
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
 import { processarListaViewport } from './viewPort/viewPort.js';
 import * as desenhar from './algoritimos/desenho2D.js';
+import * as desenhar3D from './algoritimos/desenho3D.js';
 import { desenharECG, continuarExecucao } from './algoritimos/batimentosCoardiacos.js';
-import {desenharCubo} from './algoritimos/desenho3D.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     
@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const btnLimparSaidaTextarea = document.getElementById('btnLimparSaidaTextarea');
 
+    // botões da mini VP do 
     const btnTransferirParaViewPort = document.getElementById('btnTransferirParaViewPort');
     const btnLimparViewPort = document.getElementById('btnLimparViewPort');
     const btnVisualizar = document.getElementById("btnVisualizar");
@@ -110,7 +111,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const canvasContainer = document.querySelector(".canvas-container");
     const canvass = document.getElementById("canvass");
     let ctxVP = canvass.getContext('2d');    
-    
     const fecharCanvas = document.getElementById("fecharCanvas");
 
     // Função para obter as coordenadas do mouse no canvas
@@ -128,8 +128,8 @@ document.addEventListener('DOMContentLoaded', () => {
         var Ymax = canvas.height;
         var ndh = canvas.width;
         var ndv = canvas.height;
-        var ndcx = (2 * coordenadas.x / Xmax) - 1; ;
-        var ndcy = 1 - (2 * coordenadas.y / Ymax); ;
+        var ndcx = (2 * coordenadas.x / Xmax) - 1;
+        var ndcy = 1 - (2 * coordenadas.y / Ymax);
         var dcx =  Math.round((ndcx + 1) * (ndh) / 2);
         var dcy =  Math.round((1 - ndcy) * (ndv) / 2);
 
@@ -138,143 +138,10 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("coordTela").querySelector("p").innerText = "X: " + dcx + "\nY: " + dcy ;
     }
 
-    // Função para aplicar a transformação desejada
-    function aplicarTransformacao() {
-        
-        if (document.getElementById('checkTranslacao').checked) {            
-            const xTranslacao = parseFloat(document.getElementById('xTranslacao').value);
-            const yTranslacao = parseFloat(document.getElementById('yTranslacao').value);
-
-            if (!isNaN(xTranslacao) && !isNaN(yTranslacao)) {
-                matrizBaseGeral = Translacao(matrizBaseGeral, xTranslacao, -yTranslacao);    
-                limpaTela(ctx);
-                desenhar.Eixos2D(ctx, canvas);
-                desenhar.Quadrado(matrizBaseGeral, ctx); 
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral; 
-            } 
-            else {
-                alert('Por favor, insira valores numéricos válidos para a translação.');
-            }
-        }
-
-        if(document.getElementById('checkEscala').checked){
-            const xEscala = parseFloat(document.getElementById('xEscala').value);
-            const yEscala = parseFloat(document.getElementById('yEscala').value);
-
-            if(!isNaN(xEscala) && !isNaN(yEscala)){
-                matrizBaseGeral = Escala(matrizBaseGeral, xEscala, yEscala);                
-                limpaTela(ctx);                
-                desenhar.Eixos2D(ctx, canvas);             
-                desenhar.Quadrado(matrizBaseGeral, ctx);
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral;                
-            }
-            else {
-                alert('Por favor, insira valores numéricos válidos para a Escala.');
-            }
-        }
-
-        if(document.getElementById('checkRotacao').checked){            
-            const AnguloRotacao = parseFloat(document.getElementById('AnguloRotacao').value);
-
-            if(!isNaN(AnguloRotacao)){
-                matrizBaseGeral = Rotacao(matrizBaseGeral, AnguloRotacao);                
-                limpaTela(ctx);                
-                desenhar.Eixos2D(ctx, canvas);
-                desenhar.Quadrado(matrizBaseGeral, ctx);
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral;
-            }
-            else {
-                alert('Por favor, insira valores numéricos válidos para a Rotação.');
-            }
-        }
-
-        if(document.getElementById('checkCisalhamento').checked){
-            const valorCisalhamentoX = parseFloat(document.getElementById('xCisalhamento').value);
-            const valorCisalhamentoY = parseFloat(document.getElementById('yCisalhamento').value);
-            
-            if(valorCisalhamentoX === 0){
-                matrizBaseGeral = cisalhamentoY(matrizBaseGeral, -valorCisalhamentoY);
-                limpaTela(ctx);
-                desenhar.Eixos2D(ctx, canvas);
-                desenhar.Quadrado(matrizBaseGeral, ctx);
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral;
-            }
-            else if(valorCisalhamentoY === 0){
-                matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
-                limpaTela(ctx);
-                desenhar.Eixos2D(ctx, canvas);
-                desenhar.Quadrado(matrizBaseGeral, ctx);
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral;
-            }
-            else if(!isNaN(valorCisalhamentoX) && !isNaN(valorCisalhamentoY)){
-                matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
-                matrizBaseGeral = cisalhamentoY(matrizBaseGeral, -valorCisalhamentoY);
-                limpaTela(ctx);
-                desenhar.Eixos2D(ctx, canvas);
-                desenhar.Quadrado(matrizBaseGeral, ctx);
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral;
-            } 
-            else{
-                alert("Digite os valores de cisalhamento.\nCaso NÃO deseje cisalhar em algum eixo, digite o valor 0.");
-            }
-        }
-        
-        if (document.getElementById('checkReflexao').checked) {            
-            if (document.getElementById('xReflexao').checked && !document.getElementById('yReflexao').checked) {                
-                matrizBaseGeral = ReflexaoX(matrizBaseGeral);                
-                limpaTela(ctx);                
-                desenhar.Eixos2D(ctx, canvas);               
-                desenhar.Quadrado(matrizBaseGeral, ctx);
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral;
-            }
-            else if (document.getElementById('yReflexao').checked && !document.getElementById('xReflexao').checked) {                
-                matrizBaseGeral = ReflexaoY(matrizBaseGeral);                
-                limpaTela(ctx);                
-                desenhar.Eixos2D(ctx, canvas);             
-                desenhar.Quadrado(matrizBaseGeral, ctx);
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral;
-            }
-            else if(document.getElementById('xReflexao').checked && document.getElementById('yReflexao').checked){                
-                matrizBaseGeral = ReflexaoX(matrizBaseGeral);
-                matrizBaseGeral = ReflexaoY(matrizBaseGeral);
-                limpaTela(ctx);                
-                desenhar.Eixos2D(ctx, canvas);               
-                desenhar.Quadrado(matrizBaseGeral, ctx);
-                listaParaAViewPort = [];
-                listaParaAViewPort = matrizBaseGeral;
-            } 
-            else{
-                alert("Marque alguma opção de REFLEXÃO!!");
-            }
-        }
-    }
-
-    // Função para desativar as outras seções e seus elementos
-    function disableOtherSections() {
-        otherSections.forEach(section => {
-            section.style.pointerEvents = "none"; // Desabilita a interação com as outras seções
-            Array.from(section.querySelectorAll("*")).forEach(element => {
-                element.style.pointerEvents = "none"; // Desabilita a interação com os elementos dentro da seção
-            });
-        });
-    }
-
-    // Função para ativar as outras seções e seus elementos
-    function enableOtherSections() {
-        otherSections.forEach(section => {
-            section.style.pointerEvents = "auto"; // Habilita a interação com as outras seções
-            Array.from(section.querySelectorAll("*")).forEach(element => {
-                element.style.pointerEvents = "auto"; // Habilita a interação com os elementos dentro da seção
-            });
-        });
+    function desativarAtualizacaoCoordenadas() {
+        document.getElementById("coordMundo").querySelector("p").innerText = "";
+        document.getElementById("coordNorm").querySelector("p").innerText = "";
+        document.getElementById("coordTela").querySelector("p").innerText = "";
     }
 
     /* **************************** Matriz de Transformação ***************************************** */
@@ -523,6 +390,125 @@ document.addEventListener('DOMContentLoaded', () => {
         aplicarTransformacao();
     });
 
+    // Função para aplicar a transformação desejada
+    function aplicarTransformacao() {
+    
+        if (document.getElementById('checkTranslacao').checked) {            
+            const xTranslacao = parseFloat(document.getElementById('xTranslacao').value);
+            const yTranslacao = parseFloat(document.getElementById('yTranslacao').value);
+
+            if (!isNaN(xTranslacao) && !isNaN(yTranslacao)) {
+                matrizBaseGeral = Translacao(matrizBaseGeral, xTranslacao, -yTranslacao);    
+                limpaTela(ctx);
+                desenhar.Eixos2D(ctx, canvas);
+                desenhar.Quadrado(matrizBaseGeral, ctx); 
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral; 
+            } 
+            else {
+                alert('Por favor, insira valores numéricos válidos para a translação.');
+            }
+        }
+
+        if(document.getElementById('checkEscala').checked){
+            const xEscala = parseFloat(document.getElementById('xEscala').value);
+            const yEscala = parseFloat(document.getElementById('yEscala').value);
+
+            if(!isNaN(xEscala) && !isNaN(yEscala)){
+                matrizBaseGeral = Escala(matrizBaseGeral, xEscala, yEscala);                
+                limpaTela(ctx);                
+                desenhar.Eixos2D(ctx, canvas);             
+                desenhar.Quadrado(matrizBaseGeral, ctx);
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral;                
+            }
+            else {
+                alert('Por favor, insira valores numéricos válidos para a Escala.');
+            }
+        }
+
+        if(document.getElementById('checkRotacao').checked){            
+            const AnguloRotacao = parseFloat(document.getElementById('AnguloRotacao').value);
+
+            if(!isNaN(AnguloRotacao)){
+                matrizBaseGeral = Rotacao(matrizBaseGeral, AnguloRotacao);                
+                limpaTela(ctx);                
+                desenhar.Eixos2D(ctx, canvas);
+                desenhar.Quadrado(matrizBaseGeral, ctx);
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral;
+            }
+            else {
+                alert('Por favor, insira valores numéricos válidos para a Rotação.');
+            }
+        }
+
+        if(document.getElementById('checkCisalhamento').checked){
+            const valorCisalhamentoX = parseFloat(document.getElementById('xCisalhamento').value);
+            const valorCisalhamentoY = parseFloat(document.getElementById('yCisalhamento').value);
+            
+            if(valorCisalhamentoX === 0){
+                matrizBaseGeral = cisalhamentoY(matrizBaseGeral, -valorCisalhamentoY);
+                limpaTela(ctx);
+                desenhar.Eixos2D(ctx, canvas);
+                desenhar.Quadrado(matrizBaseGeral, ctx);
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral;
+            }
+            else if(valorCisalhamentoY === 0){
+                matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
+                limpaTela(ctx);
+                desenhar.Eixos2D(ctx, canvas);
+                desenhar.Quadrado(matrizBaseGeral, ctx);
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral;
+            }
+            else if(!isNaN(valorCisalhamentoX) && !isNaN(valorCisalhamentoY)){
+                matrizBaseGeral = cisalhamentoX(matrizBaseGeral, -valorCisalhamentoX);
+                matrizBaseGeral = cisalhamentoY(matrizBaseGeral, -valorCisalhamentoY);
+                limpaTela(ctx);
+                desenhar.Eixos2D(ctx, canvas);
+                desenhar.Quadrado(matrizBaseGeral, ctx);
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral;
+            } 
+            else{
+                alert("Digite os valores de cisalhamento.\nCaso NÃO deseje cisalhar em algum eixo, digite o valor 0.");
+            }
+        }
+        
+        if (document.getElementById('checkReflexao').checked) {            
+            if (document.getElementById('xReflexao').checked && !document.getElementById('yReflexao').checked) {                
+                matrizBaseGeral = ReflexaoX(matrizBaseGeral);                
+                limpaTela(ctx);                
+                desenhar.Eixos2D(ctx, canvas);               
+                desenhar.Quadrado(matrizBaseGeral, ctx);
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral;
+            }
+            else if (document.getElementById('yReflexao').checked && !document.getElementById('xReflexao').checked) {                
+                matrizBaseGeral = ReflexaoY(matrizBaseGeral);                
+                limpaTela(ctx);                
+                desenhar.Eixos2D(ctx, canvas);             
+                desenhar.Quadrado(matrizBaseGeral, ctx);
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral;
+            }
+            else if(document.getElementById('xReflexao').checked && document.getElementById('yReflexao').checked){                
+                matrizBaseGeral = ReflexaoX(matrizBaseGeral);
+                matrizBaseGeral = ReflexaoY(matrizBaseGeral);
+                limpaTela(ctx);                
+                desenhar.Eixos2D(ctx, canvas);               
+                desenhar.Quadrado(matrizBaseGeral, ctx);
+                listaParaAViewPort = [];
+                listaParaAViewPort = matrizBaseGeral;
+            } 
+            else{
+                alert("Marque alguma opção de REFLEXÃO!!");
+            }
+        }
+    }
+
     btnDesenharRetaCohen.addEventListener('click', () => {
         let quantRetas = parseInt(inputRetas.value);
 
@@ -691,7 +677,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(opcao === "opcao1"){
             limparSaidaDeDadosTextarea();
-            desenharCubo(canvas3D);
+            desenhar3D.Cubo(canvas3D);
             /* CRIAR FUNÇÃO DE DESENHAR CUBO */
         }else if(opcao === "opcao2"){
             limpaTela(ctx);
@@ -720,21 +706,13 @@ document.addEventListener('DOMContentLoaded', () => {
                     document.getElementById('2D').checked = false;
                     canvas.style.display = 'none';
                     canvas3D.style.display = 'block';
+                    desativarAtualizacaoCoordenadas();
                     limpaTela(ctx);
 
                 }
             }
         });
     });
-
-    
-    /* Função para adicionar ouvintes de eventos aos checkboxes
-    function adicionarOuvintesCheckbox() {
-        checkboxes.forEach(function(checkbox) {
-            checkbox.addEventListener('change', function() {
-            });
-        });
-    }*/
 
     //*********************************************OUVINTES DA ENTRADA DA VP E DO CANVASVP************************************************* */
 
@@ -850,6 +828,26 @@ document.addEventListener('DOMContentLoaded', () => {
         enableOtherSections(); // Ativa as outras seções e seus elementos
         canvasContainer.style.display = "none"; // desativa o canvasVP
     });
+
+    // Função para desativar as outras seções e seus elementos
+    function disableOtherSections() {
+        otherSections.forEach(section => {
+            section.style.pointerEvents = "none"; // Desabilita a interação com as outras seções
+            Array.from(section.querySelectorAll("*")).forEach(element => {
+                element.style.pointerEvents = "none"; // Desabilita a interação com os elementos dentro da seção
+            });
+        });
+    }
+
+    // Função para ativar as outras seções e seus elementos
+    function enableOtherSections() {
+        otherSections.forEach(section => {
+            section.style.pointerEvents = "auto"; // Habilita a interação com as outras seções
+            Array.from(section.querySelectorAll("*")).forEach(element => {
+                element.style.pointerEvents = "auto"; // Habilita a interação com os elementos dentro da seção
+            });
+        });
+    }
 
 
 });

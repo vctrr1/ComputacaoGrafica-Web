@@ -49,7 +49,6 @@ export function CohenSutherland(ctx, altura, largura){
 }
 
 //calcula o tamanho do quadrado central desenhado pelo desenharEixosCohenSutherland()
-//OBS: altera de alum jeito a coordenada da reta
 export function areaDeRecorteCohen(altura, largura) {
     const espacoExtraVertical = altura / 12;
     const espacoExtraHorizontal = largura / 12;
@@ -66,6 +65,7 @@ export function areaDeRecorteCohen(altura, largura) {
     ];
 }
 
+//tela de quando os batimentos ainda não começaram
 export function batimentosCardiacos(ctx){
     // Pintar o fundo de preto
     ctx.fillStyle = 'black';
