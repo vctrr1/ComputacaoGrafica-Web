@@ -14,11 +14,16 @@ export function Cubo(canvas) {
     renderer.setClearColor(0xFFFFFF, 1); // 1 significa pintar em sua totalidade
     renderer.setSize(canvas.clientWidth, canvas.clientHeight); // Define o tamanho da área de renderização de acordo com o tamanho do canvas
 
-    // Cria o cubo
-    const geometry = new THREE.BoxGeometry(2, 2, 2);
-    const material = new THREE.MeshNormalMaterial({ side: THREE.DoubleSide });
-    const cube = new THREE.Mesh(geometry, material);
-    scene.add(cube);
+    // Cria a geometria básica do cubo
+    const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
+    
+    // Cria a geometria de arestas do cubo
+    const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
+
+    // Cria o material e o wireframe do cubo
+    const material = new THREE.LineBasicMaterial({ color: 0x000000 });
+    const wireframe = new THREE.LineSegments(edgesGeometry, material);
+    scene.add(wireframe);
 
     // Adiciona eixos cartesianos
     let eixosCartezianos = new THREE.AxesHelper(15);
@@ -27,6 +32,7 @@ export function Cubo(canvas) {
     // Renderiza a cena
     renderer.render(scene, camera);
 }
+
 
 //função de desenho da casa
 export function Casa(canvas) {
