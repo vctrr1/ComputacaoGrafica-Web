@@ -40,7 +40,9 @@ window.onload = function() {
     const xEscala3D = document.getElementById('xEscala3D');
     const yEscala3D = document.getElementById('yEscala3D');
     const zEscala3D = document.getElementById('zEscala3D');
-    const AnguloRotacao3D = document.getElementById('AnguloRotacao3D');
+    const AnguloRotacao3Dx = document.getElementById('AnguloRotacao3Dx');
+    const AnguloRotacao3Dy = document.getElementById('AnguloRotacao3Dy');
+    const AnguloRotacao3Dz = document.getElementById('AnguloRotacao3Dz');
     const xCisalhamento3D = document.getElementById('xCisalhamento3D');
     const yCisalhamento3D = document.getElementById('yCisalhamento3D');
     const zCisalhamento3D = document.getElementById('zCisalhamento3D');
@@ -84,7 +86,9 @@ window.onload = function() {
         xEscala3D.disabled = true;
         yEscala3D.disabled = true;
         zEscala3D.disabled = true;
-        AnguloRotacao3D.disabled = true;
+        AnguloRotacao3Dx.disabled = true;
+        AnguloRotacao3Dy.disabled = true;
+        AnguloRotacao3Dz.disabled = true;
         xCisalhamento3D.disabled = true;
         yCisalhamento3D.disabled = true;
         zCisalhamento3D.disabled = true;
@@ -113,7 +117,9 @@ window.onload = function() {
         xEscala3D.value = "";
         yEscala3D.value = "";
         zEscala3D.value = "";
-        AnguloRotacao3D.value = "";
+        AnguloRotacao3Dx.value = "";
+        AnguloRotacao3Dy.value = "";
+        AnguloRotacao3Dz.value = "";
         xCisalhamento3D.value = "";
         yCisalhamento3D.value = "";
         zCisalhamento3D.value = "";
@@ -440,11 +446,17 @@ window.onload = function() {
             }
             else if(this.id === "checkRotacao3D"){
                 if(checkbox.checked){
-                    AnguloRotacao3D.disabled = false;
+                    AnguloRotacao3Dx.disabled = false;
+                    AnguloRotacao3Dy.disabled = false;
+                    AnguloRotacao3Dz.disabled = false;
                 }
                 else{
-                    AnguloRotacao3D.disabled = true;
-                    AnguloRotacao3D.value = "";
+                    AnguloRotacao3Dx.disabled = true;
+                    AnguloRotacao3Dy.disabled = true;
+                    AnguloRotacao3Dz.disabled = true;
+                    AnguloRotacao3Dx.value = "";
+                    AnguloRotacao3Dy.value = "";
+                    AnguloRotacao3Dz.value = "";
                 }
             }
             else if(this.id === "checkCisalhamento3D"){
