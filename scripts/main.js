@@ -158,14 +158,14 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     let matrizBaseGeral3D = [
-        [-1, -1, -1, 1],  // V0
-        [1, -1, -1, 1],   // V1
-        [1, 1, -1, 1],    // V2
-        [-1, 1, -1, 1],   // V3
-        [-1, -1, 1, 1],   // V4
-        [1, -1, 1, 1],    // V5
-        [1, 1, 1, 1],     // V6
-        [-1, 1, 1, 1]     // V7
+        [0, 0, 0, 1],   // V
+        [2, 0, 0, 1],   // V1
+        [2, 2, 0, 1],   // V2
+        [0, 2, 0, 1],   // V3
+        [0, 0, 2, 1],   // V4
+        [2, 0, 2, 1],   // V5
+        [2, 2, 2, 1],   // V6
+        [0, 2, 2, 1]    // V7
     ];
     
     let facesCubo = [
@@ -263,15 +263,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnLimpaTransformacoes3D.addEventListener('click', () => {
         btnTransferirParaViewPort.disabled = true;
+        //matrizBaseGeral3D = [
+        //    [-1, -1, -1, 1],  // V0
+        //    [1, -1, -1, 1],   // V1
+        //    [1, 1, -1, 1],    // V2
+        //    [-1, 1, -1, 1],   // V3
+        //    [-1, -1, 1, 1],   // V4
+        //    [1, -1, 1, 1],    // V5
+        //    [1, 1, 1, 1],     // V6
+        //    [-1, 1, 1, 1]     // V7
+        //];
         matrizBaseGeral3D = [
-            [-1, -1, -1, 1],  // V0
-            [1, -1, -1, 1],   // V1
-            [1, 1, -1, 1],    // V2
-            [-1, 1, -1, 1],   // V3
-            [-1, -1, 1, 1],   // V4
-            [1, -1, 1, 1],    // V5
-            [1, 1, 1, 1],     // V6
-            [-1, 1, 1, 1]     // V7
+            [0, 0, 0, 1],   // V
+            [2, 0, 0, 1],   // V1
+            [2, 2, 0, 1],   // V2
+            [0, 2, 0, 1],   // V3
+            [0, 0, 2, 1],   // V4
+            [2, 0, 2, 1],   // V5
+            [2, 2, 2, 1],   // V6
+            [0, 2, 2, 1]    // V7
         ];
         
         facesCubo = [
@@ -559,14 +569,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function aplicarTransformacao3D(){
+        let matrizTransformada = matrizBaseGeral3D.slice();
         if(document.getElementById('checkTranslacao3D').checked){
-            let matrizTransformada = matrizBaseGeral3D.slice();
             const tx = parseFloat(document.getElementById('xTranslacao3D').value);
             const ty = parseFloat(document.getElementById('yTranslacao3D').value);
             const tz = parseFloat(document.getElementById('zTranslacao3D').value);
 
             if(!isNaN(tx) && !isNaN(ty) && !isNaN(tz)){
                 matrizTransformada = translacao3D(matrizTransformada, tx, ty, tz);
+                console.log(matrizTransformada);
                 desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
             }else{
                 alert('Digite um input valido.');
@@ -578,15 +589,13 @@ document.addEventListener('DOMContentLoaded', () => {
             const sz = parseFloat(document.getElementById('zEscala3D').value);
 
             if(!isNaN(sx) && !isNaN(sy) && !isNaN(sz)){
-                const aux = escala3D(matrizBaseGeral3D, sx, sy, sz);
-                desenhar3D.Cubo(canvas3D, aux, facesCubo);
+                matrizTransformada = escala3D(matrizTransformada, sx, sy, sz);
+                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
             }else{
                 alert('Digite um input valido.');
             }
         }
         if (document.getElementById('checkRotacao3D').checked) {
-            let matrizTransformada = matrizBaseGeral3D.slice();
-        
             // Obtenha os valores dos campos de entrada
             const angulox = parseFloat(document.getElementById('AnguloRotacao3Dx').value);
             const anguloy = parseFloat(document.getElementById('AnguloRotacao3Dy').value);
@@ -596,17 +605,14 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isNaN(angulox)) {
                 matrizTransformada = rotacaoX3D(matrizTransformada, angulox);
             }
-        
             // Aplique a rotação em Y, se o valor for um número válido
             if (!isNaN(anguloy)) {
                 matrizTransformada = rotacaoY3D(matrizTransformada, anguloy);
             }
-        
             // Aplique a rotação em Z, se o valor for um número válido
             if (!isNaN(anguloz)) {
                 matrizTransformada = rotacaoZ3D(matrizTransformada, anguloz);
             }
-        
             // Desenhe o cubo com a matriz transformada
             desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
         }
@@ -788,7 +794,7 @@ document.addEventListener('DOMContentLoaded', () => {
     btnAplicaTransformacoes3D.addEventListener('click', () => {
         aplicarTransformacao3D();
     })
-    
+
     //Ouvinte para verificar se a opção selecionada foi a de transformações ou Cohen e desenhar no canvas
     inputOpcoes2D.addEventListener('change', () => {
         var opcaoSelecionada = inputOpcoes2D.value;
