@@ -6,7 +6,7 @@ export function Cubo(canvas, matrizBase, facesCubo) {
 
     // Cria a perspectiva de visualização 3D
     const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    camera.position.set(15, 15, 15);
+    camera.position.set(15,5, 10);
     camera.lookAt(scene.position);
 
     // Cria o renderizador
