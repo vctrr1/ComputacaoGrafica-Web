@@ -79,7 +79,10 @@ export function cisalhamentoXY3D(matrizBase, shxy) {
         [0, 0, 1, 0],
         [0, 0, 0, 1]
     ];
-    return multiplicarMatrizes(matrizCisalhamento, matrizBase);
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizCisalhamento, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
 }
 
 export function cisalhamentoXZ3D(matrizBase, shxz) {
@@ -89,7 +92,10 @@ export function cisalhamentoXZ3D(matrizBase, shxz) {
         [0, 0, 1, 0],
         [0, 0, 0, 1]
     ];
-    return multiplicarMatrizes(matrizCisalhamento, matrizBase);
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizCisalhamento, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
 }
 
 export function cisalhamentoYZ3D(matrizBase, shyz) {
@@ -99,47 +105,53 @@ export function cisalhamentoYZ3D(matrizBase, shyz) {
         [0, 0, 1, 0],
         [0, 0, 0, 1]
     ];
-    return multiplicarMatrizes(matrizCisalhamento, matrizBase);
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizCisalhamento, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
 }
 
+// Função de reflexão em torno do plano XY
 export function reflexaoXY3D(matrizBase) {
     const matrizReflexao = [    
         [ 1,  0,  0,  0],
-        [ 0, 1,  0,  0],
+        [ 0,  1,  0,  0],
         [ 0,  0, -1,  0],
         [ 0,  0,  0,  1]
     ];
-    return matrizBase.map(vertice => {
-        const verticeTransformado = multiplicarMatrizes(matrizReflexao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
-        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
-    });
+    return aplicarTransformacao(matrizBase, matrizReflexao);
 }
 
+// Função de reflexão em torno do plano XZ
 export function reflexaoXZ3D(matrizBase) {
     const matrizReflexao = [    
-        [1,  0,  0,  0],
-        [ 0,  -1,  0,  0],
-        [ 0,  0, 1,  0],
+        [ 1,  0,  0,  0],
+        [ 0, -1,  0,  0],
+        [ 0,  0,  1,  0],
         [ 0,  0,  0,  1]
     ];
+    return aplicarTransformacao(matrizBase, matrizReflexao);
+}
+
+// Função de reflexão em torno do plano YZ
+export function reflexaoYZ3D(matrizBase) {
+    const matrizReflexao = [    
+        [-1,  0,  0,  0],
+        [ 0,  1,  0,  0],
+        [ 0,  0,  1,  0],
+        [ 0,  0,  0,  1]
+    ];
+    return aplicarTransformacao(matrizBase, matrizReflexao);
+}
+
+// Função para aplicar uma transformação em uma matriz de vértices
+function aplicarTransformacao(matrizBase, matrizTransformacao) {
     return matrizBase.map(vertice => {
-        const verticeTransformado = multiplicarMatrizes(matrizReflexao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        const verticeTransformado = multiplicarMatrizes(matrizTransformacao, [[vertice[0]], [vertice[1]], [vertice[2]], [1]]);
         return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
     });
 }
 
-export function reflexaoYZ3D(matrizBase) {
-    const matrizReflexao = [    
-        [ -1,  0,  0,  0],
-        [ 0, 1,  0,  0],
-        [ 0,  0, 1,  0],
-        [ 0,  0,  0,  1]
-    ];
-    return matrizBase.map(vertice => {
-        const verticeTransformado = multiplicarMatrizes(matrizReflexao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
-        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
-    });
-}
 
 function multiplicarMatrizes(a, b) {
     const rowsA = a.length, colsA = a[0].length;
