@@ -6,7 +6,7 @@ export function Cubo(canvas, matrizBase, facesCubo) {
 
     // Cria a perspectiva de visualização 3D
     const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
-    camera.position.set(5, 5, 5);
+    camera.position.set(15, 15, 15);
     camera.lookAt(scene.position);
 
     // Cria o renderizador
@@ -37,12 +37,12 @@ export function Cubo(canvas, matrizBase, facesCubo) {
     boxGeometry.setIndex(indices);
 
     // Cria o material e o cubo 3D
-    const material = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
+    const material = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true});
     const cube = new THREE.Mesh(boxGeometry, material);
     scene.add(cube);
 
     // Adiciona eixos cartesianos (opcional)
-    let eixosCartezianos = new THREE.AxesHelper(15);
+    let eixosCartezianos = new THREE.AxesHelper(25);
     scene.add(eixosCartezianos);
 
     // Renderiza a cena
