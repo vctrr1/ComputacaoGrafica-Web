@@ -310,7 +310,7 @@ header div, h1{
 }
 
 /* ************ DIV configPanel3D_opcoes_transformacoes ************ */
-.configPanel3D_opcoes_transformacoes{
+.configPanel3D_opcoes_transformacoes {
     display: flex;
     flex-direction: column;
     border: 2px solid #000;
@@ -318,39 +318,39 @@ header div, h1{
     padding-bottom: 10px;
 }
 
-.transformacoes3D:not(:first-child){
-     /*Aplicando a regra a todas as classes transformacoes3D(menos na primeira encontrada) */
-     border-top: 1px dashed #000;
+.transformacoes3D:not(:first-child) {
+    /*Aplicando a regra a todas as classes transformacoes3D (menos na primeira encontrada) */
+    border-top: 1px dashed #000;
 }
 
-.transformacoes3D{
+.transformacoes3D {
     display: flex;
     flex-direction: column;
     margin-top: 0;
 }
 
-.transformacoes3D_sub{
+.transformacoes3D_sub {
     display: flex;
     flex-direction: row;
-    justify-content: left; 
+    justify-content: left;
     text-align: center;
-    margin-top: 5px;   
+    margin-top: 5px;
 }
 
-.transformacoes3D_sub label{
+.transformacoes3D_sub label {
     font-size: 15px;
     padding-left: 10px;
     margin-bottom: 5px;
 }
 
-.transformacoes3D_entradas{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+.transformacoes3D_entradas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+    gap: 10px; /* espaço entre os itens */
     margin-bottom: 5px;
 }
 
-.transformacoes3D_entradas input[type="number"]{
+.transformacoes3D_entradas input[type="number"] {
     width: 30px; /* Define a largura */
     height: 15px; /* Define a altura */
 }
