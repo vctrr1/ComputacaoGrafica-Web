@@ -1,53 +1,161 @@
-import * as THREE from "../tree/three.module.js";
+export function translacao3D(matrizBase, tx, ty, tz) {
+    const matrizTranslacao = [
+        [1, 0, 0, tx],
+        [0, 1, 0, ty],
+        [0, 0, 1, tz],
+        [0, 0, 0, 1]
+    ];
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizTranslacao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
+}
 
+export function escala3D(matrizBase, sx, sy, sz) {
+    const matrizEscala = [
+        [sx, 0, 0, 0],
+        [0, sy, 0, 0],
+        [0, 0, sz, 0],
+        [0, 0, 0, 1]
+    ];
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizEscala, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
+}
 
+export function rotacaoX3D(matrizBase, angulo) {
+    const rad = angulo * (Math.PI / 180);
+    const cos = Math.cos(rad);
+    const sin = Math.sin(rad);
+    const matrizRotacao = [
+        [1, 0, 0, 0],
+        [0, cos, -sin, 0],
+        [0, sin, cos, 0],
+        [0, 0, 0, 1]
+    ];
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizRotacao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
+}
 
+export function rotacaoY3D(matrizBase, angulo) {
+    const rad = angulo * (Math.PI / 180);
+    const cos = Math.cos(rad);
+    const sin = Math.sin(rad);
+    const matrizRotacao = [
+        [cos, 0, sin, 0],
+        [0, 1, 0, 0],
+        [-sin, 0, cos, 0],
+        [0, 0, 0, 1]
+    ];
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizRotacao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
+}
 
-// Função para aplicar uma transformação ao cubo
-function test(cube, tipo, valores) {
-    let matrix = new THREE.Matrix4();
+export function rotacaoZ3D(matrizBase, angulo) {
+    const rad = angulo * (Math.PI / 180);
+    const cos = Math.cos(rad);
+    const sin = Math.sin(rad);
+    const matrizRotacao = [
+        [cos, -sin, 0, 0],
+        [sin, cos, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ];
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizRotacao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
+}
 
-    switch (tipo) {
-        case 'translacao':
-            const [tx, ty, tz] = valores;
-            matrix.makeTranslation(tx, ty, tz);
-            break;
-        case 'rotacao':
-            const [angle, axis] = valores;
-            switch (axis) {
-                case 'x':
-                    matrix.makeRotationX(angle);
-                    break;
-                case 'y':
-                    matrix.makeRotationY(angle);
-                    break;
-                case 'z':
-                    matrix.makeRotationZ(angle);
-                    break;
-                default:
-                    console.error('Eixo de rotação inválido');
-            }
-            break;
-        case 'escala':
-            const [sx, sy, sz] = valores;
-            matrix.makeScale(sx, sy, sz);
-            break;
-        case 'cisalhamento':
-            // Valores devem ser passados como array de 9 elementos
-            if (valores.length === 9) {
-                matrix.set(
-                    valores[0], valores[1], valores[2], 0,
-                    valores[3], valores[4], valores[5], 0,
-                    valores[6], valores[7], valores[8], 0,
-                    0, 0, 0, 1
-                );
-            } else {
-                console.error('Valores de cisalhamento inválidos');
-            }
-            break;
-        default:
-            console.error('Tipo de transformação inválido');
+export function cisalhamentoXY3D(matrizBase, shxy) {
+    const matrizCisalhamento = [
+        [1, shxy, 0, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ];
+    return multiplicarMatrizes(matrizCisalhamento, matrizBase);
+}
+
+export function cisalhamentoXZ3D(matrizBase, shxz) {
+    const matrizCisalhamento = [
+        [1, 0, shxz, 0],
+        [0, 1, 0, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ];
+    return multiplicarMatrizes(matrizCisalhamento, matrizBase);
+}
+
+export function cisalhamentoYZ3D(matrizBase, shyz) {
+    const matrizCisalhamento = [
+        [1, 0, 0, 0],
+        [0, 1, shyz, 0],
+        [0, 0, 1, 0],
+        [0, 0, 0, 1]
+    ];
+    return multiplicarMatrizes(matrizCisalhamento, matrizBase);
+}
+
+export function reflexaoXY3D(matrizBase) {
+    const matrizReflexao = [    
+        [ 1,  0,  0,  0],
+        [ 0, 1,  0,  0],
+        [ 0,  0, -1,  0],
+        [ 0,  0,  0,  1]
+    ];
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizReflexao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
+}
+
+export function reflexaoXZ3D(matrizBase) {
+    const matrizReflexao = [    
+        [1,  0,  0,  0],
+        [ 0,  -1,  0,  0],
+        [ 0,  0, 1,  0],
+        [ 0,  0,  0,  1]
+    ];
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizReflexao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
+}
+
+export function reflexaoYZ3D(matrizBase) {
+    const matrizReflexao = [    
+        [ -1,  0,  0,  0],
+        [ 0, 1,  0,  0],
+        [ 0,  0, 1,  0],
+        [ 0,  0,  0,  1]
+    ];
+    return matrizBase.map(vertice => {
+        const verticeTransformado = multiplicarMatrizes(matrizReflexao, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+    });
+}
+
+function multiplicarMatrizes(a, b) {
+    const rowsA = a.length, colsA = a[0].length;
+    const rowsB = b.length, colsB = b[0].length;
+
+    if (colsA !== rowsB) {
+        throw new Error("Número de colunas de A deve ser igual ao número de linhas de B");
     }
 
-    cube.applyMatrix4(matrix);
+    const result = Array.from({ length: rowsA }, () => Array(colsB).fill(0));
+    for (let i = 0; i < rowsA; i++) {
+        for (let j = 0; j < colsB; j++) {
+            for (let k = 0; k < colsA; k++) {
+                result[i][j] += a[i][k] * b[k][j];
+            }
+        }
+    }
+    return result;
 }

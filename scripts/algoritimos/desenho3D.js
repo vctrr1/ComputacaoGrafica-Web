@@ -1,31 +1,47 @@
 import * as THREE from "../tree/three.module.js"
 
-export function Cubo(canvas) {
+export function Cubo(canvas, matrizBase, facesCubo) {
     // Cria a cena a ser renderizada
     const scene = new THREE.Scene();
 
     // Cria a perspectiva de visualização 3D
     const camera = new THREE.PerspectiveCamera(75, canvas.clientWidth / canvas.clientHeight, 0.1, 1000);
     camera.position.set(5, 5, 5);
-    camera.lookAt(scene.position); // Aponta a câmera para onde foi definida a cena 
+    camera.lookAt(scene.position);
 
     // Cria o renderizador
     const renderer = new THREE.WebGLRenderer({ canvas: canvas });
-    renderer.setClearColor(0xFFFFFF, 1); // 1 significa pintar em sua totalidade
-    renderer.setSize(canvas.clientWidth, canvas.clientHeight); // Define o tamanho da área de renderização de acordo com o tamanho do canvas
+    renderer.setClearColor(0xFFFFFF, 1);
+    renderer.setSize(canvas.clientWidth, canvas.clientHeight);
 
-    // Cria a geometria básica do cubo
-    const boxGeometry = new THREE.BoxGeometry(2, 2, 2);
-    
-    // Cria a geometria de arestas do cubo
-    const edgesGeometry = new THREE.EdgesGeometry(boxGeometry);
+    // Cria a geometria básica do cubo usando BufferGeometry
+    const boxGeometry = new THREE.BufferGeometry();
 
-    // Cria o material e o wireframe do cubo
-    const material = new THREE.LineBasicMaterial({ color: 0x000000 });
-    const wireframe = new THREE.LineSegments(edgesGeometry, material);
-    scene.add(wireframe);
+    // Converte a matriz de coordenadas para um formato adequado para BufferGeometry
+    const vertices = [];
+    matrizBase.forEach(coordenada => {
+        vertices.push(coordenada[0], coordenada[1], coordenada[2]);
+    });
 
-    // Adiciona eixos cartesianos
+    // Adiciona os vértices à geometria
+    boxGeometry.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+
+    // Adiciona as faces do cubo
+    const indices = [];
+    facesCubo.forEach(face => {
+        indices.push(face[0], face[1], face[2]);
+        indices.push(face[0], face[2], face[3]);
+    });
+
+    // Define os índices das faces
+    boxGeometry.setIndex(indices);
+
+    // Cria o material e o cubo 3D
+    const material = new THREE.MeshBasicMaterial({ color: 0x000000, wireframe: true });
+    const cube = new THREE.Mesh(boxGeometry, material);
+    scene.add(cube);
+
+    // Adiciona eixos cartesianos (opcional)
     let eixosCartezianos = new THREE.AxesHelper(15);
     scene.add(eixosCartezianos);
 
@@ -43,7 +59,8 @@ export function Casa(canvas) {
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
     const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
-    camera.position.z = 5;
+    camera.position.set(5, 5, 5);
+    camera.lookAt(scene.position); // Aponta a câmera para onde foi definida a cena 
 
     // Renderizador
     const renderer = new THREE.WebGLRenderer({ canvas: canvas });

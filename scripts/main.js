@@ -2,6 +2,7 @@ import { DDA, retaPontoMedio } from './algoritimos/reta.js';
 import { circunferenciaPolinomial, circunferenciaTrigonometrica, circunferenciaPontoMedio } from './algoritimos/circunferencia.js';
 import { elipsePontoMedio } from './algoritimos/elipse.js';
 import { Translacao, Escala, Rotacao, ReflexaoX, ReflexaoY, cisalhamentoX, cisalhamentoY } from './algoritimos/transformacoes2D.js';
+import {translacao3D, escala3D, rotacaoX3D, rotacaoY3D, rotacaoZ3D, cisalhamentoXY3D, cisalhamentoXZ3D, cisalhamentoYZ3D, reflexaoXY3D, reflexaoXZ3D, reflexaoYZ3D}  from './algoritimos/transformacoes3D.js';
 import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaDeDados } from './utils/utils.js';
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
 import { processarListaViewport } from './viewPort/viewPort.js';
@@ -149,14 +150,32 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("coordTela").querySelector("p").innerText = "";
     }
 
-    /* **************************** Matriz de Transformação ***************************************** */
+    /* **************************** Matrizes de Transformação ***************************************** */
     let matrizBaseGeral = [
         [0, 50, 50, 0],
         [0, 0, -50, -50],
         [1, 1, 1, 1]
     ];
 
-    let matrizBaseGeral3D = [];
+    let matrizBaseGeral3D = [
+        [-1, -1, -1, 1],  // V0
+        [1, -1, -1, 1],   // V1
+        [1, 1, -1, 1],    // V2
+        [-1, 1, -1, 1],   // V3
+        [-1, -1, 1, 1],   // V4
+        [1, -1, 1, 1],    // V5
+        [1, 1, 1, 1],     // V6
+        [-1, 1, 1, 1]     // V7
+    ];
+    
+    let facesCubo = [
+        [0, 1, 2, 3],  // Face frontal
+        [4, 5, 6, 7],  // Face traseira
+        [0, 1, 5, 4],  // Face lateral esquerda
+        [2, 3, 7, 6],  // Face lateral direita
+        [1, 2, 6, 5],  // Face superior
+        [0, 3, 7, 4]   // Face inferior
+    ];
     
     /* *************************** Area de Recorte COHEN-SUTHERLAND ********************************** */
     let matrizCoordRetas = [];
@@ -244,7 +263,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnLimpaTransformacoes3D.addEventListener('click', () => {
         btnTransferirParaViewPort.disabled = true;
-        desenhar3D.Cubo(canvas3D);
+        matrizBaseGeral3D = [
+            [-1, -1, -1, 1],  // V0
+            [1, -1, -1, 1],   // V1
+            [1, 1, -1, 1],    // V2
+            [-1, 1, -1, 1],   // V3
+            [-1, -1, 1, 1],   // V4
+            [1, -1, 1, 1],    // V5
+            [1, 1, 1, 1],     // V6
+            [-1, 1, 1, 1]     // V7
+        ];
+        
+        facesCubo = [
+            [0, 1, 2, 3],  // Face frontal
+            [4, 5, 6, 7],  // Face traseira
+            [0, 1, 5, 4],  // Face lateral esquerda
+            [2, 3, 7, 6],  // Face lateral direita
+            [1, 2, 6, 5],  // Face superior
+            [0, 3, 7, 4]   // Face inferior
+        ];
+        desenhar3D.Cubo(canvas3D, matrizBaseGeral3D, facesCubo);
         limparSaidaDeDadosTextarea();
     });
 
@@ -522,12 +560,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function aplicarTransformacao3D(){
         if(document.getElementById('checkTranslacao3D').checked){
+            let matrizTransformada = matrizBaseGeral3D.slice();
             const tx = parseFloat(document.getElementById('xTranslacao3D').value);
             const ty = parseFloat(document.getElementById('yTranslacao3D').value);
             const tz = parseFloat(document.getElementById('zTranslacao3D').value);
 
             if(!isNaN(tx) && !isNaN(ty) && !isNaN(tz)){
-
+                matrizTransformada = translacao3D(matrizTransformada, tx, ty, tz);
+                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
             }else{
                 alert('Digite um input valido.');
             }
@@ -538,16 +578,19 @@ document.addEventListener('DOMContentLoaded', () => {
             const sz = parseFloat(document.getElementById('zEscala3D').value);
 
             if(!isNaN(sx) && !isNaN(sy) && !isNaN(sz)){
-
+                const aux = escala3D(matrizBaseGeral3D, sx, sy, sz);
+                desenhar3D.Cubo(canvas3D, aux, facesCubo);
             }else{
                 alert('Digite um input valido.');
             }
         }
         if(document.getElementById('checkRotacao3D').checked){
+            let matrizTransformada = matrizBaseGeral3D.slice();
             const angulo = parseFloat(document.getElementById('AnguloRotacao3D').value);
             
             if(!isNaN(angulo)){
-
+                matrizTransformada = rotacaoY3D(matrizTransformada, angulo);
+                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
             }else{
                 alert('Digite um input valido.');
             }
@@ -564,17 +607,21 @@ document.addEventListener('DOMContentLoaded', () => {
             }            
         }
         if(document.getElementById('checkReflexao3D').checked){
+            let matrizTransformada = matrizBaseGeral3D.slice();
             if(document.getElementById('xyReflexao3D').checked){
-                //reflexão em xy
-                
+                matrizTransformada = reflexaoXY3D(matrizTransformada);
+                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
             }
             else if(document.getElementById('xzReflexao3D').checked){
                 //reflexão em xz
+                matrizTransformada = reflexaoXZ3D(matrizTransformada);
+                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
                 
             }
             else if(document.getElementById('yzReflexao3D').checked){
                 //reflexão em yz
-                
+                matrizTransformada = reflexaoYZ3D(matrizTransformada);
+                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
             }
             else {
                 alert('marque uma reflexão!');
@@ -755,7 +802,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         if(opcao === "opcao1"){
             limparSaidaDeDadosTextarea();
-            desenhar3D.Cubo(canvas3D);
+            desenhar3D.Cubo(canvas3D, matrizBaseGeral3D, facesCubo);
             /* CRIAR FUNÇÃO DE DESENHAR CUBO */
         }else if(opcao === "opcao2"){
             limparSaidaDeDadosTextarea();
@@ -785,7 +832,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     canvas.style.display = 'none';
                     canvas3D.style.display = 'block';
                     desativarAtualizacaoCoordenadas();
-                    desenhar3D.Cubo(canvas3D);
+                    desenhar3D.Cubo(canvas3D, matrizBaseGeral3D, facesCubo);
                     limpaTela(ctx);
 
                 }
