@@ -288,6 +288,7 @@ window.onload = function() {
                         xTranslacao.disabled = false;
                         yTranslacao.disabled = false;
                     }
+<<<<<<< HEAD
                     else{
                         desmarcaCheckBoxesTransComp();
                         limpaCampoDasEntradas2D();
@@ -350,6 +351,17 @@ window.onload = function() {
                         desmarcaCheckBoxesTransComp();
                         desativaEntradasDeValoresDasTransformacoes2D();
                     }                
+=======
+                break;
+                    
+            }
+            
+            // Se o checkbox foi marcado
+            if (this.checked) {
+                // Mantem "checkReflexao" marcado se "xReflexao" ou "yReflexao" estiverem marcados
+                if ((checkbox.id === "xReflexao" || checkbox.id === "yReflexao")) {
+                    document.getElementById("checkReflexao").checked = true;
+>>>>>>> 588029434c60ddb911b5bcf596e986be94a70ad0
                 }
             }
             // Informações para composição dos checkboxes

@@ -66,7 +66,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // botões da mini VP do 
     const btnTransferirParaViewPort = document.getElementById('btnTransferirParaViewPort');
     const btnLimparViewPort = document.getElementById('btnLimparViewPort');
+<<<<<<< HEAD
     const btnVisualizar = document.getElementById("btnVisualizar");
+=======
+    //botões viewPort inicial desativados
+>>>>>>> 588029434c60ddb911b5bcf596e986be94a70ad0
     btnTransferirParaViewPort.disabled = true;
     btnLimparViewPort.disabled = true;
     btnVisualizar.disabled = true;
