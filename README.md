@@ -27,6 +27,8 @@
 - 10º [x] - Implementar alg. Elipse Ponto Medio
 - 11º [x] - Implementar transferencia de Elipse para viewPort
 - 12º [x] - Implementar batimentos cardiacos
-- 13º [] - Implementar transformações 3d
+- 13º [x] - Implementar transformações 3d
 - 14º [] - Implementar visualizações
 - 15º [] - Corrigir Bug (Ao transferir para VP um objeto do tipo reta, ao mudar para circunferencia, desenhar objeto e transferir para vp, não é transferido a circunferencia e sim uma reta novamente, esta acontecendo com todos os tipos de desenho)
+- 16º [] - Corrigir rotação 3D fora da origem
+- 14º [] - Corrigir reflexão 3D com objeto com cor
