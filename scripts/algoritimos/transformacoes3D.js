@@ -161,10 +161,29 @@ export function cisalhamentoGeral3D(matrizBase, shxy, shxz, shyx, shyz, shzx, sh
         [0, 0, 0, 1]
     ];
 
-    return matrizBase.map(vertice => {
-        const verticeTransformado = multiplicarMatrizes(matrizCisalhamento, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
-        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
-    });
+    const centro = calcularCentro(matrizBase);
+
+    // Verifica se o objeto já está na origem
+    if (centro[0] !== 0 || centro[1] !== 0 || centro[2] !== 0) {
+        // Translada o objeto para a origem
+        matrizBase = translacao3D(matrizBase, -centro[0] + 1, -centro[1] + 1, -centro[2] + 1);
+
+        // Aplica a escala
+        matrizBase = matrizBase.map(vertice => {
+            const verticeTransformado = multiplicarMatrizes(matrizCisalhamento, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+            return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+        });
+
+        // Translada o objeto de volta para a posição original, considerando o deslocamento inicial
+        matrizBase = translacao3D(matrizBase, centro[0] - 1, centro[1] - 1, centro[2] - 1);
+        return matrizBase;
+
+    } else {
+        return matrizBase.map(vertice => {
+            const verticeTransformado = multiplicarMatrizes(matrizCisalhamento, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+            return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+        });
+    }
 }
 
 // Função de reflexão em torno do plano XY
