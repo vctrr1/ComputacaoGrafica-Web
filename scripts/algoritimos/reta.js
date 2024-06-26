@@ -1,6 +1,6 @@
 import { ativaPixel, setarDadosParaSaidaDeDados } from '../utils/utils.js'
 
-export function DDA(X1, Y1, X2, Y2, tipoCanvas) {
+export function DDA(X1, Y1, X2, Y2, tipoCanvas, cor) {
     var deltaX = X2 - X1;
     var deltaY = Y2 - Y1;
 
@@ -12,11 +12,11 @@ export function DDA(X1, Y1, X2, Y2, tipoCanvas) {
     var X = X1;
     var Y = Y1;
 
-    ativaPixel(tipoCanvas, Math.round(X), Math.round(Y));
+    ativaPixel(tipoCanvas, Math.round(X), Math.round(Y), cor);
 
     setarDadosParaSaidaDeDados("\nFunção de Reta DDA.\n\n" + 
         "P1("+ X1.toFixed(0) + ", " + Y1.toFixed(0) + ")\tP2("+ X2.toFixed(0) + ", " + Y2.toFixed(0) + ")\n" +
-        "Delta X = " + deltaX.toFixed(2) + "\tDelta Y = " + deltaY.toFixed(2) +
+        "Delta X = " + deltaX.toFixed(2) + "\nDelta Y = " + deltaY.toFixed(2) +
         "\nLength = " + length +
         "\nXinc = " + Xinc.toFixed(2) + "\tYinc = " + Yinc.toFixed(2) +"\n\n"
     );
@@ -24,7 +24,7 @@ export function DDA(X1, Y1, X2, Y2, tipoCanvas) {
     for (var i = 0; i < length; i++) {
         X += Xinc;
         Y += Yinc;
-        ativaPixel(tipoCanvas, Math.round(X), Math.round(Y));
+        ativaPixel(tipoCanvas, Math.round(X), Math.round(Y),cor);
         setarDadosParaSaidaDeDados((i+1)+"º " + "NP("+ X.toFixed(2) + ", " + Y.toFixed(2) + ")\n");
     }
 }

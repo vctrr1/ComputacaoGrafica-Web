@@ -100,7 +100,7 @@ header div, h1{
     margin-bottom: 1px;
 }
 
-/* ************ DIV configPanel2D ************ */
+/* ******************* DIV configPanel2D ******************** */
 .configPanel2D{
     display: flex;
     flex-direction: row;
@@ -116,7 +116,23 @@ header div, h1{
     padding-bottom: 5px;
 }
 
-/* ************ DIV configPanel2D_opcoes_pixel ************ */
+/* ******************* DIV configPanel3D ******************** */
+.configPanel3D{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel3D select {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+/* ****************** DIV configPanel2D_opcoes_pixel ****************** */
 .configPanel2D_opcoes_pixel{
     display: flex;
     flex-direction: row;
@@ -137,7 +153,7 @@ header div, h1{
     height: 15px; /* Define a altura */ 
 }
 
-/* ************ DIV configPanel2D_opcoes_retas ************ */
+/* *************** DIV configPanel2D_opcoes_retas *************** */
 .configPanel2D_opcoes_retas{
     display: flex;
     flex-direction: column;
@@ -151,6 +167,10 @@ header div, h1{
 .configPanel2D_opcoes_retas h6{
     margin-top: 5px;
     margin-bottom: 12px;
+}
+
+.configPanel2D_opcoes_retas label {
+    font-size: 14px; /* Define o tamanho da fonte desejado */
 }
 
 .configPanel2D_opcoes_retas_pontos{
@@ -182,7 +202,7 @@ header div, h1{
     color: white;
 }
 
-.ponto1, .ponto2{
+.ponto1, .ponto2 {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
@@ -210,6 +230,38 @@ header div, h1{
     width: 88%; /* Define a largura */
     height: 15px; /* Define a altura */ 
 }
+
+/* ***************** DIV configPanel2D_opcoes_elipse ***************** */
+.configPanel2D_opcoes_elipse{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel2D_opcoes_elipse h6{
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+.configPanel2D_opcoes_elipse label {
+    font-size: 14px; /* Define o tamanho da fonte desejado */
+}
+
+.configPanel2D_opcoes_elipse_pontos{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+}
+
+.configPanel2D_opcoes_elipse_pontos input[type="number"]{
+    width: 88%; /* Define a largura */
+    height: 15px; /* Define a altura */ 
+}
+
 
 /* ************ DIV configPanel2D_opcoes_transformacoes ************ */
 .configPanel2D_opcoes_transformacoes{
@@ -257,6 +309,71 @@ header div, h1{
     height: 15px; /* Define a altura */
 }
 
+/* ************ DIV configPanel3D_opcoes_transformacoes ************ */
+.configPanel3D_opcoes_transformacoes {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    text-align: center;
+    padding-bottom: 10px;
+}
+
+.transformacoes3D:not(:first-child) {
+    /*Aplicando a regra a todas as classes transformacoes3D (menos na primeira encontrada) */
+    border-top: 1px dashed #000;
+}
+
+.transformacoes3D {
+    display: flex;
+    flex-direction: column;
+    margin-top: 0;
+}
+
+.transformacoes3D_sub {
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    text-align: center;
+    margin-top: 5px;
+}
+
+.transformacoes3D_sub label {
+    font-size: 15px;
+    padding-left: 10px;
+    margin-bottom: 5px;
+}
+
+.transformacoes3D_entradas {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 colunas */
+    gap: 10px; /* espaço entre os itens */
+    margin-bottom: 5px;
+}
+
+.transformacoes3D_entradas input[type="number"] {
+    width: 30px; /* Define a largura */
+    height: 15px; /* Define a altura */
+}
+
+/* ************ DIV configPanel3D_opcoes_projecoes ************ */
+.configPanel3D_opcoes_projecoes{
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #000;
+    padding-left: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.projecoes3D{
+    padding-bottom: 15px;
+}
+
+#btnAplicaProjecoes{
+    display: block;
+    margin: 0 auto;
+}
+
 /* ************ DIV configPanel2D_cohen-sutherland ************ */
 .configPanel2D_cohen-sutherland{
     display: flex;
@@ -272,6 +389,30 @@ header div, h1{
     margin-top: 12px;
     margin-bottom: 10px;
 }
+.configPanel2D_cohen-sutherland .inputRetas {
+    align-items: center;
+}
+
+/* ****************** DIV configPanel2D_opcoes_batimentosCardiacos ****************** */
+.configPanel2D_opcoes_BatimentosCardiacos{
+    display: flex;
+    flex-direction: row;
+    border: 2px solid #000;
+    text-align: center;
+    margin-bottom: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.configPanel2D_opcoes_BatimentosCardiacos h6{
+    margin-top: 5px;
+    margin-bottom: 12px;
+}
+
+.configPanel2D_opcoes_BatimentosCardiacos input{
+    width: 88%; /* Define a largura */
+    height: 15px; /* Define a altura */ 
+}
 
 /* ***************************************** SECTION main_conteudo-painelDesenho ***************************************** */
 .main_conteudo-painelDesenho{
@@ -280,6 +421,15 @@ header div, h1{
     width: 100%;
     border: 3px double black;
     margin-left: 5px;
+    position: relative; /* Adiciona position relative para controlar a posição dos filhos */
+}
+
+#canvas, #canvas3D {
+    width: 100%;
+    height: 100%;
+    position: absolute; /* Posiciona os canvases absolutamente dentro da seção pai */
+    top: 0;
+    left: 0;
 }
 
 /* ***************************************** SECTION main_Saida-Dados ***************************************** */
@@ -368,4 +518,90 @@ header div, h1{
 #btnLimparSaidaTextarea{
     margin-top: 1px;
     margin-bottom: 5px;
+}
+
+/* ***************************************** SECTION canvasContainer e canvasModal ***************************************** */
+
+
+/* Estilos para o modal */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 3; /* Aumentando z-index para sobrepor o canvas */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 10% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50%;
+    text-align: center;
+    position: relative; /* Adicionando posição relativa */
+}
+
+.close {
+    color: #aaa;
+    position: absolute; /* Posição absoluta */
+    top: 5px;
+    right: 10px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Estilo para o canvas */
+.canvas-container {    
+    display: none;
+    position: fixed;
+    z-index: 3;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid #888;
+    overflow: auto;
+    background-color: #fff;    
+}
+
+.canvas-container canvas {
+    display: block;
+}
+
+.close-button {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.dark-overlay {
+    background-color: rgba(0, 0, 0, 0.5); /* Cor de fundo semi-transparente */
+}
+
+#fecharCanvas {
+    position: absolute;
+    top: 1px; /* ajuste a distância do topo conforme necessário */
+    right: 1px; /* ajuste a distância da esquerda conforme necessário */
+    color: red;
+    background-color: transparent;
+    font-weight: bold;
+    border-radius: 40%;
+    border: none;
+}
+
+#fecharCanvas:hover{
+    color: black;
+    background-color: red;
 }

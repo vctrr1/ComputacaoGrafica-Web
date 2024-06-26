@@ -1,8 +1,4 @@
-import { DDA } from './reta.js';
-import { limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaDeDados } from '../utils/utils.js';
-import * as desenhar from './desenho.js';
-
-export function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax, ctx , altura, largura, matrizAreaDeRecorte) {
+export function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax) {
 
     function bit(codigo, pos) {
         var bit = codigo << (31 - pos);
@@ -45,11 +41,6 @@ export function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax, ctx , al
             aceito = true;
             feito = true;
         } else if ((codigo1 & codigo2) != 0) {// Totalmente fora da area de recorte
-            limpaTela(ctx);
-            desenhar.CohenSutherland(ctx, altura, largura);
-            desenhar.Quadrado(matrizAreaDeRecorte, ctx);
-            limparSaidaDeDadosTextarea();
-            setarDadosParaSaidaDeDados("\nLinha fora da area de recorte");
             feito = true;
         } else {
             // Parcialmente dentro
@@ -84,13 +75,9 @@ export function cohenSutherland(x1, y1, x2, y2, xmin, ymin, xmax, ymax, ctx , al
     } // fim while
 
     if (aceito) {
-        limpaTela(ctx);
-        desenhar.CohenSutherland(ctx, altura, largura);
-        desenhar.Quadrado(matrizAreaDeRecorte, ctx);
-        limparSaidaDeDadosTextarea();
-        setarDadosParaSaidaDeDados("\nNOVAS COORDENADAS DA RETA.\n\n");
-        DDA(x1, y1, x2, y2, ctx);
+        //retorna os pontos da reja recortada para ser redenhada no canvas
+        return {x1, y1, x2, y2};
     } else {
-        console.log("Line rejected");
+        return null;
     }
 }

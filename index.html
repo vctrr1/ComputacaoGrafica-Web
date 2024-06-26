@@ -13,11 +13,12 @@
     <script type="module" src="scripts/configTela.js"></script>
     <script type="module" src="scripts/algoritimos/circunferencia.js" ></script>    
     <script type="module" src="scripts/algoritimos/cohenShutherland.js" ></script>    
-    <script type="module" src="scripts/algoritimos/desenho.js"></script>
+    <script type="module" src="scripts/algoritimos/desenho2D.js"></script>
+    <script type="module" src="scripts/algoritimos/desenho3D.js"></script>
     <script type="module" src="scripts/algoritimos/reta.js"></script>
-    <script type="module" src="scripts/algoritimos/trasformacoes.js"></script>
+    <script type="module" src="scripts/algoritimos/transformacoes2D.js"></script>
+    <script type="module" src="scripts/algoritimos/transformacoes3D.js"></script>
     <script type="module" src="scripts/utils/utils.js"></script>
-    <script type="module" src="scripts/utils/produtoDeMatrizes.js"></script>
 
 </head>
 
@@ -47,7 +48,7 @@
                 <!-- ESCOLHA DE DESENHOS 2D OU 3D -->
                 <div class="opcaoDeDesenho">                    
                     <label><input type="checkbox" class="opcaoEscolhida" id="2D"> 2D </label><br>
-                    <label><input type="checkbox" class="opcaoEscolhida" id="3D" disabled> 3D </label><br>
+                    <label><input type="checkbox" class="opcaoEscolhida" id="3D"> 3D </label><br>
                 </div>
 
                 <!-- INFORMAÇÕES DAS COORDENADAS GERAIS -->
@@ -72,19 +73,24 @@
 
                 </div>
 
+                <!-- ******************************************** 2D ********************************************-->
+
                 <!-- ESCOLHA DOS TIPOS DE DESENHOS 2D (PIXEL - RETAS - CIRCUNFERENCIAS E TRANSFORMAÇÕES) -->
                 <div class="configPanel2D" style="display: none;">                    
                     
-                    <label for="opcoes">Opção:</label>
-                    <select id="opcoes">
+                    <label for="opcoes2D">Opção:</label>
+                    <select id="opcoes2D">
                         <option value="opcao1">Pixel</option>
-                        <option value="opcao2">DDA</option>
-                        <option value="opcao3">Reta P.M</option>
-                        <option value="opcao4">Circun. Polinomial</option>
-                        <option value="opcao5">Circun. Trigonométrica</option>
-                        <option value="opcao6">Circunferência P.M</option>
-                        <option value="opcao7">Transformações</option>
-                        <option value="opcao8">Cohen-Sutherland</option>
+                        <option value="opcao2">Reta DDA</option>
+                        <option value="opcao3">Reta Ponto Medio</option>
+                        <option value="opcao4">Circunf. Polinomial</option>
+                        <option value="opcao5">Circunf. Trigonométrica</option>
+                        <option value="opcao6">Circunf. Ponto Medio</option>
+                        <option value="opcao7">Elipse</option>
+                        <option value="opcao8">Transformações</option>
+                        <option value="opcao9">Composição</option>
+                        <option value="opcao10">Cohen-Sutherland</option>
+                        <option value="opcao11">Batimentos Cardíacos</option>
                     </select>                    
                 
                 </div>
@@ -142,7 +148,31 @@
                     </div>
                 </div>
 
-                <!-- PAINEL ENTRADA DAS OPÇÕES DE TRANSFORMAÇÕES -->
+                <!-- PAINEL ENTRADA DO RAIO E ORIGEM DA ELIPSE -->
+                <div class="configPanel2D_opcoes_elipse" style="display: none;">
+                    <h6>Digite os Pontos</h6>
+
+                    <div class="configPanel2D_opcoes_elipse_pontos">
+                        
+                        <div class="ponto1">
+                            <label>X Origem: <input type="number" id="inputElipseX"></label>
+                            <label>Y Origem: <input type="number" id="inputElipseY"></label>
+                        </div>
+                        <div class="ponto2">
+                            <label>Raio X: <input type="number" id="inputElipseRaioX"></label>
+                            <label>Raio Y: <input type="number" id="inputElipseRaioY"></label>
+                        </div>
+
+                    </div>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnDesenharElipse">Desenhar</button>
+                        <button id="btnLimparElipse">Limpar</button>
+                    </div>
+
+                </div>
+
+                <!-- PAINEL ENTRADA DAS OPÇÕES DE TRANSFORMAÇÕES 2D-->
                 <div class="configPanel2D_opcoes_transformacoes" style="display: none;">
 
                     <div class="transformacoes2D">
@@ -202,15 +232,10 @@
                 </div>
 
                 <div class="configPanel2D_cohen-sutherland" style="display: none;">
-                    <h6>Digite os Pontos da Reta</h6>
+                    <h6>Digite a quantidade de Retas</h6>
                     <div class="configPanel2D_opcoes_retas_pontos">
-                        <div class="ponto1">
-                            <label>X1 : <input type="number" id="inputCohenX1"></label>
-                            <label>Y1 : <input type="number" id="inputCohenY1"></label>
-                        </div>
-                        <div class="ponto2">
-                            <label>X2 : <input type="number" id="inputCohenX2"></label>
-                            <label>Y2 : <input type="number" id="inputCohenY2"></label>
+                        <div class="inputRetas">
+                           <input type="number" id="inputRetas">
                         </div>
                         <div class="botoesDeAtivarELimpar">
                             <button id="btnDesenharRetaCohen">Desenhar</button>
@@ -220,31 +245,142 @@
                     </div>
                 </div>
 
-                <!-- FALTA CONFIGURAR -->
+                <div class="configPanel2D_opcoes_BatimentosCardiacos" style="display: none;">
+                    <h6>Digite as Informações</h6>
+
+                    <div class="entradaDeDados">                        
+                        <label>Idade : <input type="number" id="inputIdade"></label><br>                        
+                        <label>Situação : <input type="number" id="inputSitucao"></label>
+                    </div>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnAplicarBatimentos">Aplicar</button>
+                        <button id="btnLimparCanvasBatimentos">Limpar</button>
+                    </div>
+                </div>
+
+
+                <!-- ******************************************** 3D ********************************************-->
+
+                <!-- ESCOLHA DOS TIPOS DE OPÇÃO 3D (COMPOSIÇÃO OU VISUALIZAÇÃO) -->
                 <div class="configPanel3D" style="display: none;">
-                    <h6>asdaaasdsd Teste 3d</h6>
+                    <label for="opcoes3D">Opção:</label>
+                    <select id="opcoes3D">
+                        <option value="opcao1">Composição</option>
+                        <option value="opcao2">Projeção</option>
+                    </select> 
+                </div>
+
+                <!-- PAINEL ENTRADA DAS OPÇÕES DE TRANSFORMAÇÕES 3D-->
+                <div class="configPanel3D_opcoes_transformacoes" style="display: none;">
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkTranslacao3D" > Translação</label>                           
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>X: <input type="number" id="xTranslacao3D"></label>
+                            <label>Y: <input type="number" id="yTranslacao3D"></label>
+                            <label>Z: <input type="number" id="zTranslacao3D"></label> 
+                        </div>                       
+                    </div>
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkEscala3D" > Escala</label>                            
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>X: <input type="number" id="xEscala3D"></label>
+                            <label>Y: <input type="number" id="yEscala3D"></label>
+                            <label>Z: <input type="number" id="zEscala3D"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkRotacao3D" > Rotação</label>
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>X: <input type="number" id="AnguloRotacao3Dx"></label>
+                            <label>Y: <input type="number" id="AnguloRotacao3Dy"></label>
+                            <label>Z: <input type="number" id="AnguloRotacao3Dz"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkCisalhamento3D" > Cisalhamento</label>
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>XY: <input type="number" id="xyCisalhamento3D"></label>
+                            <label>XZ: <input type="number" id="xzCisalhamento3D"></label>
+                            <label>YX: <input type="number" id="yxCisalhamento3D"></label>
+                            <label>YZ: <input type="number" id="yzCisalhamento3D"></label>
+                            <label>ZX: <input type="number" id="zxCisalhamento3D"></label>
+                            <label>ZY: <input type="number" id="zyCisalhamento3D"></label>
+                        </div>
+                    </div>
+
+                    <div class="transformacoes3D">
+                        <div class="transformacoes3D_sub">
+                            <label><input type="checkbox" id="checkReflexao3D" > Reflexão</label>
+                        </div>
+                        <div class="transformacoes3D_entradas">
+                            <label>XY: <input type="checkbox" id="xyReflexao3D"></label>
+                            <label>XZ: <input type="checkbox" id="xzReflexao3D"></label>
+                            <label>YZ: <input type="checkbox" id="yzReflexao3D"></label>
+                        </div>
+                    </div>
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnAplicaTransformacoes3D">Aplicar</button>
+                        <button id="btnLimpaTransformacoes3D">Limpar</button>
+                    </div>
+
+                </div>
+
+                <!-- PAINEL ENTRADA DAS OPÇÕES DE PROJEÇÕES 3D-->
+                <div class="configPanel3D_opcoes_projecoes" style="display: none;">
+
+                    <div class="projecoes3D">
+                        <label><input type="checkbox" id="projecaoPerspectiva" > Perspectiva</label>                       
+                    </div>
+
+                    <div class="projecoes3D">
+                        <label><input type="checkbox" id="projecaoParalelaIsometrica" > Paralela Isométrica</label>
+                    </div>
+
+                    <div class="projecoes3D">
+                        <label><input type="checkbox" id="projecaoParalelaOrtografica" > Paralela Ortográfica</label>
+                    </div>                    
+
+                    <div class="botoesDeAtivarELimpar">
+                        <button id="btnAplicaProjecoes">Aplicar</button>
+                    </div>
+
                 </div>
     
             </section>
     
             <!-- CANVAS - ONDE SERÁ VISUALIZADO OS DESENHOS ESCOLHIDOS -->
-            <section class="main_conteudo-painelDesenho">
-                
-                <canvas id="canvas"></canvas>                                
-            
+            <section class="main_conteudo-painelDesenho">                
+                <canvas id="canvas" style="display: none;"></canvas>
+                <canvas id="canvas3D" style="display: none;"></canvas>         
             </section>
 
             <!-- Canvas ViewPort - Onde sairá os dados em coordenadas do dispositivo -->
             <section class="main_Saida-Dados">
 
-                <div class="saidaViewPort">
+                <div class="saidaViewPort"> 
                     <h4>View Port</h4>
                     <div class="delimitacaoViewPort">
                         <canvas id="viewPortDoProjeto"></canvas>
-                    </div>                    
+                    </div>
+                                        
                     <div class="botoesDeAtivarELimpar">
                         <button id="btnTransferirParaViewPort">Transferir</button>
                         <button id="btnLimparViewPort">Limpar</button>
+                        <button id="btnVisualizar">VP User</button>
                     </div>
                 </div>
 
@@ -259,7 +395,22 @@
                 </div>
 
             </section>
-    
+            
+            <section id="canvasContainer" class="canvas-container" style="display: none;">
+                <canvas id="canvass"></canvas>
+                <button id="fecharCanvas">X</button>
+            </section>
+
+            <section id="canvasModal" class="modal" style="display: none;">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <p>Defina o tamanho do canvas:</p>
+                    <input type="number" id="larguraCanvas" placeholder="Largura">
+                    <input type="number" id="alturaCanvas" placeholder="Altura">
+                    <button id="criarCanvas">Criar Canvas</button>
+                </div>
+            </section>
+            
         </div>
        
     </main>

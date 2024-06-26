@@ -1,3 +1,4 @@
+
 // Função para desenhar os eixos X e Y para visualizar as transformações
 export function Eixos2D(ctx, canvas) {
     ctx.strokeStyle = 'gray'; // 'black' representa a cor preta
@@ -48,7 +49,6 @@ export function CohenSutherland(ctx, altura, largura){
 }
 
 //calcula o tamanho do quadrado central desenhado pelo desenharEixosCohenSutherland()
-//OBS: altera de alum jeito a coordenada da reta
 export function areaDeRecorteCohen(altura, largura) {
     const espacoExtraVertical = altura / 12;
     const espacoExtraHorizontal = largura / 12;
@@ -63,4 +63,19 @@ export function areaDeRecorteCohen(altura, largura) {
         [xEsquerda, xDireita, xDireita, xEsquerda], // Coordenadas X
         [yTopo, yTopo, yBase, yBase], // Coordenadas Y
     ];
+}
+
+//tela de quando os batimentos ainda não começaram
+export function batimentosCardiacos(ctx){
+    // Pintar o fundo de preto
+    ctx.fillStyle = 'black';
+    ctx.fillRect(-canvas.width / 2, ((-canvas.height / 2)-5), canvas.width, canvas.height);
+
+    // Desenhar a linha central horizontal
+    ctx.strokeStyle = 'Lime';  // Cor da linha
+    ctx.lineWidth = 1;  // Espessura da linha
+    ctx.beginPath();
+    ctx.moveTo(-canvas.width / 2, 0);
+    ctx.lineTo(canvas.width / 2, 0);
+    ctx.stroke();
 }
