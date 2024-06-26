@@ -43,9 +43,12 @@ window.onload = function() {
     const AnguloRotacao3Dx = document.getElementById('AnguloRotacao3Dx');
     const AnguloRotacao3Dy = document.getElementById('AnguloRotacao3Dy');
     const AnguloRotacao3Dz = document.getElementById('AnguloRotacao3Dz');
-    const xCisalhamento3D = document.getElementById('xCisalhamento3D');
-    const yCisalhamento3D = document.getElementById('yCisalhamento3D');
-    const zCisalhamento3D = document.getElementById('zCisalhamento3D');
+    const xyCisalhamento3D = document.getElementById('xyCisalhamento3D');
+    const xzCisalhamento3D = document.getElementById('xzCisalhamento3D');
+    const yxCisalhamento3D = document.getElementById('yxCisalhamento3D');
+    const yzCisalhamento3D = document.getElementById('yzCisalhamento3D');
+    const zxCisalhamento3D = document.getElementById('zxCisalhamento3D');
+    const zyCisalhamento3D = document.getElementById('zyCisalhamento3D');
     const xyReflexao3D =  document.getElementById('xyReflexao3D');
     const xzReflexao3D = document.getElementById('xzReflexao3D');
     const yzReflexao3D = document.getElementById('yzReflexao3D');
@@ -89,9 +92,12 @@ window.onload = function() {
         AnguloRotacao3Dx.disabled = true;
         AnguloRotacao3Dy.disabled = true;
         AnguloRotacao3Dz.disabled = true;
-        xCisalhamento3D.disabled = true;
-        yCisalhamento3D.disabled = true;
-        zCisalhamento3D.disabled = true;
+        xyCisalhamento3D.disabled = true;
+        xzCisalhamento3D.disabled = true;
+        yxCisalhamento3D.disabled = true;
+        yzCisalhamento3D.disabled = true;
+        zxCisalhamento3D.disabled = true;
+        zyCisalhamento3D.disabled = true;
         xyReflexao3D.disabled = true;
         xzReflexao3D.disabled = true;
         yzReflexao3D.disabled = true;
@@ -120,9 +126,12 @@ window.onload = function() {
         AnguloRotacao3Dx.value = "";
         AnguloRotacao3Dy.value = "";
         AnguloRotacao3Dz.value = "";
-        xCisalhamento3D.value = "";
-        yCisalhamento3D.value = "";
-        zCisalhamento3D.value = "";
+        xyCisalhamento3D.value = "";
+        xzCisalhamento3D.value = "";
+        yxCisalhamento3D.value = "";
+        yzCisalhamento3D.value = "";
+        zxCisalhamento3D.value = "";
+        zyCisalhamento3D.value = "";
     }
 
     // Desativa todas as divs referentes a div 2D
@@ -461,17 +470,26 @@ window.onload = function() {
             }
             else if(this.id === "checkCisalhamento3D"){
                 if(checkbox.checked){
-                    xCisalhamento3D.disabled = false;
-                    yCisalhamento3D.disabled = false;
-                    zCisalhamento3D.disabled = false;
+                    xyCisalhamento3D.disabled = false;
+                    xzCisalhamento3D.disabled = false;
+                    yxCisalhamento3D.disabled = false;
+                    yzCisalhamento3D.disabled = false;
+                    zxCisalhamento3D.disabled = false;
+                    zyCisalhamento3D.disabled = false;
                 }
                 else{
-                    xCisalhamento3D.disabled = true;
-                    yCisalhamento3D.disabled = true;
-                    zCisalhamento3D.disabled = true;
-                    xCisalhamento3D.value = "";
-                    yCisalhamento3D.value = "";
-                    zCisalhamento3D.value = "";
+                    xyCisalhamento3D.disabled = true;
+                    xzCisalhamento3D.disabled = true;
+                    yxCisalhamento3D.disabled = true;
+                    yzCisalhamento3D.disabled = true;
+                    zxCisalhamento3D.disabled = true;
+                    zyCisalhamento3D.disabled = true;
+                    xyCisalhamento3D.value = "";
+                    xzCisalhamento3D.value = "";
+                    yxCisalhamento3D.value = "";
+                    yzCisalhamento3D.value = "";
+                    zxCisalhamento3D.value = "";
+                    zyCisalhamento3D.value = "";
                 }
             }
             else if(this.id === "checkReflexao3D"){
