@@ -2,7 +2,7 @@ import { DDA, retaPontoMedio } from './algoritimos/reta.js';
 import { circunferenciaPolinomial, circunferenciaTrigonometrica, circunferenciaPontoMedio } from './algoritimos/circunferencia.js';
 import { elipsePontoMedio } from './algoritimos/elipse.js';
 import { Translacao, Escala, Rotacao, ReflexaoX, ReflexaoY, cisalhamentoX, cisalhamentoY } from './algoritimos/transformacoes2D.js';
-import {translacao3D, escala3D, rotacaoX3D, rotacaoY3D, rotacaoZ3D, cisalhamentoXY3D, cisalhamentoXZ3D, cisalhamentoYZ3D, reflexaoXY3D, reflexaoXZ3D, reflexaoYZ3D}  from './algoritimos/transformacoes3D.js';
+import {translacao3D, escala3D, rotacaoX3D, rotacaoY3D, rotacaoZ3D, reflexaoXY3D, reflexaoXZ3D, reflexaoYZ3D, cisalhamentoGeral3D}  from './algoritimos/transformacoes3D.js';
 import { ativaPixel, limpaTela, limparSaidaDeDadosTextarea, setarDadosParaSaidaDeDados } from './utils/utils.js';
 import { cohenSutherland } from './algoritimos/cohenShutherland.js';
 import { processarListaViewport } from './viewPort/viewPort.js';
@@ -571,28 +571,22 @@ document.addEventListener('DOMContentLoaded', () => {
     function aplicarTransformacao3D(){
         let matrizTransformada = matrizBaseGeral3D.slice();
         if(document.getElementById('checkTranslacao3D').checked){
-            const tx = parseFloat(document.getElementById('xTranslacao3D').value);
-            const ty = parseFloat(document.getElementById('yTranslacao3D').value);
-            const tz = parseFloat(document.getElementById('zTranslacao3D').value);
-
-            if(!isNaN(tx) && !isNaN(ty) && !isNaN(tz)){
-                matrizTransformada = translacao3D(matrizTransformada, tx, ty, tz);
-                console.log(matrizTransformada);
-                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
-            }else{
-                alert('Digite um input valido.');
-            }
+            const tx = parseInput(document.getElementById('xTranslacao3D').value);
+            const ty = parseInput(document.getElementById('yTranslacao3D').value);
+            const tz = parseInput(document.getElementById('zTranslacao3D').value);
+            
+            matrizTransformada = translacao3D(matrizTransformada, tx, ty, tz);
         }
         if(document.getElementById('checkEscala3D').checked){
-            const sx = parseFloat(document.getElementById('xEscala3D').value);
-            const sy = parseFloat(document.getElementById('yEscala3D').value);
-            const sz = parseFloat(document.getElementById('zEscala3D').value);
+            let sx = parseFloat(document.getElementById('xEscala3D').value || 1); // se n for digitado nada no input é atribuido 1 a variavel
+            let sy = parseFloat(document.getElementById('yEscala3D').value || 1);
+            let sz = parseFloat(document.getElementById('zEscala3D').value || 1);
 
-            if(!isNaN(sx) && !isNaN(sy) && !isNaN(sz)){
-                matrizTransformada = escala3D(matrizTransformada, sx, sy, sz);
-                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
+            //verifica se é igual a zero
+            if(sx === 0 || sy === 0 || sz === 0){
+                alert("Digite um número Válido");
             }else{
-                alert('Digite um input valido.');
+                matrizTransformada = escala3D(matrizTransformada, sx, sy, sz);
             }
         }
         if (document.getElementById('checkRotacao3D').checked) {
@@ -601,62 +595,55 @@ document.addEventListener('DOMContentLoaded', () => {
             const anguloy = parseFloat(document.getElementById('AnguloRotacao3Dy').value);
             const anguloz = parseFloat(document.getElementById('AnguloRotacao3Dz').value);
         
-            // Aplique a rotação em X, se o valor for um número válido
+            // Aplica a rotação em X, se o valor for um número válido
             if (!isNaN(angulox)) {
                 matrizTransformada = rotacaoX3D(matrizTransformada, angulox);
             }
-            // Aplique a rotação em Y, se o valor for um número válido
+            // Aplica a rotação em Y, se o valor for um número válido
             if (!isNaN(anguloy)) {
                 matrizTransformada = rotacaoY3D(matrizTransformada, anguloy);
             }
-            // Aplique a rotação em Z, se o valor for um número válido
+            // Aplica a rotação em Z, se o valor for um número válido
             if (!isNaN(anguloz)) {
                 matrizTransformada = rotacaoZ3D(matrizTransformada, anguloz);
             }
-            // Desenhe o cubo com a matriz transformada
-            desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
         }
-
         if(document.getElementById('checkCisalhamento3D').checked){
-            let matrizTransformada = matrizBaseGeral3D.slice();
-            const shxy = parseFloat(document.getElementById('xCisalhamento3D').value);
-            const shxz = parseFloat(document.getElementById('yCisalhamento3D').value);
-            const shyz = parseFloat(document.getElementById('zCisalhamento3D').value);
+            const shxy = parseInput(document.getElementById('xyCisalhamento3D').value || 0);
+            const shxz = parseInput(document.getElementById('xzCisalhamento3D').value || 0);
+            const shyx = parseInput(document.getElementById('yxCisalhamento3D').value || 0);
+            const shyz = parseInput(document.getElementById('yzCisalhamento3D').value || 0);
+            const shzx = parseInput(document.getElementById('zxCisalhamento3D').value || 0);
+            const shzy = parseInput(document.getElementById('zyCisalhamento3D').value || 0);
 
-            if(!isNaN(shxy)){
-                matrizTransformada = cisalhamentoXY3D(matrizTransformada, shxy);                
-            }
-            if(!isNaN(shxz)){
-                matrizTransformada = cisalhamentoXZ3D(matrizTransformada, shxz);
-            }
-            if(!isNaN(shyz)){
-                matrizTransformada = cisalhamentoYZ3D(matrizTransformada, shyz);
-            }
-            desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);         
+            //console.log("XY"+shxy + " XZ"+shxz + " YX"+shyx + " YZ"+shyz + " ZX"+shzx + " ZY"+shzy);
+            matrizTransformada = cisalhamentoGeral3D(matrizTransformada, shxy, shxz, shyx, shyz, shzx, shzy);      
         }
-
         if(document.getElementById('checkReflexao3D').checked){
-            let matrizTransformada = matrizBaseGeral3D.slice();
             if(document.getElementById('xyReflexao3D').checked){
+                //reflexão xy
                 matrizTransformada = reflexaoXY3D(matrizTransformada);
-                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
             }
             else if(document.getElementById('xzReflexao3D').checked){
                 //reflexão em xz
-                matrizTransformada = reflexaoXZ3D(matrizTransformada);
-                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
-                
+                matrizTransformada = reflexaoXZ3D(matrizTransformada);                
             }
             else if(document.getElementById('yzReflexao3D').checked){
                 //reflexão em yz
                 matrizTransformada = reflexaoYZ3D(matrizTransformada);
-                desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);
             }
             else {
                 alert('marque uma reflexão!');
             }
             
         }
+
+        desenhar3D.Cubo(canvas3D, matrizTransformada, facesCubo);   
+    }
+    //verifica se foi digitado algum valor, se n for, atribui 0 a variavel
+    function parseInput(value) {
+        const parsedValue = parseFloat(value);
+        return isNaN(parsedValue) ? 0 : parsedValue;
     }
 
     btnDesenharRetaCohen.addEventListener('click', () => {
