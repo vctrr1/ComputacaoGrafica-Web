@@ -23,3 +23,4 @@
 - 6º [x] - Criar a função( do botão) de limpar da viewPort
 - 7º [x] - Criar a função de ativar o botão de limpar, depois de ter clicado no botão transferir da viewPort
 - 8º [x] - Criar a função de ativar o botão de transferir, depois de ter desenhado algo no canvas principal
+- 9º [x] - Tests
