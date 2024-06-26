@@ -18,10 +18,31 @@ export function escala3D(matrizBase, sx, sy, sz) {
         [0, 0, sz, 0],
         [0, 0, 0, 1]
     ];
-    return matrizBase.map(vertice => {
-        const verticeTransformado = multiplicarMatrizes(matrizEscala, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
-        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
-    });
+
+    const centro = calcularCentro(matrizBase);
+
+    // Verifica se o objeto já está na origem
+    if (centro[0] !== 0 || centro[1] !== 0 || centro[2] !== 0) {
+        // Translada o objeto para a origem
+        matrizBase = translacao3D(matrizBase, -centro[0] + 1, -centro[1] + 1, -centro[2] + 1);
+
+        // Aplica a escala
+        matrizBase = matrizBase.map(vertice => {
+            const verticeTransformado = multiplicarMatrizes(matrizEscala, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+            return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+        });
+
+        // Translada o objeto de volta para a posição original, considerando o deslocamento inicial
+        matrizBase = translacao3D(matrizBase, centro[0] - 1, centro[1] - 1, centro[2] - 1);
+        return matrizBase;
+
+    } else {
+        return matrizBase.map(vertice => {
+            const verticeTransformado = multiplicarMatrizes(matrizEscala, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
+            return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
+        });
+    }
+    
 }
 
 export function rotacaoX3D(matrizBase, angulo) {
@@ -72,37 +93,11 @@ export function rotacaoZ3D(matrizBase, angulo) {
     });
 }
 
-export function cisalhamentoXY3D(matrizBase, shxy) {
+export function cisalhamentoGeral3D(matrizBase, shxy, shxz, shyx, shyz, shzx, shzy) {
     const matrizCisalhamento = [
-        [1, shxy, 0, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
-    ];
-    return matrizBase.map(vertice => {
-        const verticeTransformado = multiplicarMatrizes(matrizCisalhamento, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
-        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
-    });
-}
-
-export function cisalhamentoXZ3D(matrizBase, shxz) {
-    const matrizCisalhamento = [
-        [1, 0, shxz, 0],
-        [0, 1, 0, 0],
-        [0, 0, 1, 0],
-        [0, 0, 0, 1]
-    ];
-    return matrizBase.map(vertice => {
-        const verticeTransformado = multiplicarMatrizes(matrizCisalhamento, [[vertice[0]], [vertice[1]], [vertice[2]], [vertice[3]]]);
-        return [verticeTransformado[0][0], verticeTransformado[1][0], verticeTransformado[2][0], verticeTransformado[3][0]];
-    });
-}
-
-export function cisalhamentoYZ3D(matrizBase, shyz) {
-    const matrizCisalhamento = [
-        [1, 0, 0, 0],
-        [0, 1, shyz, 0],
-        [0, 0, 1, 0],
+        [1, shxy, shxz, 0],
+        [shyx, 1, shyz, 0],
+        [shzx, shzy, 1, 0],
         [0, 0, 0, 1]
     ];
     return matrizBase.map(vertice => {
@@ -170,4 +165,28 @@ function multiplicarMatrizes(a, b) {
         }
     }
     return result;
+}
+
+function calcularCentro(matriz) {
+    const deslocamentoInicial = [1, 1, 1];
+    const numVertices = matriz.length;
+    let cx = 0, cy = 0, cz = 0;
+
+    matriz.forEach(vertice => {
+        cx += vertice[0] - deslocamentoInicial[0];
+        cy += vertice[1] - deslocamentoInicial[1];
+        cz += vertice[2] - deslocamentoInicial[2];
+    });
+
+    // Calcula a média das coordenadas dos vértices
+    cx /= numVertices;
+    cy /= numVertices;
+    cz /= numVertices;
+
+    // Adiciona o deslocamento inicial de volta ao centroide calculado
+    cx += deslocamentoInicial[0];
+    cy += deslocamentoInicial[1];
+    cz += deslocamentoInicial[2];
+
+    return [cx, cy, cz];
 }
