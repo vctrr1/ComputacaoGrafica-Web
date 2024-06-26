@@ -1,6 +1,6 @@
 # Projeto de Computação Gráfica - UEPB
 
-**Desenvolvido por** _Arthur Felipe MS_
+**Desenvolvido por** _Arthur Felipe MS - Rafel - Victor_
 
 #### Desenvolvido com:
 
