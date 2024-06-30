@@ -105,7 +105,7 @@ export function Rotacao(matrizBase, angulo) {
         matrizResultado = Translacao(matrizResultado,tx, ty);
 
     }else {
-        const matrizResultado = multiplicarMatrizes(matrizRotacao, matrizBase);
+        matrizResultado = multiplicarMatrizes(matrizRotacao, matrizBase);
         setarDadosParaSaidaDeDados("\Rotação.\n\n" + 
             "Angulo : " + angulo.toFixed(4) + "\n" +
             "Cos. Theta : " + cos_theta.toFixed(4) + "\n" +  
