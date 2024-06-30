@@ -20,7 +20,6 @@ window.onload = function() {
     const selectOpcoes3D = document.getElementById('opcoes3D');
     const divTransformacoes3D = document.querySelector('.configPanel3D_opcoes_transformacoes');
     const divProjecoes3D = document.querySelector('.configPanel3D_opcoes_projecoes');
-    const divQuantidadeDeRotacoes = document.querySelector('.divQuandRotacao');
     
     // CheckBoxes das transformações/Composição
     const checkTranslacao = document.getElementById('checkTranslacao');
@@ -461,13 +460,11 @@ window.onload = function() {
             }
             else if(this.id === "checkRotacao3D"){
                 if(checkbox.checked){
-                    divQuantidadeDeRotacoes.style.display = 'block';
                     AnguloRotacao3Dx.disabled = false;
                     AnguloRotacao3Dy.disabled = false;
                     AnguloRotacao3Dz.disabled = false;
                 }
                 else{
-                    divQuantidadeDeRotacoes.style.display = 'none';
                     AnguloRotacao3Dx.disabled = true;
                     AnguloRotacao3Dy.disabled = true;
                     AnguloRotacao3Dz.disabled = true;
