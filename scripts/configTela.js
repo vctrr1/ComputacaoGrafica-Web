@@ -20,6 +20,7 @@ window.onload = function() {
     const selectOpcoes3D = document.getElementById('opcoes3D');
     const divTransformacoes3D = document.querySelector('.configPanel3D_opcoes_transformacoes');
     const divProjecoes3D = document.querySelector('.configPanel3D_opcoes_projecoes');
+    const divQuantidadeDeRotacoes = document.querySelector('.divQuandRotacao');
     
     // CheckBoxes das transformações/Composição
     const checkTranslacao = document.getElementById('checkTranslacao');
@@ -52,6 +53,11 @@ window.onload = function() {
     const xyReflexao3D =  document.getElementById('xyReflexao3D');
     const xzReflexao3D = document.getElementById('xzReflexao3D');
     const yzReflexao3D = document.getElementById('yzReflexao3D');
+
+    //inputs de pespectivas 3D
+    const projecaoPerspectiva = document.getElementById('projecaoPerspectiva');
+    const projecaoParalelaIsometrica = document.getElementById('projecaoParalelaIsometrica');
+    const projecaoParalelaOrtografica = document.getElementById('projecaoParalelaOrtografica');
     
     // Inputs de entradas das transformações 2D
     const xTranslacao = document.getElementById('xTranslacao');
@@ -455,11 +461,13 @@ window.onload = function() {
             }
             else if(this.id === "checkRotacao3D"){
                 if(checkbox.checked){
+                    divQuantidadeDeRotacoes.style.display = 'block';
                     AnguloRotacao3Dx.disabled = false;
                     AnguloRotacao3Dy.disabled = false;
                     AnguloRotacao3Dz.disabled = false;
                 }
                 else{
+                    divQuantidadeDeRotacoes.style.display = 'none';
                     AnguloRotacao3Dx.disabled = true;
                     AnguloRotacao3Dy.disabled = true;
                     AnguloRotacao3Dz.disabled = true;
@@ -547,5 +555,32 @@ window.onload = function() {
         });        
     });
 
+    //impede usuário selecionar mais de uma opção de prespectiva
+    projecaoPerspectiva.addEventListener('click', () => {
+        projecaoParalelaIsometrica.disabled = true;
+        projecaoParalelaOrtografica.disabled = true;
+        if(projecaoPerspectiva.checked === false){
+            projecaoParalelaIsometrica.disabled = false;
+            projecaoParalelaOrtografica.disabled = false;
+        }
+    })
+
+    projecaoParalelaIsometrica.addEventListener('click', () => {
+        projecaoPerspectiva.disabled = true;
+        projecaoParalelaOrtografica.disabled = true;
+        if(projecaoParalelaIsometrica.checked === false){
+            projecaoPerspectiva.disabled = false;
+            projecaoParalelaOrtografica.disabled = false;
+        }
+    })
+
+    projecaoParalelaOrtografica.addEventListener('click', () => {
+        projecaoParalelaIsometrica.disabled = true;
+        projecaoPerspectiva.disabled = true;
+        if(projecaoParalelaOrtografica.checked === false){
+            projecaoParalelaIsometrica.disabled = false;
+            projecaoPerspectiva.disabled = false;
+        }
+    })
 
 };
